@@ -9,6 +9,8 @@ int main()
 	while (1)
 	{
 		line = readline("🍪🍪🍪\033[0;32m>$ \033[0m");
+		if (line && line[0])
+			add_history(line);
 		printf("%s\n", line);
 		free(line);
 	}
