@@ -4,8 +4,8 @@
 
 int	main()
 {
-	char *pathname1 = "test1.txt";
-	char *pathname2 = "test2.txt";
+	char *pathname1 = "folder/test1.txt";
+	char *pathname2 = "folder/test3.txt";
 	
 	if (access(pathname1, F_OK) == 0)
 		printf("%s is exist\n", pathname1);
