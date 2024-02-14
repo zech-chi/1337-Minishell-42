@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 22:55:47 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/02/14 11:50:43 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/02/14 18:20:44 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,40 @@ char	*ft_env_search(t_env *env, char *key)
 	}
 	return (NULL);
 }
+
+int	ft_env_size(t_env *env)
+{
+	int	size;
+
+	size = 0;
+	while (env)
+	{
+		size++;
+		env = env->next;
+	}
+	return (size);
+}
+
+
+char	**ft_env_create_2d(t_env *env)
+{
+	char	**env_2d;
+	int		r;
+
+	env_2d = malloc(sizeof(char *) * (ft_env_size(env) + 1));
+	if (!env_2d)
+		return (NULL);
+	r = 0;
+	while (env)
+	{
+		env_2d[r++] = ft_strjoin(ft_strdup(env->key), ft_strjoin("=", ft_strdup(env->value)));
+		env = env->next;
+	}
+	env_2d[r] = NULL;
+	return (env_2d);
+}
+
+
 //int main(int ac, char **av, char **ev)
 //{
 //	t_env *env;

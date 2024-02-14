@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 19:25:40 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/02/14 14:32:26 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/02/14 18:16:45 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	ft_execute_3(char **splited_prompt, t_env *env)
 		return ;
 	r = -1;
 	while (path[++r])
-		execve(ft_strjoin(path[r], ft_strjoin("/", command)), splited_prompt, NULL);
+		execve(ft_strjoin(path[r], ft_strjoin("/", command)), splited_prompt, ft_env_create_2d(env));
 }
 
 void	ft_execute(char *prompt, t_env **env)
@@ -50,7 +50,7 @@ void	ft_execute(char *prompt, t_env **env)
 	pid = fork();
 	if (pid == 0)
 	{
-		execve(splited_prompt[0], splited_prompt, NULL);
+		execve(splited_prompt[0], splited_prompt, ft_env_create_2d(*env));
 		ft_execute_3(splited_prompt, *env);
 		perror("cookies error");
 		exit(SUCCESS);
