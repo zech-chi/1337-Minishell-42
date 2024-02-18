@@ -8,3 +8,4 @@ int main(void)
 	fork();
 	printf("hello world!\n");
 }
+// 2 ^ n = 2 ^ 3 = 8

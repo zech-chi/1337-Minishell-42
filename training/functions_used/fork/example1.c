@@ -3,6 +3,7 @@
 
 int main(void)
 {
-	fork();
-	printf("hello world! pid = %d\n", getpid());
+	if (fork() > 0)
+		fork();
+	printf("hello world!\n");
 }

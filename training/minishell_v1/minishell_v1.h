@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 18:33:21 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/02/14 18:16:57 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/02/16 12:13:05 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef struct s_env
 // builtins
 #define ENV "env"
 #define EXIT "exit"
-
+#define PWD "pwd"
 /*
 	*functions prototypes*
 */
@@ -54,13 +54,18 @@ int		ft_env_size(t_env *env);
 int	ft_strcmp(char *s1, char *s2);
 
 // strjoin.c file
-char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strjoin(char *s1, char *s2);
 
 // strlen.c file
 size_t	ft_strlen(const char *s);
 
 // strdup.c file
 char	*ft_strdup(const char *s1);
+
+// pwd.c
+void	ft_pwd_print(t_env *env);
+
+
 
 char	**ft_split(char const *s, char c);
 void	ft_execute(char *prompt, t_env **env);

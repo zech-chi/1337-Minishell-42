@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 18:37:53 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/02/14 11:25:05 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/02/16 10:53:23 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,11 @@ int	main(int ac, char **av, char **ev)
 	while (1)
 	{
 		prompt = ft_get_prompt();
+		if (prompt == NULL)
+		{
+			printf("exit\n");
+			exit(SUCCESS);
+		}
 		//parse(prompt);
 		ft_execute(prompt, &env);
 	}

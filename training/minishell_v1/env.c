@@ -6,13 +6,13 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 22:55:47 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/02/14 18:20:44 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/02/15 21:29:36 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_v1.h"
 
-// add new key and value in env
+// add new key and value in env 
 // return 0 if all good, -1 otherwise
 int	ft_env_add(t_env **env, char *key, char *value)
 {
@@ -71,6 +71,8 @@ t_env	*ft_env_create(char **ev)
 	t_env	*env;
 	char	**splited_row;
 	int		r;
+	int		c;
+	char	*value;
 
 	r = -1;
 	env = NULL;
@@ -79,7 +81,17 @@ t_env	*ft_env_create(char **ev)
 		splited_row = ft_split(ev[r], EQUAL);
 		if (!splited_row)
 			return (NULL); // I should clear env !!!!
-		ft_env_add(&env, splited_row[0], splited_row[1]);
+		c = 1;
+		value = NULL;
+		while (splited_row[c])
+		{
+			if (c == 1)
+				value = ft_strjoin(value, splited_row[c]);
+			else
+				value = ft_strjoin(value, ft_strjoin("=", splited_row[c]));
+			c++;
+		}
+		ft_env_add(&env, splited_row[0], value);
 		free(splited_row);
 	}
 	return (env);
