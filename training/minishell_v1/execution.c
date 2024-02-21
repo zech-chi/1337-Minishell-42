@@ -6,22 +6,24 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 19:25:40 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/02/16 12:14:44 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/02/21 09:14:18 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_v1.h"
 
-int	ft_execute_builtins(char **splited_prompt, t_env *env)
+int	ft_execute_builtins(char **splited_prompt, t_env **env)
 {
 	if (!splited_prompt || !(*splited_prompt))
 		return (SUCCESS);
 	else if (!ft_strcmp(ENV, splited_prompt[0]))
-		return (ft_env_print(env), SUCCESS);
+		return (ft_env_print(*env), SUCCESS);
 	else if (!ft_strcmp(EXIT, splited_prompt[0]))
 		return (printf("exit\n") ,exit(SUCCESS), SUCCESS);
 	else if (!ft_strcmp(PWD, splited_prompt[0]))
-		return (ft_pwd_print(env), SUCCESS);
+		return (ft_pwd_print(), SUCCESS);
+	else if (!ft_strcmp(CD, splited_prompt[0]))
+		return (ft_cd(splited_prompt, env));
 	else
 		return (FAILED); 
 }
@@ -47,7 +49,7 @@ void	ft_execute(char *prompt, t_env **env)
 	pid_t	pid;
 
 	splited_prompt = ft_split(prompt, SPACE);
-	if (ft_execute_builtins(splited_prompt, *env) == SUCCESS)
+	if (ft_execute_builtins(splited_prompt, env) == SUCCESS)
 		return ;
 	pid = fork();
 	if (pid == 0)

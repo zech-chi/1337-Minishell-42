@@ -6,13 +6,14 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 18:33:21 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/02/16 12:13:05 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/02/21 09:14:39 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_V1_H
 # define MINISHELL_V1_H
 
+#include <sys/param.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -37,6 +38,7 @@ typedef struct s_env
 #define ENV "env"
 #define EXIT "exit"
 #define PWD "pwd"
+#define CD "cd"
 /*
 	*functions prototypes*
 */
@@ -49,6 +51,7 @@ char	*ft_env_search(t_env *env, char *key);
 void	ft_env_clear(t_env **env);
 char	**ft_env_create_2d(t_env *env);
 int		ft_env_size(t_env *env);
+int		ft_env_update(t_env **env, char *key, char *newval);
 
 // strcmp.c file
 int	ft_strcmp(char *s1, char *s2);
@@ -63,8 +66,9 @@ size_t	ft_strlen(const char *s);
 char	*ft_strdup(const char *s1);
 
 // pwd.c
-void	ft_pwd_print(t_env *env);
+void	ft_pwd_print();
 
+int	ft_cd(char **splited_prompt, t_env **env);
 
 
 char	**ft_split(char const *s, char c);

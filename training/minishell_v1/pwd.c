@@ -6,22 +6,15 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 11:39:10 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/02/16 12:13:57 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/02/20 17:34:46 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_v1.h"
 
-void	ft_pwd_print(t_env *env)
+void	ft_pwd_print()
 {
-	while (env)
-	{
-		if (!ft_strcmp(env->key, "PWD"))
-		{
-			printf("%s\n", env->value);
-			return ;
-		}
-		env = env->next;
-	}
-	printf("NULL\n");
+	char buff[MAXPATHLEN];
+
+	printf("%s\n", getcwd(buff, MAXPATHLEN));
 }

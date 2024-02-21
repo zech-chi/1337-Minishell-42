@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 22:55:47 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/02/15 21:29:36 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/02/20 18:10:20 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ t_env	*ft_env_create(char **ev)
 	return (env);
 }
 
+
 // search for key and return its value
 // for example if key == "USER" it returns "zech-chi"
 // if key not in env it returns NULL
@@ -143,6 +144,22 @@ char	**ft_env_create_2d(t_env *env)
 	return (env_2d);
 }
 
+int	ft_env_update(t_env **env, char *key, char *newval)
+{
+	t_env	*node;
+
+	node = *env;
+	while (node)
+	{
+		if (!ft_strcmp(node->key, key))
+		{
+			node->value = newval;
+			return (0);
+		}
+		node = node->next;
+	}
+	return (1);
+}
 
 //int main(int ac, char **av, char **ev)
 //{
