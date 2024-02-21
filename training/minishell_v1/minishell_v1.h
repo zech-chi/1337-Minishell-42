@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 18:33:21 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/02/21 09:14:39 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/02/21 15:08:39 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ typedef struct s_env
 #define EXIT "exit"
 #define PWD "pwd"
 #define CD "cd"
+#define EXPORT "export"
+#define UNSET "unset"
 /*
 	*functions prototypes*
 */
@@ -52,6 +54,7 @@ void	ft_env_clear(t_env **env);
 char	**ft_env_create_2d(t_env *env);
 int		ft_env_size(t_env *env);
 int		ft_env_update(t_env **env, char *key, char *newval);
+void	ft_env_delete(t_env **env, char *key);
 
 // strcmp.c file
 int	ft_strcmp(char *s1, char *s2);
@@ -68,7 +71,12 @@ char	*ft_strdup(const char *s1);
 // pwd.c
 void	ft_pwd_print();
 
+
+int	ft_export(t_env **env, char **splited_prompt);
+
 int	ft_cd(char **splited_prompt, t_env **env);
+
+int ft_unset(t_env **env, char **splited_prompt);
 
 
 char	**ft_split(char const *s, char c);

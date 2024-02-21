@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 22:55:47 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/02/20 18:10:20 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/02/21 15:17:47 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,32 @@ int	ft_env_update(t_env **env, char *key, char *newval)
 		node = node->next;
 	}
 	return (1);
+}
+
+void	ft_env_delete(t_env **env, char *key)
+{
+	t_env	*prev;
+	t_env	*cur;
+
+	if (!env || !(*env))
+		return ;
+	prev = *env;
+	if (!ft_strcmp(key, prev->key))
+	{
+		(*env) = prev->next;
+		return ;
+	}
+	cur = prev->next;
+	while (cur)
+	{
+		if (!ft_strcmp(key, cur->key))
+		{
+			prev->next = cur->next;
+			return ; // must free here!!!
+		}
+		cur = cur->next;
+		prev = prev->next;
+	}
 }
 
 //int main(int ac, char **av, char **ev)

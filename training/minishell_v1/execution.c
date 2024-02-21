@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 19:25:40 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/02/21 09:14:18 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/02/21 15:09:07 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@ int	ft_execute_builtins(char **splited_prompt, t_env **env)
 		return (ft_pwd_print(), SUCCESS);
 	else if (!ft_strcmp(CD, splited_prompt[0]))
 		return (ft_cd(splited_prompt, env));
+	else if (!ft_strcmp(EXPORT, splited_prompt[0]))
+		return (ft_export(env, splited_prompt));
+	else if (!ft_strcmp(UNSET, splited_prompt[0]))
+		return (ft_unset(env, splited_prompt));
 	else
 		return (FAILED); 
 }
