@@ -6,12 +6,13 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 12:29:59 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/02/21 12:40:17 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/02/21 15:20:37 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_v1.h"
 
+// had function mnkoha ba9i khasha tgad
 int	ft_export(t_env **env, char **splited_prompt)
 {
 	int	i;
