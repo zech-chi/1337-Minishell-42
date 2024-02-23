@@ -6,11 +6,13 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 19:25:40 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/02/21 15:09:07 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/02/21 16:49:31 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_v1.h"
+
+int	status = 0;
 
 int	ft_execute_builtins(char **splited_prompt, t_env **env)
 {
@@ -28,6 +30,8 @@ int	ft_execute_builtins(char **splited_prompt, t_env **env)
 		return (ft_export(env, splited_prompt));
 	else if (!ft_strcmp(UNSET, splited_prompt[0]))
 		return (ft_unset(env, splited_prompt));
+	else if (!ft_strcmp("echo", splited_prompt[0]) && !ft_strcmp("$?", splited_prompt[1]))
+		return (printf("%d\n", status % 255), 0);
 	else
 		return (FAILED); 
 }
@@ -61,10 +65,10 @@ void	ft_execute(char *prompt, t_env **env)
 		execve(splited_prompt[0], splited_prompt, ft_env_create_2d(*env));
 		ft_execute_3(splited_prompt, *env);
 		perror("cookies error");
-		exit(SUCCESS);
+		exit(errno);
 	}
 	else if (pid > 0)
-		wait(NULL);
+		wait(&status);
 	else
 		perror("can't fork");
 }

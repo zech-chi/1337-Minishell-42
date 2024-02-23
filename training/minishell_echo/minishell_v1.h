@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/13 18:33:21 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/02/21 16:48:14 by zech-chi         ###   ########.fr       */
+/*   Created: 2024/02/23 16:53:17 by zech-chi          #+#    #+#             */
+/*   Updated: 2024/02/23 18:54:55 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,18 @@
 #include <readline/readline.h>
 #include <errno.h>
 
+
+
+typedef struct s_list
+{
+	void			*content;
+	struct s_list	*next;
+}	t_list;
+
+t_list	*ft_lstnew(void *content);
+void	ft_lstadd_back(t_list **lst, t_list *new);
+
+
 typedef struct s_env
 {
 	char			*key;
@@ -31,22 +43,33 @@ typedef struct s_env
 #define SUCCESS 0
 #define FAILED 1
 
-// split by
+
 #define SPACE ' '
 #define EQUAL '='
 
-// builtins
-#define ENV "env"
-#define EXIT "exit"
-#define PWD "pwd"
-#define CD "cd"
-#define EXPORT "export"
-#define UNSET "unset"
-/*
-	*functions prototypes*
-*/
+// echo.c
+int	ft_echo_execute(char *prompt, t_env *env);
 
+// strcmp
+int	ft_strcmp(char *s1, char *s2);
 
+// strjoin.c file
+char	*ft_strjoin(char *s1, char *s2);
+
+// strlen.c file
+size_t	ft_strlen(const char *s);
+
+// strdup.c file
+char	*ft_strdup(const char *s1);
+
+// split.c
+char	**ft_split(char const *s, char c);
+
+// strncmp
+int	ft_strncmp(const char *s1, const char *s2, size_t n);
+
+// strtrim
+char	*ft_strtrim(char const *s1, char const *set);
 
 // env.c file
 int		ft_env_add(t_env **env, char *key, char *value);
@@ -59,31 +82,9 @@ int		ft_env_size(t_env *env);
 int		ft_env_update(t_env **env, char *key, char *newval);
 void	ft_env_delete(t_env **env, char *key);
 
-// strcmp.c file
-int	ft_strcmp(char *s1, char *s2);
-
-// strjoin.c file
-char	*ft_strjoin(char *s1, char *s2);
-
-// strlen.c file
-size_t	ft_strlen(const char *s);
-
-// strdup.c file
-char	*ft_strdup(const char *s1);
-
-// pwd.c
-void	ft_pwd_print();
 
 
-int	ft_export(t_env **env, char **splited_prompt);
 
-int	ft_cd(char **splited_prompt, t_env **env);
-
-int ft_unset(t_env **env, char **splited_prompt);
-
-
-char	**ft_split(char const *s, char c);
-void	ft_execute(char *prompt, t_env **env);
 
 
 #endif

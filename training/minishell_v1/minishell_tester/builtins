@@ -1,3 +1,5 @@
+ls
+ls -la
 echo hello world
 echo "hello world"
 echo 'hello world'
@@ -49,4 +51,3 @@ exit "-100"
 exit -"100"
 exit hello
 exit 42 world
-
