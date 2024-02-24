@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 18:34:39 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/02/23 18:35:35 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/02/24 10:13:45 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,16 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 	while (cur_node->next)
 		cur_node = cur_node->next;
 	cur_node->next = new;
+}
+
+t_list	*ft_lstlast(t_list *lst)
+{
+	t_list	*cur_node;
+
+	cur_node = lst;
+	if (cur_node == NULL)
+		return (NULL);
+	while (cur_node->next)
+		cur_node = cur_node->next;
+	return (cur_node);
 }

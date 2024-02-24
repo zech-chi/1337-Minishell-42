@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 16:56:25 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/02/23 21:38:53 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/02/24 13:13:17 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,21 @@ t_list	*ft_echo_parse(char *prompt)
 	cur = NULL;
 	while (prompt[i])
 	{
-		if (prompt[i] == ' ' && open == 0)
+		if ((prompt[i] == ' ' || prompt[i] == '"' || prompt[i] == '\'') && open == 0)
 		{
 			if (cur)
 				ft_lstadd_back(&echo_head, ft_lstnew(cur));
 			cur = NULL;
+			if (prompt[i] == '\'')
+			{
+				cur = ft_strjoin(cur, "'");
+				open = '\'';
+			}
+			else if (prompt[i] == '"')
+			{
+				cur = ft_strjoin(cur, ft_strdup("\""));
+				open = '"';
+			}
 		}
 		else if (prompt[i] == '\'')
 		{
@@ -78,17 +88,204 @@ t_list	*ft_echo_parse(char *prompt)
 	return (echo_head);
 }
 
+int	ft_echo_check_error(t_list *echo_head)
+{
+	t_list	*last_node;
+	char	*s;
+	int		len;
+
+	last_node = ft_lstlast(echo_head);
+	s = (char *)last_node->content;
+	len = ft_strlen(s);
+	if (s[0] == '\'' && (len <= 1 || s[len - 1] != s[0]))
+		return (1);
+	if (s[0] == '"' && (len <= 1 || s[len - 1] != s[0]))
+		return (1);
+	return (0);
+}
+
+
+void	ft_single_quote(char *s)
+{
+	int	i;
+	int	len;
+
+	len = ft_strlen(s);
+	if (len == 2)
+		return ;
+	i = 1;
+	while (i < len - 1)
+		printf("%c", s[i++]);
+}
+
+int	ft_is_char_in_str(char *str, char c)
+{
+	while (*str)
+	{
+		if (*str == c)
+			return (1);
+		str++;
+	}
+	return (0);
+}
+
+void	ft_double_quote(char *s, t_env *env)
+{
+	int		i;
+	int		len;
+	char	str[2];
+	int		open;
+	char	*cur;
+	char	*env_s;
+	
+	open = 0;
+	str[1] = 0;
+	cur = NULL;
+	len = ft_strlen(s);
+	if (len == 2)
+		return ;
+	i = 1;
+	while (i < len - 1)
+	{
+		if (open)
+		{
+			if (ft_is_char_in_str(SPLITERS, s[i]))
+			{
+				env_s = ft_env_search(env, cur);
+				if (env_s)
+					printf("%s", env_s);
+				cur = NULL;
+				if (s[i] != '$')
+				{
+					printf("%c", s[i]);
+					open = 0;
+				}
+			}
+			else
+			{
+				str[0] = s[i];
+				cur = ft_strjoin(cur, ft_strdup(str));
+			}
+		}
+		else
+		{
+			if (s[i] == '$')
+				open = 1;
+			else
+				printf("%c", s[i]);
+		}
+		i++;
+	}
+	if (cur)
+	{
+		env_s = ft_env_search(env, cur);
+		if (env_s)
+		printf("%s", env_s);
+	}
+}
+
+void	ft_normal_str(char *s, t_env *env)
+{
+	int i;
+	char	str[2];
+	int		open;
+	char	*cur;
+	char	*env_s;
+
+	i = 0;
+	open = 0;
+	str[1] = 0;
+	cur = NULL;
+	while (s[i])
+	{
+		if (open)
+		{
+			if (ft_is_char_in_str(SPLITERS, s[i]))
+			{
+				env_s = ft_env_search(env, cur);
+				if (env_s)
+					printf("%s", env_s);
+				cur = NULL;
+				if (s[i] != '$')
+				{
+					printf("%c", s[i]);
+					open = 0;
+				}
+			}
+			else
+			{
+				str[0] = s[i];
+				cur = ft_strjoin(cur, ft_strdup(str));
+			}
+		}
+		else
+		{
+			if (s[i] == '$')
+				open = 1;
+			else
+				printf("%c", s[i]);
+		}
+		i++;
+	}
+	if (cur)
+	{
+		env_s = ft_env_search(env, cur);
+		if (env_s)
+		printf("%s", env_s);
+	}
+}
+
+void	ft_echo_print(t_list *head, t_env *env)
+{
+	int	withnl;
+
+	if (!(head->next))
+	{
+		printf("\n");
+		return ;
+	}
+	head = head->next;
+	withnl = 1 * (!ft_strcmp("-n", head->content));
+	if (withnl)
+		head = head->next;
+	while (head)
+	{
+		if (((char *)head->content)[0] == '\'')
+			ft_single_quote(head->content);
+		else if (((char *)head->content)[0] == '"')
+			ft_double_quote(head->content, env);
+		else 
+			ft_normal_str(head->content, env);
+		if (head->next)
+			printf(" ");
+		head = head->next;
+	}
+	if (!withnl)
+		printf("\n");
+	(void)env;
+}
+
+
 int	ft_echo_execute(char *prompt, t_env *env)
 {
 	char *new_prompt;
+	t_list	*echo_head;
 
 	printf("prompt: %s\n", prompt);
 	new_prompt = ft_strtrim(prompt, " ");
 	printf("new prompt: %s\n", new_prompt);
 	if (!ft_strncmp(new_prompt, "echo", 4))
 	{
-		ft_print_linked_list(ft_echo_parse(new_prompt));
-		printf("here\n");
+		echo_head = ft_echo_parse(new_prompt);
+		ft_print_linked_list(echo_head);
+		if (ft_echo_check_error(echo_head) == ERROR)
+			printf("error\n");
+		else
+		{
+			printf("good\n");
+			printf("-----------------------------\n");
+			ft_echo_print(echo_head, env);
+		}
 	}
 	(void)(env);
 	return (0);

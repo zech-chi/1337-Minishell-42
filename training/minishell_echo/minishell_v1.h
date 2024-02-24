@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 16:53:17 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/02/23 18:54:55 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/02/24 13:24:12 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_list
 
 t_list	*ft_lstnew(void *content);
 void	ft_lstadd_back(t_list **lst, t_list *new);
+t_list	*ft_lstlast(t_list *lst);
 
 
 typedef struct s_env
@@ -43,9 +44,11 @@ typedef struct s_env
 #define SUCCESS 0
 #define FAILED 1
 
+#define ERROR 1
 
 #define SPACE ' '
 #define EQUAL '='
+#define SPLITERS " !@#$%^&*()-_=+[]{}|;:'\",.<>?/`"
 
 // echo.c
 int	ft_echo_execute(char *prompt, t_env *env);
