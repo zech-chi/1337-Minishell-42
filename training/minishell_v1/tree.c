@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:57:50 by ymomen            #+#    #+#             */
-/*   Updated: 2024/02/23 17:27:49 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/02/26 22:27:24 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ t_tree* insertIntoBST(t_tree* root, int indx)
     }
     return (root);
 }
+
 
 
 

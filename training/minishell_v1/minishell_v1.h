@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:13:08 by ymomen            #+#    #+#             */
-/*   Updated: 2024/02/25 23:42:25 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/02/26 17:25:40 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 typedef struct s_tree
 {
 	int			indx;
+	
 	struct s_tree	*right;
 	struct s_tree	*left;
 }	t_tree;
@@ -46,6 +47,7 @@ typedef struct s_lst
 
 
 /* FUNCTIONS */
+int is_delimter(char c);
 char **lst_to_arr(t_lst *head);
 void lst_clear(t_lst *head);
 int size_lst(t_lst *head);

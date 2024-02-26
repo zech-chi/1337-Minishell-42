@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:40:33 by ymomen            #+#    #+#             */
-/*   Updated: 2024/02/26 14:42:16 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/02/26 15:52:34 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,13 @@ int	main(void)
 		node = tokens_lst(line);
 		char **arr = lst_to_arr(node);
 		int k  = 0;
+		
 		while(*arr)
 		{
 			 k = 0;
 			while (*arr[k])
 			{
-				if (!ft_isalnum(*arr[k]) && )
+		
 					
 			}
 			printf("%s\n",*arr);
