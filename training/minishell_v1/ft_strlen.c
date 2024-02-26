@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/31 16:58:33 by ymomen            #+#    #+#             */
-/*   Updated: 2024/02/22 22:00:45 by ymomen           ###   ########.fr       */
+/*   Created: 2023/10/31 14:44:51 by ymomen            #+#    #+#             */
+/*   Updated: 2024/02/24 12:53:01 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_v1.h"
 
-void	ft_bzero(void *s, size_t n)
+size_t	ft_strlen(const char *s)
 {
-	size_t	count;
-	char	*str;
+	size_t	i;
 
-	str = (char *) s;
-	count = 0;
-	while (count < n)
+	i = 0;
+	while (s[i])
 	{
-		str[count] = '\0';
-		count++;
+		i++;
 	}
+	return (i);
 }
