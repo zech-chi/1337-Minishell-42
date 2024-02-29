@@ -6,34 +6,34 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:57:50 by ymomen            #+#    #+#             */
-/*   Updated: 2024/02/26 22:27:24 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/02/28 06:22:43 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_v1.h"
 
-t_tree	*new_node(int value)
+t_tree	*new_node(char *value)
 {
 	t_tree	*node;
 	node = malloc(sizeof(t_tree));
 	if (!node)
 		return (NULL);
 
-		node->indx = value;
+		node->value = value;
 		node->right = NULL;
 		node->left = NULL;
 	return (node);
 }
-t_tree* insertIntoBST(t_tree* root, int indx) 
+t_tree* insertIntoBST(t_tree* root, char *value) 
 {
    if (!root)
-        return (new_node(indx));
+        return (new_node(value));
     else
     {
-        if (root->indx < indx)
-            root -> right = insertIntoBST(root->right, indx);
-        else if (root->indx > indx)
-           root->left = insertIntoBST(root->left, indx);
+        if (root->value < value)
+            root -> right = insertIntoBST(root->right, value);
+        else if (root->value > value)
+           root->left = insertIntoBST(root->left, value);
     }
     return (root);
 }

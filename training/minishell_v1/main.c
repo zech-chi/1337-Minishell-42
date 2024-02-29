@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:40:33 by ymomen            #+#    #+#             */
-/*   Updated: 2024/02/26 15:52:34 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/02/29 23:33:53 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void printtrree(t_tree *here)
 	if(here)
 	{
 		printtrree(here->left);
-		printf("%d\n", here->indx);
+		printf("%s\n", here->value);
 		printtrree(here->right);
 	}
 	return;
@@ -41,7 +41,7 @@ void print2DUtil(t_tree * root, int space)
 	printf("\n");
 	for (int i = COUNT; i < space; i++)
 		printf(" ");
-	printf("%d\n", root->indx);
+	printf("%s\n", root->value);
 
 	// Process left child
 	print2DUtil(root->left, space);
@@ -63,6 +63,8 @@ int	main(void)
 
 	char *line;
 	t_lst *node;
+	t_lst *postfix= NULL;
+	t_tree *tree = NULL;
 	node = NULL;
 	// char s[3];
 	// int i = 0;
@@ -72,21 +74,20 @@ int	main(void)
 	{
 		line = readline("🍪🍪🍪\033[0;32m>$ \033[0m");
 		node = tokens_lst(line);
-		char **arr = lst_to_arr(node);
-		int k  = 0;
-		
-		while(*arr)
+
+		from_infix_to_Postfix(node, &postfix);
+		while(postfix)
 		{
-			 k = 0;
-			while (*arr[k])
-			{
-		
-					
-			}
-			printf("%s\n",*arr);
-			arr++;
+			printf("%s\n", postfix->value);
+			postfix = postfix->next;
 		}
+		// tree = postfix_tree(postfix);
+		//  print2D(tree);
+		// free(postfix);
+		// postfix = NULL;
 		free(line);
+		free(tree);
+		tree = NULL;
 	}
 	
 	exit(0);

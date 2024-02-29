@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 23:32:33 by ymomen            #+#    #+#             */
-/*   Updated: 2024/02/26 00:05:30 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/02/29 23:33:23 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int is_delimter(char c)
 			if (c == '>')
 				return (REDIRECTION);
 			else if (c == '<')
-				return (LESS_THAN);
+				return (INPUT);
 			else if (c == '|')
 				return (PIPE);
 			else if (c == '&')
@@ -59,16 +59,47 @@ void is_quot_open(int *pass, char command)
 	else if (command == '"' && *pass == 2)
 		*pass = 0;
 }
+void is_parc_open(int *parc, char command, int pass)
+{
+	if (pass)
+		return ;
+	else
+	{
+		if (command == '(')
+		*parc += 1;
+	else if (command == ')' && *parc)
+		*parc -= 1;
+	else if (command == ')')
+		*parc = 451454545;
+	}
+}
+
+void trime(t_lst *head)
+{
+	if (!head)
+		return;
+
+	char *arr;
+	while(head)
+	{
+		arr = head->value;
+		head->value = ft_strtrim(arr, " ");
+		free(arr);
+		head = head->next;
+	}
+}
 
 t_lst *tokens_lst(char *command)
 {
 	int end;
 	t_lst *node = NULL;
 	int pass = 0;
+	int parc = 0;
 	int i = 0;
 	while(command[i])
 	{
 		is_quot_open(&pass ,command[i]);
+		is_parc_open(&parc, command[i], pass);
 		if (command[i] && (is_delimter(command[i]) > 0) && pass == 0)
 		{
 			if ((is_delimter(command[i + 1]) > 0)  && ((is_delimter(command[i + 1]) < 5) && (is_delimter(command[i]) < 5)))
@@ -95,7 +126,12 @@ t_lst *tokens_lst(char *command)
 		}
 		i++;
 	}
-	return (node);
+	if (parc)
+	{
+		write(2, "error!\n", 8);
+		return (NULL);
+	}
+	return (trime(node), node);
 }
 
 char check_arr(char *arr)
@@ -108,29 +144,4 @@ char check_arr(char *arr)
 		i++;
 	}
 	return(0);
-}
-
-char **lst_to_arr(t_lst *head)
-{
-	int size = size_lst(head);
-	char **arr;
-	int i = 0;
-	t_lst *node;
-
-	node = head;
-	arr= (char **) malloc(sizeof (char *) * (size + 1));
-	if (!arr)
-		return (NULL);
-	while (node && i < size)
-	{
-		arr[i] = ft_strtrim(node->value, " ");
-		 if (check_arr(arr[i]))
-			i++;
-		else
-			free(arr[i]);	
-		node = node->next;
-	}
-	arr[i] = NULL;
-	lst_clear(head);
-	return (arr);
 }

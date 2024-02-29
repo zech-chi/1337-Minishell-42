@@ -1,34 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   linked_lst.c                                       :+:      :+:    :+:   */
+/*   stack.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 17:39:11 by ymomen            #+#    #+#             */
-/*   Updated: 2024/02/29 23:30:37 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/02/28 22:37:09 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_v1.h"
 
-t_lst *lst_new(char *str)
+t_stack *stack_new(void *str)
 {
-	t_lst *node;
+	t_stack *node;
 	
 	if (!str || check_arr(str) == 0)
 		return (NULL);
-	node = (t_lst *) malloc(sizeof(t_lst));
+	node = (t_stack *) malloc(sizeof(t_stack));
 	if (!node)
 		return (NULL);
 	node->value  = str;
-	is_operateur(&node);
 	node->next = NULL;
 	return (node);
 }
-void lst_add_back(t_lst **head, t_lst *node)
+void stack_add_back(t_stack **head, t_stack *node)
 {
-	t_lst * tmp;
+	t_stack * tmp;
 	if (!head || !node)
 		return ;
 	if (!*head)
@@ -46,9 +45,9 @@ void lst_add_back(t_lst **head, t_lst *node)
 	return ;	
 	}
 }
-int size_lst(t_lst **head)
+int size_stack(t_stack **head)
 {
-	t_lst *tmp;
+	t_stack *tmp;
 	int i;
 
 	if (!head || !*head)
@@ -62,9 +61,9 @@ int size_lst(t_lst **head)
 	}
 	return (i);
 }
-void lst_clear(t_lst *head)
+void stack_clear(t_stack *head)
 {
-	t_lst *node;
+	t_stack *node;
 	if (!head)
 		return ;
 	node = head;
@@ -76,11 +75,11 @@ void lst_clear(t_lst *head)
 		node = head;
 	}
 }
-void *pop_last(t_lst **stack)
+void *pop_stack(t_stack **stack)
 {
 	void  *ptr = NULL;
-	t_lst *tmp;
-	t_lst *prv;
+	t_stack *tmp;
+	t_stack *prv;
 	if (!stack || !*stack)
 		return (NULL);
 	
@@ -105,12 +104,12 @@ void *pop_last(t_lst **stack)
 	return (ptr);
 }
 
-void	ft_lstadd_front(t_lst **lst, t_lst *new)
+void	ft_stackadd_front(t_stack **stack, t_stack *new)
 {
-	new->next = *lst;
-	*lst = new;
+	new->next = *stack;
+	*stack = new;
 }
-t_lst *lastone(t_lst *head)
+t_stack *lastonestack(t_stack *head)
 {
 	if (!head)
 		return (NULL);
