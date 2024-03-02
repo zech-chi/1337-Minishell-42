@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 16:56:25 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/02/24 13:13:17 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/02/24 15:54:06 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,16 @@ t_list	*ft_echo_parse(char *prompt)
 		if ((prompt[i] == ' ' || prompt[i] == '"' || prompt[i] == '\'') && open == 0)
 		{
 			if (cur)
-				ft_lstadd_back(&echo_head, ft_lstnew(cur));
+			{
+				if (prompt[i] == ' ')
+					ft_lstadd_back(&echo_head, ft_lstnew(ft_strjoin(cur, ft_strdup(" "))));
+				else
+					ft_lstadd_back(&echo_head, ft_lstnew(cur));
+			}
 			cur = NULL;
 			if (prompt[i] == '\'')
 			{
-				cur = ft_strjoin(cur, "'");
+				cur = ft_strjoin(cur, ft_strdup("'"));
 				open = '\'';
 			}
 			else if (prompt[i] == '"')
@@ -53,12 +58,15 @@ t_list	*ft_echo_parse(char *prompt)
 		}
 		else if (prompt[i] == '\'')
 		{
-			cur = ft_strjoin(cur, "'");
+			cur = ft_strjoin(cur, ft_strdup("'"));
 			if (open == 0)
 				open = '\'';
 			else if (open == '\'')
 			{
-				ft_lstadd_back(&echo_head, ft_lstnew(cur));
+				if (prompt[i + 1] == ' ')
+					ft_lstadd_back(&echo_head, ft_lstnew(ft_strjoin(cur, ft_strdup(" "))));
+				else
+					ft_lstadd_back(&echo_head, ft_lstnew(cur));
 				cur = NULL;
 				open = 0;
 			}
@@ -70,7 +78,10 @@ t_list	*ft_echo_parse(char *prompt)
 				open = '"';
 			else if (open == '"')
 			{
-				ft_lstadd_back(&echo_head, ft_lstnew(cur));
+				if (prompt[i + 1] == ' ')
+					ft_lstadd_back(&echo_head, ft_lstnew(ft_strjoin(cur, " ")));
+				else
+					ft_lstadd_back(&echo_head, ft_lstnew(cur));
 				cur = NULL;
 				open = 0;
 			}
@@ -238,6 +249,7 @@ void	ft_normal_str(char *s, t_env *env)
 void	ft_echo_print(t_list *head, t_env *env)
 {
 	int	withnl;
+	char *s;
 
 	if (!(head->next))
 	{
@@ -250,19 +262,19 @@ void	ft_echo_print(t_list *head, t_env *env)
 		head = head->next;
 	while (head)
 	{
-		if (((char *)head->content)[0] == '\'')
-			ft_single_quote(head->content);
-		else if (((char *)head->content)[0] == '"')
-			ft_double_quote(head->content, env);
+		s = (char *)head->content;
+		if (s[0] == '\'')
+			ft_single_quote(s);
+		else if (s[0] == '"')
+			ft_double_quote(s, env);
 		else 
-			ft_normal_str(head->content, env);
-		if (head->next)
-			printf(" ");
+			ft_normal_str(s, env);
+		//if (s[ft_strlen(s) - 1] == ' ')
+		//	printf(" ");
 		head = head->next;
 	}
 	if (!withnl)
 		printf("\n");
-	(void)env;
 }
 
 

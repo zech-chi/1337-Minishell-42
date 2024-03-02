@@ -26,9 +26,9 @@ int main()
 {
 	int	fd[2];
 	int	pid;
-	int	pid2;
-	char	*cmd1[] = {"/bin/cat", NULL};
-	char	*cmd2[] = {"/usr/bin/cat", NULL};
+
+	char	*cmd1[] = {"/bin/ls", NULL};
+	char	*cmd2[] = {"/usr/bin/grep", "a", NULL};
 
 	if (pipe(fd) == -1)
 	{
@@ -45,23 +45,11 @@ int main()
 		close(fd[1]);
 		execve(cmd1[0], cmd1, NULL);
 	} else {
-		pid2 = fork();
-		if (pid2 == -1)
-		{
-			perror("fork");
-			return (1);
-		}
-		else if (pid2 == 0){
-			close(fd[1]);
-			dup2(fd[0], 0);
-			close(fd[0]);
-			execve(cmd2[0], cmd2, NULL);
-		}
+		wait(NULL);
+		close(fd[1]);
+		dup2(fd[0], 0);
+		close(fd[0]);
+		execve(cmd2[0], cmd2, NULL);
 	}
-	close(fd[0]);
-	close(fd[1]);
-	waitpid(pid,NULL, 0);
-	waitpid(pid2,NULL, 0);
-	write(1, "d\n", 2);
 	return (0);
 }

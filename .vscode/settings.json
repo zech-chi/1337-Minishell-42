@@ -4,6 +4,7 @@
 		"readline.h": "c",
 		"param.h": "c",
 		"ios": "c",
-		"locale": "c"
+		"locale": "c",
+		"minishell_v2.h": "c"
 	}
 }
