@@ -4,11 +4,14 @@ RM = rm -f
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror
 
 READLINEFLAG = -lreadline
 
 SRCS =	main.c \
+		expanding/expand.c \
+		infix_to_postfix/infix_to_postfix.c \
+		libft_tools/linked_list.c \
 		libft_tools/strlen.c \
 		libft_tools/split.c \
 		libft_tools/strcmp.c \

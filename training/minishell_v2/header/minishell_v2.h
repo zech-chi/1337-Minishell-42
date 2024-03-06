@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 21:15:30 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/02 15:01:16 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/06 09:38:32 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,15 @@
 
 #define SUCCESS 0
 #define FAILED 1
+
+typedef struct s_list
+{
+	void			*content;
+	struct s_list	*next;
+}	t_list;
+t_list	*ft_lstnew(void *content);
+void	ft_lstadd_back(t_list **lst, t_list *new);
+t_list	*ft_lstlast(t_list *lst);
 
 /* tree stafff */
 typedef struct s_node {
@@ -81,4 +90,15 @@ void	ft_env_print(t_env *env);
 void	ft_env_clear(t_env **env);
 int		ft_env_size(t_env *env);
 char	**ft_env_create_2d(t_env *env);
+
+
+// infix_to_postfix
+void	ft_print_prompt_splited(char **prompt_splited);
+void	ft_parse(char *prompt);
+
+
+// expand.c
+char	*ft_char_to_str(char c);
+char	**ft_expand(char *prompt);
+
 #endif
