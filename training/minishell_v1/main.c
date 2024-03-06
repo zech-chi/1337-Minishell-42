@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:40:33 by ymomen            #+#    #+#             */
-/*   Updated: 2024/02/29 23:33:53 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/03/02 17:05:57 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,36 +59,21 @@ int	ft_isalnum(int c)
 }
 int	main(void)
 {
-
-
 	char *line;
 	t_lst *node;
-	t_lst *postfix= NULL;
-	t_tree *tree = NULL;
 	node = NULL;
-	// char s[3];
-	// int i = 0;
-	atexit(ff);
-	
+	// atexit(ff);
 	while (1)
 	{
 		line = readline("🍪🍪🍪\033[0;32m>$ \033[0m");
 		node = tokens_lst(line);
-
-		from_infix_to_Postfix(node, &postfix);
-		while(postfix)
+	while(node)
 		{
-			printf("%s\n", postfix->value);
-			postfix = postfix->next;
+			printf("%s\n", node->value);
+			node = node->next;
 		}
-		// tree = postfix_tree(postfix);
-		//  print2D(tree);
-		// free(postfix);
-		// postfix = NULL;
-		free(line);
-		free(tree);
-		tree = NULL;
+	free(node);
+	node = NULL;
 	}
-	
 	exit(0);
 }

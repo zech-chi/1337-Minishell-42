@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 21:51:50 by ymomen            #+#    #+#             */
-/*   Updated: 2024/02/29 22:54:26 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/03/02 18:19:22 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,3 +127,104 @@ void	ft_lstadd_front(t_lst **lst, t_lst *new)
 // char	*ft_strtok(char *str);
 // t_tree	*creat_tree(char *str);
 // void	ft_bzero(void *s, size_t n);
+
+
+
+void hpl(t_lst **postfix, t_lst *head, t_lst *stack)
+{
+
+	t_lst *prev = NULL;
+	t_lst *pop = NULL;
+	prev = lastone(stack);
+	if (prev && prev->prio == head->prio)
+	{
+		while (prev && ( head->read != prev->read))
+		{
+			pop = lst_new((void *) pop_last(&stack));
+			if (pop->type != OPEN_PARENTH && pop->type != CLOSE_PARENTH)
+				lst_add_back(postfix, pop);
+			prev = lastone(stack);
+		}
+		lst_add_back(&stack, lst_new(head->value));
+	}
+	else if (prev && prev->prio > head->prio)
+	{
+		while(prev && prev->prio > head->prio)
+		{
+			pop = lst_new((void *) pop_last(&stack));
+			if (pop->type != OPEN_PARENTH && pop->type != CLOSE_PARENTH)
+				lst_add_back(postfix, pop);
+			prev = lastone(stack);
+		}
+		lst_add_back(&stack, lst_new(head->value));
+	}
+	else if ( prev && prev->prio < head->prio)
+		lst_add_back(&stack, lst_new(head->value));
+}
+void from_infix_to_Postfix(t_lst *head, t_lst **postfix)
+{												
+	t_lst *stack = NULL;
+	int parc = 0;
+	t_lst *pop = NULL;
+	
+	while(head)
+	{
+		is_parc_open(&parc, head->value[0], 0);
+		if(head->prio == -1)
+			lst_add_back(postfix, lst_new(head->value));
+		else if (!stack || parc)
+				lst_add_back(&stack, lst_new(head->value));
+		else if (head->type == CLOSE_PARENTH)
+		{
+			while(lastone(stack)->type != OPEN_PARENTH)
+			{
+				pop = lst_new((void *) pop_last(&stack));
+				if (pop->type != OPEN_PARENTH && pop->type != CLOSE_PARENTH)
+					lst_add_back(postfix, pop);
+			}
+			pop = lst_new((void *) pop_last(&stack));
+		}
+		else
+			hpl(postfix,head, stack);
+		head = head->next;
+	}
+	while(size_lst(&stack) > 0)	
+		{
+			pop = lst_new((void *) pop_last(&stack));
+			if (pop->type != OPEN_PARENTH && pop->type != CLOSE_PARENTH)
+				lst_add_back(postfix, pop);
+		}
+}
+
+t_tree *postfix_tree(t_lst *postfix)
+{
+	t_stack *stack = NULL;
+	t_tree *tree = NULL;
+	while(postfix)
+	{
+		if (postfix->prio == -1)
+		{
+			tree = new_node(postfix->value);
+			stack_add_back(&stack, stack_new(tree));
+		}
+		else
+		{
+			tree = new_node(postfix->value);
+			tree->right = (t_tree *)(pop_stack(&stack));
+			tree->left= (t_tree *)(pop_stack(&stack));
+			stack_add_back(&stack, stack_new(tree));
+		}
+		postfix = postfix->next;
+	}
+	tree = pop_stack(&stack);
+	return (tree);
+}
+
+	/*stack*/
+t_stack *lastonstack(t_stack *head);
+void	ft_stackadd_front(t_stack **stack, t_stack *new);
+void *pop_stack(t_stack **stack);
+void stack_clear(t_stack *head);
+int size_stack(t_stack **head);
+void stack_add_back(t_stack **head, t_stack *node);
+t_stack *stack_new(void *str);

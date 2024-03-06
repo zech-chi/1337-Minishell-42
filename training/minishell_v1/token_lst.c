@@ -6,142 +6,100 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 23:32:33 by ymomen            #+#    #+#             */
-/*   Updated: 2024/02/29 23:33:23 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/03/02 18:30:15 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_v1.h"
 
-int is_delimter(char c)
+void	is_quot_parc_open(t_parse *par_line, char command)
 {
-	if (c == '|' || c == '&'|| c == '>' || c == '<' || c == '(' || c == ')')
-		{
-			if (c == '>')
-				return (REDIRECTION);
-			else if (c == '<')
-				return (INPUT);
-			else if (c == '|')
-				return (PIPE);
-			else if (c == '&')
-				return (SINGL_AND);
-			else if (c == '(')
-				return (OPEN_PARENTH);
-			else if (c == ')')
-				return (CLOSE_PARENTH);
-		}
-		return (0); 
-}
-char	*ft_monstrdup(const char *s1, size_t size)
-{
-	char		*dup;
-	size_t		i;
-
-	i = 0;
-	dup = (char *) malloc(size + 1 * sizeof(char));
-	if (!dup)
-		return (NULL);
-	while (i < size)
-	{
-		dup[i] = s1[i];
-		i++;
-	}
-	dup[i] = '\0';
-	return (dup);
-}
-void is_quot_open(int *pass, char command)
-{
-	if (command == '\'' && *pass == 0)
-		*pass = 1;
-	else if (command == '\'' && *pass == 1)
-		*pass = 0;
-	else if (command == '"' && *pass == 0)
-		*pass = 2;
-	else if (command == '"' && *pass == 2)
-		*pass = 0;
-}
-void is_parc_open(int *parc, char command, int pass)
-{
-	if (pass)
+	if (command == '\'' && par_line->quot == 0)
+		par_line->quot = 1;
+	else if (command == '\'' && par_line->quot == 1)
+		par_line->quot = 0;
+	else if (command == '"' && par_line->quot == 0)
+		par_line->quot = 2;
+	else if (command == '"' && par_line->quot == 2)
+		par_line->quot = 0;
+	if (par_line->quot)
 		return ;
 	else
 	{
 		if (command == '(')
-		*parc += 1;
-	else if (command == ')' && *parc)
-		*parc -= 1;
-	else if (command == ')')
-		*parc = 451454545;
+			par_line->prac += 1;
+		else if (command == ')' && par_line->prac)
+			par_line->prac -= 1;
+		else if (command == ')' && !par_line->prac)
+			par_line->prac = 451454545;
 	}
 }
 
-void trime(t_lst *head)
+void	tokens_contu(t_lst **node, char *command, int *i, t_parse *par_line)
 {
-	if (!head)
-		return;
+	int		end;
+	t_lst	*prev;
 
-	char *arr;
-	while(head)
+	prev = lastone(*node);
+	if (prev && command[*i] && (prev->type == 1 || prev->type == 2
+			|| prev->type == 9 || prev->type == 10))
 	{
-		arr = head->value;
-		head->value = ft_strtrim(arr, " ");
-		free(arr);
-		head = head->next;
+		end = *i;
+		while (command[end] && (par_line->quot || (command[end] != ' '
+					&& !is_delimter(command[end]))))
+			is_quot_parc_open(par_line, command[++end]);
+	}
+	else
+	{
+		end = *i;
+		while (command[end] && (par_line->quot || !is_delimter(command[end])))
+			is_quot_parc_open(par_line, command[++end]);
+	}
+	if (end != *i)
+	{
+		lst_add_back(node, lst_new(ft_monstrdup(&command[*i], end - *i)));
+		*i = end -1;
+		init_type(prev, lastone(*node));
 	}
 }
 
-t_lst *tokens_lst(char *command)
+t_lst	*check_parss_erres(t_parse parc_line, t_lst **node)
 {
-	int end;
-	t_lst *node = NULL;
-	int pass = 0;
-	int parc = 0;
-	int i = 0;
-	while(command[i])
+	if (parc_line.prac)
 	{
-		is_quot_open(&pass ,command[i]);
-		is_parc_open(&parc, command[i], pass);
-		if (command[i] && (is_delimter(command[i]) > 0) && pass == 0)
-		{
-			if ((is_delimter(command[i + 1]) > 0)  && ((is_delimter(command[i + 1]) < 5) && (is_delimter(command[i]) < 5)))
-			{
-				lst_add_back(&node, lst_new(ft_monstrdup(&command[i], 2)));
-				i++;
-			}
-			else
-				lst_add_back(&node, lst_new(ft_monstrdup(&command[i], 1)));
-		}
-		else
-		{
-			end = i;
-			while(command[end] && (pass || !is_delimter(command[end])))
-			{
-				end++;
-				is_quot_open(&pass ,command[end]);
-			}
-			if (end != i)
-			{
-				lst_add_back(&node, lst_new(ft_monstrdup(&command[i], end - i)));
-				i = end -1;
-			}
-		}
-		i++;
-	}
-	if (parc)
-	{
-		write(2, "error!\n", 8);
+		write(2, "parse errer!\n", 14);
+		lst_clear(*node);
 		return (NULL);
 	}
-	return (trime(node), node);
+	else
+		trime(*node);
+	return (*node);
 }
 
-char check_arr(char *arr)
+t_lst	*tokens_lst(char *cmd)
 {
-	int i = 0;
-	while (arr[i])
+	t_lst	*node;
+	t_parse	par_line;
+	int		i;
+
+	i = 0;
+	par_line.prac = 0;
+	par_line.quot = 0;
+	node = NULL;
+	while (cmd[i])
 	{
-		if (arr[i] != ' ')
-			return (1);
+		is_quot_parc_open(&par_line, cmd[i]);
+		if (cmd[i] && (is_delimter(cmd[i]) > 0) && par_line.quot == 0)
+		{
+			if (((is_delimter(cmd[i + 1]) < 5) && (is_delimter(cmd[i]) < 5))
+				&& cmd[i] == cmd[i + 1])
+				lst_add_back(&node, lst_new(ft_monstrdup(&cmd[i++], 2)));
+			else
+				lst_add_back(&node, lst_new(ft_monstrdup(&cmd[i], 1)));
+		}
+		else
+			tokens_contu(&node, cmd, &i, &par_line);
 		i++;
 	}
-	return(0);
+	return (check_parss_erres(par_line, &node));
 }
