@@ -6,74 +6,73 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:40:33 by ymomen            #+#    #+#             */
-/*   Updated: 2024/03/02 17:05:57 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/03/07 00:38:56 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_v1.h"
-#define COUNT 10
-void ff()
-{system("leaks a.out");}
-void printtrree(t_tree *here)
-{
-	if(here)
-	{
-		printtrree(here->left);
-		printf("%s\n", here->value);
-		printtrree(here->right);
-	}
-	return;
-}
-void print2DUtil(t_tree * root, int space)
-{
-	// Base case
-	if (root == NULL)
-		return;
 
-	// Increase distance between levels
-	space += COUNT;
-
-	// Process right child first
-	print2DUtil(root->right, space);
-
-	// Print current node after space
-	// count
-	printf("\n");
-	for (int i = COUNT; i < space; i++)
-		printf(" ");
-	printf("%s\n", root->value);
-
-	// Process left child
-	print2DUtil(root->left, space);
+int get_height(t_tree *root) {
+    if (root == NULL) {
+        return 0;
+    }
+    int left_height = get_height(root->left);
+    int right_height = get_height(root->right);
+    return 1 + (left_height > right_height ? left_height : right_height);
 }
-void print2D(t_tree * root)
-{
-	// Pass initial space count as 0
-	print2DUtil(root, 0);
+
+// Function to print spaces for formatting
+void print_spaces(int n) {
+    for (int i = 0; i < n; i++) {
+        printf(" ");
+    }
 }
-int	ft_isalnum(int c)
-{
-	if ((c >= 48 && c <= 57) || (c >= 65 && c <= 90) || (c >= 97 && c <= 122))
-		return (1);
-	return (0);
+
+// Recursive function to print the tree in 2D
+void print_tree_2d_util(t_tree *root, int level, int space) {
+    if (root == NULL) {
+        return;
+    }
+
+    // Increase space for next level
+    space += level;
+
+    // Process right child first for right-angled tree (in-order traversal)
+    print_tree_2d_util(root->right, level, space);
+
+    // Print current node after padding
+    print_spaces(space);
+    printf("%s\n", root->value);
+
+    // Process left child
+    print_tree_2d_util(root->left, level, space);
 }
+
+// Function to print the tree in 2D
+void print_tree_2d(t_tree *root) {
+    int height = get_height(root);
+    print_tree_2d_util(root, height, 0);
+}
+
 int	main(void)
 {
 	char *line;
 	t_lst *node;
+	t_lst *post = NULL;
+	t_tree *tree;
 	node = NULL;
 	// atexit(ff);
 	while (1)
 	{
 		line = readline("🍪🍪🍪\033[0;32m>$ \033[0m");
 		node = tokens_lst(line);
-	while(node)
-		{
-			printf("%s\n", node->value);
-			node = node->next;
-		}
+		post = from_infix_to_Postfix(node);
+		tree = postfix_tree(post);
+		print_tree_2d(tree);
+	free(tree);
+	free(post);
 	free(node);
-	node = NULL;
+	post = NULL;
 	}
 	exit(0);
 }

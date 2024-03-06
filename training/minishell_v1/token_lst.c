@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 23:32:33 by ymomen            #+#    #+#             */
-/*   Updated: 2024/03/02 18:30:15 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/03/07 00:51:58 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	is_quot_parc_open(t_parse *par_line, char command)
 	{
 		if (command == '(')
 			par_line->prac += 1;
-		else if (command == ')' && par_line->prac)
+		else if (command == ')' && (par_line->prac > 0))
 			par_line->prac -= 1;
 		else if (command == ')' && !par_line->prac)
 			par_line->prac = 451454545;

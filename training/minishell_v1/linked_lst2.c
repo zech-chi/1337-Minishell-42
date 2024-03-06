@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 22:27:36 by ymomen            #+#    #+#             */
-/*   Updated: 2024/03/02 17:40:52 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/03/07 00:32:50 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,11 @@ void	init_type(t_lst *prev, t_lst *node)
 		else if (prev->type == HERE_DOC)
 			node->type = LIMITER;
 		else
-			node->type = 0;
+			 if (node->type == 0)
+			 {
+                node->type = OPERAND;
+                node->prio = 0;
+                node->read = R_TO_L; 
+			 }
 	}
 }

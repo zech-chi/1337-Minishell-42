@@ -6,13 +6,13 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 17:39:11 by ymomen            #+#    #+#             */
-/*   Updated: 2024/03/02 17:37:24 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/03/07 00:32:53 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_v1.h"
 
-t_lst	*lst_new(char *str)
+t_lst	*lst_new(void *str)
 {
 	t_lst	*node;
 
@@ -83,30 +83,45 @@ void	lst_clear(t_lst *head)
 	}
 }
 
-void	*pop_last(t_lst **stack)
+void *pop_last(t_lst **stack)
 {
-	void	*ptr;
-	t_lst	*tmp;
-	t_lst	*prv;
-
+	void  *ptr = NULL;
+	t_lst *tmp;
+	t_lst *prv;
 	if (!stack || !*stack)
 		return (NULL);
+	
 	tmp = *stack;
 	if (!(*stack)->next)
 	{
 		ptr = (*stack)->value;
 		free(*stack);
-		return (ptr);
+		*stack= NULL; 
+		return(ptr);
 	}
-	while ((*stack)->next)
+	while((*stack)->next)
 	{
 		prv = *stack;
 		*stack = (*stack)->next;
 	}
 	ptr = (*stack)->value;
-	free(*stack);
-	*stack = NULL;
-	prv->next = NULL;
+		free(*stack);
+		*stack= NULL;
+		prv->next = NULL;
 	*stack = tmp;
 	return (ptr);
+}
+void	lst_push(t_lst **lst, t_lst *new)
+{
+	new->next = *lst;
+	*lst = new;
+}
+
+t_lst *lst_pop(t_lst **lst)
+{
+	t_lst	*top;
+
+	top = *lst;
+	*lst = (*lst)->next;
+	return (*lst);
 }

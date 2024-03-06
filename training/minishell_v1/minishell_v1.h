@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:13:08 by ymomen            #+#    #+#             */
-/*   Updated: 2024/03/03 15:48:29 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/03/07 00:35:30 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,16 @@ enum e_peroirty { open_par = 6 , close_par = 6, and = 5, or = 5, pip = 3, redir 
 # define HERE_DOC 10
 # define CLOSE_PARENTH 11
 # define OPEN_PARENTH 12
-# define OUTFILE 20
-# define INFILE 21
-# define LIMITER 22
-# define OUTFILE_APPAND 23
-# define COMMAND 0
+# define OUTFILE -2
+# define INFILE -3
+# define LIMITER -4
+# define OUTFILE_APPAND -5
 
 # define L_TO_R 3
 # define R_TO_L 2
 # define L_R_R_L 1
+
+#define OPERAND 0;
 typedef struct s_tree
 {
 	char			*value;
@@ -64,14 +65,15 @@ typedef struct s_parse
 
 void print2D(t_tree * root);
 
+t_lst *from_infix_to_Postfix(t_lst *head);
 /* FUNCTIONS */
+void	is_quot_parc_open(t_parse *par_line, char command);
 int	ft_strcmp(char *s1, char *s2);
 void	trime(t_lst *head);
 void	init_type(t_lst *prev, t_lst *node);
 char	*ft_monstrdup(const char *s1, size_t size);
 void is_operateur(t_lst **node);
 int check_arr(char *arr);
-void from_infix_to_Postfix(t_lst *head, t_lst **postfix);
 int is_delimter(char c);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 size_t	ft_strlen(const char *s);
@@ -86,10 +88,12 @@ t_tree	*insertIntoBST(t_tree* root, char *value);
 
 
 /* lst*/
+t_lst *lst_pop(t_lst **lst);
+void	lst_push(t_lst **lst, t_lst *new);
 void lst_clear(t_lst *head);
 t_lst *lastone(t_lst *head);
 void lst_add_back(t_lst **head, t_lst *node);
-t_lst *lst_new(char *str);
+t_lst *lst_new(void *str);
 t_lst *tokens_lst(char *command);
 void *pop_last(t_lst **stack);
 int size_lst(t_lst **head);
