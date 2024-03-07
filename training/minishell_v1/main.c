@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:40:33 by ymomen            #+#    #+#             */
-/*   Updated: 2024/03/07 21:42:57 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/03/07 23:47:31 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,33 @@ void print_tree_2d(t_tree *root) {
     print_tree_2d_util(root, height, 0);
 }
 
+
+void    ft_inorder_traversal(t_tree *root)
+{
+    if (root)
+    {
+        ft_inorder_traversal(root->left);
+        // if (root->type == OPERAND)
+        //     printf("CMD");
+        // else if (root->type == PIPE)
+        //     printf("PIPE");
+        // else if (root->type == AND)
+        //     printf("AND");
+        // else if (root->type == OR)
+        //     printf("OR");
+        // else if (root->type == REDIRECT_OUTPUT)
+        //     printf("REDIRECT_OUTPUT");
+        // else if (root->type == REDIRECT_OUTPUT_APPEND)
+        //     printf("REDIRECT_OUTPUT_APPEND");
+        // else if (root->type == REDIRECT_INPUT)
+        //     printf("REDIRECT_INPUT");
+        // else if (root->type == HEREDOC)
+        //     printf("HEREDOC");
+        printf("-->%s\n", root->value);
+        ft_inorder_traversal(root->right);
+    }
+}
+
 int	main(void)
 {
 	char *line;
@@ -66,7 +93,8 @@ int	main(void)
 	// atexit(ff);
 	while (1)
 	{
-		line = readline("🍪🍪🍪\033[0;32m>$ \033[0m");
+		line = readline("🍪\033[0;32m>$ \033[0m");
+		add_history(line);
 		node = tokens_lst(line);
 		post = from_infix_to_Postfix(node);
 		tree = postfix_tree(post);
@@ -76,7 +104,7 @@ int	main(void)
 	// 	printf("%s\n", post->value);
 	// 	post = post->next;
 	// }
-	free(post);
+	// free(post);
 	free(node);
 	post = NULL;
 	free(tree);

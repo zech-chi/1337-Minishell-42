@@ -20,7 +20,8 @@
 		"type_traits": "c",
 		"vector": "c",
 		"atomic": "c",
-		"locale": "c"
+		"locale": "c",
+		"ios": "c"
 	},
 	"functionHeaderExtension.headerFilePath": "/Users/ymomen/Desktop/1337-Minishell-42/training/minishell_v1/minishell_v1.h"
 }

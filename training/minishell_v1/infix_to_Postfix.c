@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:34:06 by ymomen            #+#    #+#             */
-/*   Updated: 2024/03/07 17:40:09 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/03/08 00:01:32 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,12 @@ t_lst *from_infix_to_Postfix(t_lst *head) {
 t_tree *postfix_tree(t_lst *postfix)
 {
 	t_lst *stack = NULL;
-	t_tree *tree = NULL;
+	t_tree *tree;
+    t_lst *tmp;
 	while(postfix)
 	{
-		if (postfix->prio == -1)
+        tree = NULL;
+		if (postfix->type == 0)
 		{
 			tree = new_node(postfix->value);
 			lst_add_back(&stack, lst_new(tree));
@@ -68,8 +70,11 @@ t_tree *postfix_tree(t_lst *postfix)
 			tree->right = (t_tree *)(pop_last(&stack));
 			tree->left= (t_tree *)(pop_last(&stack));
 			lst_add_back(&stack, lst_new(tree));
+        
 		}
+        tmp = postfix;
 		postfix = postfix->next;
+        free(tmp);
 	}
 	tree = pop_last(&stack);
 	return (tree);
