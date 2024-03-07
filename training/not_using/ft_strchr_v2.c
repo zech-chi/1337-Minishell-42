@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 21:51:50 by ymomen            #+#    #+#             */
-/*   Updated: 2024/03/02 18:19:22 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/03/07 00:34:36 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,3 +228,81 @@ void stack_clear(t_stack *head);
 int size_stack(t_stack **head);
 void stack_add_back(t_stack **head, t_stack *node);
 t_stack *stack_new(void *str);
+
+
+
+
+
+
+
+
+
+// void hpl(t_lst **postfix, t_lst *head, t_lst *stack)
+// {
+
+// 	t_lst *prev = NULL;
+// 	t_lst *pop = NULL;
+// 	prev = lastone(stack);
+// 			// if (prev && prev->prio == head->prio)
+// 			// {
+// 			// 	while (prev && (head->prio == prev->prio))
+// 			// 	{
+// 			// 		pop = lst_new((void *) pop_last(&stack));
+// 			// 		if (pop->type != OPEN_PARENTH && pop->type != CLOSE_PARENTH)
+// 			// 			lst_add_back(postfix, pop);
+// 			// 		prev = lastone(stack);
+// 			// 	}
+// 			// 		lst_add_back(&stack, lst_new(head->value));
+// 			// }
+// 			if (head->type > 0)
+// 			{
+// 				while (stack && prev->type != OPEN_PARENTH &&
+//                        (prev->prio >= head->prio ||
+//                         (prev->prio == head->prio && prev->read == R_TO_L)))
+// 				{
+// 					pop = lst_new((void *) pop_last(&stack));
+// 					if (pop->type != OPEN_PARENTH && pop->type != CLOSE_PARENTH)
+// 						lst_add_back(postfix, pop);
+// 					prev = lastone(stack);
+// 				}
+// 				lst_add_back(&stack, lst_new(head->value));
+// 			}
+// }
+// t_lst *from_infix_to_Postfix(t_lst *head)
+// {												
+// 	t_lst *stack = NULL;
+// 	t_lst *postfix = NULL;
+// 	 t_parse prac;
+// 	prac.prac = 0;
+// 	prac.prac = 0;
+// 	t_lst *pop = NULL;
+	
+// 	while(head)
+// 	{
+// 		is_quot_parc_open(&prac, head->value[0]);
+// 		if(head->type == 0)
+// 			lst_add_back(&postfix, lst_new(head->value));
+// 		else if (!stack || prac.prac)
+// 				lst_add_back(&stack, lst_new(head->value));
+// 		else if (head->type == CLOSE_PARENTH)
+// 		{
+// 			while(lastone(stack)->type != OPEN_PARENTH)
+// 			{
+// 				pop = lst_new((void *) pop_last(&stack));
+// 				if (pop->type != OPEN_PARENTH && pop->type != CLOSE_PARENTH)
+// 					lst_add_back(&postfix, pop);
+// 			}
+// 			pop_last(&stack);
+// 		}
+// 		else
+// 			hpl(&postfix,head, stack);
+// 		head = head->next;
+// 	}
+// 	while(stack)	
+// 		{
+// 			pop = lst_new((void *) pop_last(&stack));
+// 			if (pop->type != OPEN_PARENTH && pop->type != CLOSE_PARENTH)
+// 				lst_add_back(&postfix, pop);
+// 		}
+// 		return (postfix);
+// }
