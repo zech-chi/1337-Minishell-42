@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:13:08 by ymomen            #+#    #+#             */
-/*   Updated: 2024/03/07 00:35:30 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/03/07 18:42:36 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void print2D(t_tree * root);
 
 t_lst *from_infix_to_Postfix(t_lst *head);
 /* FUNCTIONS */
-void	is_quot_parc_open(t_parse *par_line, char command);
+void	is_quot_parc_open(t_parse *par_line, char command, int qorp);
 int	ft_strcmp(char *s1, char *s2);
 void	trime(t_lst *head);
 void	init_type(t_lst *prev, t_lst *node);

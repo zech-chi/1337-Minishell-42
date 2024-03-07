@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:34:06 by ymomen            #+#    #+#             */
-/*   Updated: 2024/03/07 00:42:28 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/03/07 17:40:09 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 t_lst *from_infix_to_Postfix(t_lst *head) {
     t_lst *postfix = NULL; 
-    t_lst *stack = NULL;          
+    t_lst *stack = NULL; 
+	t_lst *pop = NULL;         
 
     while (head) {
           
@@ -25,17 +26,16 @@ t_lst *from_infix_to_Postfix(t_lst *head) {
              else if (head->type == CLOSE_PARENTH)
 			 {
                 while (stack && lastone(stack)->type != OPEN_PARENTH) {
-                    t_lst *pop = lst_new((void *)pop_last(&stack));
+                    pop = lst_new((void *)pop_last(&stack));
                     lst_add_back(&postfix, pop);
                 }
                 pop_last(&stack);
 			 }
             else if (head->type > 0)
 			{
-                while (stack && lastone(stack)->type != OPEN_PARENTH &&
-                       (lastone(stack)->prio <= head->prio ||
+                while (stack && lastone(stack)->type != OPEN_PARENTH && (lastone(stack)->prio <= head->prio ||
                         (lastone(stack)->prio == head->prio && lastone(stack)->read == R_TO_L))) {
-                    t_lst *pop = lst_new((void *)pop_last(&stack));
+                    pop = lst_new((void *)pop_last(&stack));
                     lst_add_back(&postfix, pop);
                 }
                 lst_add_back(&stack, lst_new(head->value));
@@ -43,7 +43,7 @@ t_lst *from_infix_to_Postfix(t_lst *head) {
         head = head->next;
     }
     while (stack) {
-        t_lst *pop = lst_new((void *)pop_last(&stack));
+        pop = lst_new((void *)pop_last(&stack));
         lst_add_back(&postfix, pop);
     }
 
