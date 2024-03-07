@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 22:09:34 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/06 11:23:24 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/07 17:25:45 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,10 @@ t_node	*ft_build_tree(void)
 	t_node	*root;
 
 	root = NULL;
+	//root = ft_insert_node(root, ft_strdup("||"), 4, OR);
 	root = ft_insert_node(root, ft_strdup("|"), 2, PIPE);
-	root = ft_insert_node(root, ft_strdup("echo a"), 1, CMD);
-	//root = ft_insert_node(root, ft_strdup("|"), 4, PIPE);
-	root = ft_insert_node(root, ft_strdup("echo a"), 3, CMD);
-	//root = ft_insert_node(root, ft_strdup("wc -l"), 5, CMD);
+	root = ft_insert_node(root, ft_strdup("cat"), 1, CMD);
+	root = ft_insert_node(root, ft_strdup("ls"), 3, CMD);
+	//root = ft_insert_node(root, ft_strdup("ls"), 5, CMD);
 	return (root);
 }

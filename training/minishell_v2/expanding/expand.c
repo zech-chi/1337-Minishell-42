@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 09:36:52 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/06 09:57:30 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/07 22:21:04 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,31 +45,22 @@ void	ft_print_lst(t_list *node)
 	}
 }
 
-char	**ft_expand(char *prompt)
+char **ft_expand(char *prompt, t_env *env)
 {
-	t_list	*expanded_prompt;	// store expanded prompt
-	int		open;	//store " or ' or space 
-	int		i;	// index in prompt
-	char	*cur;	// store small part part of prompt
-	char	*env_var;	// store if found $ to look in env after
-	int		op;
+	t_list	*head = NULL;
+	int open = 0; // " or ' or 0
+	char	*buff = NULL;
+	int	i = 0;
+	char	*buff2 = NULL;
 
-	if (!prompt)
-		return (0);
-	open = 0;
-	i = -1;
-	cur = NULL;
-	expanded_prompt = NULL;
-	env_var = NULL;
-	op = 0;
-	while (prompt[++i])
+	while (prompt[i])
 	{
 		if (prompt[i] == ' ' && open == 0)
 		{
-			if (cur)
+			if (buff)
 			{
-				ft_lstadd_back(&expanded_prompt, ft_lstnew(cur));
-				cur = NULL; // I must call free
+				ft_lstadd_back(&head, ft_lstnew(buff));
+				buff = NULL; // free
 			}
 		}
 		else if (prompt[i] == '"' || prompt[i] == '\'')
@@ -79,18 +70,46 @@ char	**ft_expand(char *prompt)
 			else if (open == prompt[i])
 				open = 0;
 			else
-				cur = ft_strjoin(cur, ft_char_to_str(prompt[i]));
+				buff = ft_strjoin(buff, ft_char_to_str(prompt[i]));
 		}
 		else if (prompt[i] == '$' && open != '\'')
 		{
-			env_var = ft_strjoin(env_var, ft_char_to_str(prompt[i]));
-			op = 1;
+			while (prompt[i] && prompt[i] == '$')
+			{
+				buff2 = ft_char_to_str(prompt[i]);
+				i++;
+				while (prompt[i] && !ft_is_char_in_str(prompt[i], "$ +=?#@*\"'"))
+				{
+					buff2 = ft_strjoin(buff2, ft_char_to_str(prompt[i]));
+					i++;
+				}
+				buff = ft_strjoin(buff, ft_env_search(env, buff2 + 1));
+				if (prompt[i] == '"' || prompt[i] == '\'')
+				{
+					if (open == 0)
+						open = prompt[i];
+					else if (open == prompt[i])
+						open = 0;
+					else
+						buff = ft_strjoin(buff, ft_char_to_str(prompt[i]));
+				}
+				else if (prompt[i] && prompt[i] != '$' && prompt[i] != ' ')
+					buff = ft_strjoin(buff, ft_char_to_str(prompt[i]));
+				buff2 = NULL;
+			}
 		}
 		else
-			cur = ft_strjoin(cur, ft_char_to_str(prompt[i]));
+			buff = ft_strjoin(buff, ft_char_to_str(prompt[i]));
+
+		if (!prompt[i])
+			break;
+		i++;
 	}
-	if (cur)
-		ft_lstadd_back(&expanded_prompt, ft_lstnew(cur));
-	ft_print_lst(expanded_prompt);
+	if (buff)
+	{
+		ft_lstadd_back(&head, ft_lstnew(buff));
+		buff = NULL; // free
+	}
+	ft_print_lst(head);
 	return (NULL);
 }

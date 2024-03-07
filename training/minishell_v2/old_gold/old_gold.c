@@ -631,3 +631,262 @@
 //	//else
 //	//	ft_cmd_execute(root->data, env, exit_status);
 //}
+
+//void	ft_cmd_execute(char *cmd, t_env **env, int *exit_status, int std)
+//{
+//	char	**cmd_2d;
+//	pid_t	pid;
+//	int		fd[2];
+
+//	cmd_2d = ft_split(cmd, SPACE);
+//	pipe(fd);
+//	if (!cmd_2d)
+//		exit(FAILED);
+//	pid = fork();
+//	if (pid < 0)
+//	{
+//		perror("Fork Error");
+//		exit(FAILED);
+//	}
+//	else if (pid == 0)
+//	{
+//		close(fd[0]);
+//		if(std)
+//			dup2(fd[1], STDOUT_FILENO);
+//		close(fd[1]);
+//		execve(cmd_2d[0], cmd_2d, ft_env_create_2d(*env));
+//		ft_execute_search_in_path(cmd_2d, *env);
+//		perror("Execution Error");
+//		exit(FAILED);
+//	}
+//	dup2 (fd[0], 0);
+//	close (fd[1]);
+//	close(fd[0]);
+//	wait(exit_status);
+//}
+
+//void	ft_execute_pipe(t_node *root, t_env **env, int *exit_status)
+//{
+
+//	if (root && root->type == PIPE)
+//	{
+//		ft_cmd_execute(root->left->data, env, exit_status, 1);
+//		//save = root->left;
+//		if (root->right->type == PIPE)
+//			ft_execute_pipe(root->right, env, exit_status);
+//		else
+//		{
+//			ft_cmd_execute(root->right->data, env, exit_status, 0);
+//		}
+//	}
+//	else
+//	{
+//		ft_cmd_execute(root->data, env, exit_status , 0);
+//	}
+//}
+
+
+//void	ft_execute(t_node *root, t_env **env, int *exit_status)
+//{
+//	//pid_t	pid;
+//	//static int	i;
+//	////static int	j;
+//	//int			fd;
+
+//	if (!root)
+//		return ;
+//	else if (root->type == PIPE)
+//	{
+//		ft_execute_pipe(root, env, exit_status);
+//	}
+//	//else if (root->type == REDIRECT_OUTPUT || root->type == REDIRECT_OUTPUT_APPEND)
+//	//{
+//	//	if (fork() == 0)
+//	//	{
+//	//		fd = ft_open_file(root->right->data, root->type);
+//	//		if (i == 0)
+//	//		{
+//	//			dup2(fd, STDOUT_FILENO);
+//	//			i++;
+//	//		}
+//	//		close(fd);
+//	//		if (root->left)
+//	//			ft_execute(root->left, env, exit_status);
+//	//		exit(*exit_status);
+//	//	}
+//	//	else 
+//	//		wait(exit_status);
+//	//}
+//	//else if (root->type == AND)
+//	//{
+//	//	ft_execute(root->left, env, exit_status);
+//	//	if ((*exit_status) == 0)
+//	//		ft_execute(root->right, env, exit_status);
+//	//}
+//	//else if (root->type == OR)
+//	//{
+//	//	ft_execute(root->left, env, exit_status);
+//	//	if ((*exit_status) != 0)
+//	//		ft_execute(root->right, env, exit_status);
+//	//}
+//	else
+//		ft_cmd_execute(root->data, env, exit_status, 0);
+//}
+
+
+//char	**ft_expand(char *prompt, t_env *env)
+//{
+//	t_list	*expanded_prompt;	// store expanded prompt
+//	int		open;	//store " or ' or 0 
+//	int		i;	// index in prompt
+//	char	*cur;	// store small part part of prompt
+//	char	*env_var;	// store if found $ to look in env after
+//	int		op;
+
+//	if (!prompt)
+//		return (0);
+//	open = 0;
+//	i = -1;
+//	cur = NULL;
+//	expanded_prompt = NULL;
+//	env_var = NULL;
+//	op = 0;
+//	while (prompt[++i])
+//	{
+//		if (prompt[i] == ' ' && open == 0)
+//		{
+//			if (op)
+//			{
+//				//env_var = ft_strjoin(ft_char_to_str('<'), env_var);
+//				//env_var = ft_strjoin(env_var, ft_char_to_str('>'));
+//				cur = ft_strjoin(cur, ft_env_search(env, env_var + 1));
+//				env_var = NULL;
+//				op = 0;
+//			}
+//			if (cur)
+//			{
+//				ft_lstadd_back(&expanded_prompt, ft_lstnew(cur));
+//				cur = NULL; // I must call free
+//			}
+//		}
+//		else if (prompt[i] == '"' || prompt[i] == '\'')
+//		{
+//			if (open == 0)
+//				open = prompt[i];
+//			else if (open == prompt[i])
+//			{
+//				if (op)
+//				{
+//					//env_var = ft_strjoin(ft_char_to_str('<'), env_var);
+//					//env_var = ft_strjoin(env_var, ft_char_to_str('>'));
+//					cur = ft_strjoin(cur, ft_env_search(env, env_var + 1));
+//					env_var = NULL;
+//					op = 0;
+//				}
+//				open = 0;
+//			}
+//			else
+//				cur = ft_strjoin(cur, ft_char_to_str(prompt[i]));
+//		}
+//		else if (prompt[i] == '$' && op == 0 && open != '\'')
+//		{
+//			env_var = ft_strjoin(env_var, ft_char_to_str(prompt[i]));
+//			op = 1;
+//		}
+//		else if (op == 1)
+//		{
+//			if (ft_is_char_in_str(prompt[i], "$;!?*%#=+"))
+//			{
+//				//env_var = ft_strjoin(ft_char_to_str('<'), env_var);
+//				//env_var = ft_strjoin(env_var, ft_char_to_str('>'));
+//				cur = ft_strjoin(cur, ft_env_search(env, env_var + 1));
+//				//printf("cur %s", cur);
+//				env_var = NULL;
+//				if (prompt[i] == '$')
+//					env_var = ft_strjoin(env_var, ft_char_to_str(prompt[i]));
+//				else
+//				{
+//					op = 0;
+//					cur = ft_strjoin(cur, ft_char_to_str(prompt[i]));
+//				}
+//			}
+//			else
+//				env_var = ft_strjoin(env_var, ft_char_to_str(prompt[i]));
+//		}
+//		else
+//			cur = ft_strjoin(cur, ft_char_to_str(prompt[i]));
+//	}
+//	if (op)
+//	{
+//		//env_var = ft_strjoin(ft_char_to_str('<'), env_var);
+//		//env_var = ft_strjoin(env_var, ft_char_to_str('>'));
+//		cur = ft_strjoin(cur, ft_env_search(env, env_var + 1));
+//		env_var = NULL;
+//		op = 0;
+//	}
+//	if (cur)
+//		ft_lstadd_back(&expanded_prompt, ft_lstnew(cur));
+//	ft_print_lst(expanded_prompt);
+//	return (NULL);
+//}
+
+//char **ft_expand(char *prompt)
+//{
+    
+//    t_list    *head = NULL;
+//    int open = 0; // " or ' or 0
+//    char    *buff = NULL;
+//    int    i = 0;
+//    char    *buff2 = NULL;
+
+//    while (prompt[i])
+//    {
+//        if (prompt[i] == ' ' && open == 0)
+//        {
+//            if (buff)
+//            {
+//                ft_lstadd_back(&head, ft_lstnew(buff));
+//                buff = NULL; // free
+//            }
+//        }
+//        else if (prompt[i] == '"' || prompt[i] == '\'')
+//        {
+//            if (open == 0)
+//                open = prompt[i];
+//            else if (open == prompt[i])
+//                open = 0;
+//            else
+//                buff = ft_strjoin2(buff, ft_chartostr(prompt[i]));
+//        }
+//        else if (prompt[i] == '$' && open != '\'')
+//        {
+//            while (prompt[i] && prompt[i] == '$')
+//            {
+//                buff2 = ft_chartostr(prompt[i]);
+//                i++;
+//                while (prompt[i] && !ft_is_del(prompt[i], "$ +=?#@*\"'"))
+//                {
+//                    buff2 = ft_strjoin2(buff2, ft_chartostr(prompt[i]));
+//                    i++;
+//                }
+//                buff = ft_strjoin2(buff, ft_search_var(buff2 + 1));
+//                if (prompt[i] && prompt[i] != '$' && prompt[i] != ' ')
+//                    buff = ft_strjoin2(buff, ft_chartostr(prompt[i]));
+//                buff2 = NULL;
+//            }
+//        }
+//        else
+//            buff = ft_strjoin2(buff, ft_chartostr(prompt[i]));
+
+//        if (!prompt[i])
+//            break;
+//        i++;
+//    }
+//    if (buff)
+//    {
+//        ft_lstadd_back(&head, ft_lstnew(buff));
+//        buff = NULL; // free
+//    }
+//    ft_print_lst(head);
+//    return (NULL);
+//}
