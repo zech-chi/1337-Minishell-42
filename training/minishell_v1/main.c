@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:40:33 by ymomen            #+#    #+#             */
-/*   Updated: 2024/03/07 18:49:42 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/03/07 21:42:57 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	main(void)
 	char *line;
 	t_lst *node;
 	t_lst *post = NULL;
-	// t_tree *tree;
+	t_tree *tree;
 	node = NULL;
 	// atexit(ff);
 	while (1)
@@ -69,20 +69,19 @@ int	main(void)
 		line = readline("🍪🍪🍪\033[0;32m>$ \033[0m");
 		node = tokens_lst(line);
 		post = from_infix_to_Postfix(node);
-		// tree = postfix_tree(post);
-		// print_tree_2d(tree);
-	// free(tree);
-	while (post)
-	{
-		printf("%s\n", post->value);
-		post = post->next;
-	}
-	// free(post);
-	// free(node);
-	// post = NULL;
-	// free(tree);
-	// tree = NULL;
-	// node = NULL;
+		tree = postfix_tree(post);
+		print_tree_2d(tree);
+	// while (post)
+	// {
+	// 	printf("%s\n", post->value);
+	// 	post = post->next;
+	// }
+	free(post);
+	free(node);
+	post = NULL;
+	free(tree);
+	tree = NULL;
+	node = NULL;
 	}
 	exit(0);
 }
