@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 00:21:31 by ymomen            #+#    #+#             */
-/*   Updated: 2024/03/02 17:44:36 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/03/15 01:25:57 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,20 +50,6 @@ char	*ft_monstrdup(const char *s1, size_t size)
 	return (dup);
 }
 
-int	check_arr(char *arr)
-{
-	int	i;
-
-	i = 0;
-	while (arr[i])
-	{
-		if (arr[i] != ' ')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
 int	ft_strcmp(char *s1, char *s2)
 {
 	int	i;
@@ -91,4 +77,26 @@ void	trime(t_lst *head)
 		free(arr);
 		head = head->next;
 	}
+}
+
+void update_lst(t_lst **head)
+{
+    t_lst *node;
+    char *str;
+	t_lst *temp;
+
+    node = *head;
+    while (node && node->next)
+    {
+        if (node->type == REDIRECTION && node->next->type == OUTFILE)
+        {
+            str = ft_strjoin(node->value, node->next->value);
+            node->value = str;
+            temp = node->next;
+			node->prio = node->next->prio;
+            node->next = node->next->next;
+            free(temp);
+        }
+    	node = node->next;
+    }
 }

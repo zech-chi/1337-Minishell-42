@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 17:39:11 by ymomen            #+#    #+#             */
-/*   Updated: 2024/03/07 00:32:53 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/03/10 01:28:18 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_lst	*lst_new(void *str)
 {
 	t_lst	*node;
 
-	if (!str || check_arr(str) == 0)
+	if (!str)
 		return (NULL);
 	node = (t_lst *) malloc(sizeof(t_lst));
 	if (!node)
@@ -32,7 +32,11 @@ void	lst_add_back(t_lst **head, t_lst *node)
 	t_lst	*tmp;
 
 	if (!head || !node)
+	{
+		if (!node)
+			write(2, "🍪: malloc error\n", 17);
 		return ;
+	}
 	if (!*head)
 	{
 		*head = node;
@@ -83,37 +87,47 @@ void	lst_clear(t_lst *head)
 	}
 }
 
-void *pop_last(t_lst **stack)
+void	*pop_last(t_lst **stack)
 {
-	void  *ptr = NULL;
-	t_lst *tmp;
-	t_lst *prv;
+	void	*ptr;
+	t_lst	*tmp;
+	t_lst	*prv;
+
 	if (!stack || !*stack)
 		return (NULL);
-	
 	tmp = *stack;
 	if (!(*stack)->next)
 	{
 		ptr = (*stack)->value;
 		free(*stack);
-		*stack= NULL; 
-		return(ptr);
+		*stack = NULL;
+		return (ptr);
 	}
-	while((*stack)->next)
+	while ((*stack)->next)
 	{
 		prv = *stack;
 		*stack = (*stack)->next;
 	}
 	ptr = (*stack)->value;
-		free(*stack);
-		*stack= NULL;
-		prv->next = NULL;
+	free(*stack);
+	*stack = NULL;
+	prv->next = NULL;
 	*stack = tmp;
 	return (ptr);
 }
-void	lst_push(t_lst **lst, t_lst *new)
+void	 lst_add_front(t_lst **lst, t_lst *new)
 {
-	new->next = *lst;
+	t_lst	*tmp;
+	if (!lst || !new)
+		return ;
+	if (!*lst)
+	{
+		*lst = new;
+		(*lst)->next = NULL;
+		return ;
+	}
+	tmp = *lst;
+	new->next = tmp;
 	*lst = new;
 }
 

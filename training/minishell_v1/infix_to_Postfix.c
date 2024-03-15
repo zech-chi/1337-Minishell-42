@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:34:06 by ymomen            #+#    #+#             */
-/*   Updated: 2024/03/07 17:40:09 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/03/14 14:42:59 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_lst *from_infix_to_Postfix(t_lst *head) {
 			 }
             else if (head->type > 0)
 			{
-                while (stack && lastone(stack)->type != OPEN_PARENTH && (lastone(stack)->prio <= head->prio ||
+                while (stack && lastone(stack)->type != OPEN_PARENTH && (lastone(stack)->prio < head->prio ||
                         (lastone(stack)->prio == head->prio && lastone(stack)->read == R_TO_L))) {
                     pop = lst_new((void *)pop_last(&stack));
                     lst_add_back(&postfix, pop);
@@ -46,31 +46,53 @@ t_lst *from_infix_to_Postfix(t_lst *head) {
         pop = lst_new((void *)pop_last(&stack));
         lst_add_back(&postfix, pop);
     }
-
     return postfix;
 }
 
-
 t_tree *postfix_tree(t_lst *postfix)
 {
-	t_lst *stack = NULL;
-	t_tree *tree = NULL;
-	while(postfix)
-	{
-		if (postfix->prio == -1)
-		{
-			tree = new_node(postfix->value);
-			lst_add_back(&stack, lst_new(tree));
-		}
-		else
-		{
-			tree = new_node(postfix->value);
-			tree->right = (t_tree *)(pop_last(&stack));
-			tree->left= (t_tree *)(pop_last(&stack));
-			lst_add_back(&stack, lst_new(tree));
-		}
-		postfix = postfix->next;
-	}
-	tree = pop_last(&stack);
-	return (tree);
+    t_lst *stack = NULL;
+    t_tree *tree = NULL;
+    t_tree *l;
+    t_tree *r;
+    
+
+    while(postfix)
+    {
+        if (postfix->type == 0)
+        {
+            tree = new_node(postfix->value);
+            lst_add_back(&stack, lst_new(tree));
+        }
+        else
+        {
+            tree = new_node(postfix->value);
+            r = (t_tree *)(pop_last(&stack));
+            l = (t_tree *)(pop_last(&stack));
+            // if (tree->type == PIPE && ((r && r->type == PIPE) || (l && l->type == PIPE)))
+            // {
+            //     node = l;
+            //     while (node->right->type == PIPE)
+            //         node = node->right;
+            //    tree->left = node->right;
+            //    node->right = tree;
+            //    tree->right = r;
+            //    tree = l;
+            // }
+            // else
+            // {
+                tree->right = r;
+                tree->left = l;
+            // }
+            lst_add_back(&stack, lst_new(tree));
+        }
+        postfix = postfix->next;
+    }
+    tree = pop_last(&stack);
+    if (stack)
+    {
+        tree->right = pop_last(&stack);
+        tree->left = pop_last(&stack);
+    }
+    return (tree);
 }

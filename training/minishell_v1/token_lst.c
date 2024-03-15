@@ -6,33 +6,64 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 23:32:33 by ymomen            #+#    #+#             */
-/*   Updated: 2024/03/07 18:40:18 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/03/14 15:43:19 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_v1.h"
 
-void	is_quot_parc_open(t_parse *par_line, char command, int what)
+void	is_quot_parc_open(t_parse *par_line, char command, int check)
 {
-	if ( what >= 1 && command == '\'' && par_line->quot == 0)
+	if (check >= 1 && command == '\'' && par_line->quot == 0)
 		par_line->quot = 1;
-	else if ( what >= 1 && command == '\'' && par_line->quot == 1)
+	else if (check >= 1 && command == '\'' && par_line->quot == 1)
 		par_line->quot = 0;
-	else if ( what >= 1 && command == '"' && par_line->quot == 0)
+	else if (check >= 1 && command == '"' && par_line->quot == 0)
 		par_line->quot = 2;
-	else if ( what >= 1 && command == '"' && par_line->quot == 2)
+	else if (check >= 1 && command == '"' && par_line->quot == 2)
 		par_line->quot = 0;
-	if (what == 2 && par_line->quot == 0)
+	if (check == 2 && par_line->quot == 0)
 	{
 		if (command == '(')
 			par_line->prac += 1;
 		else if (command == ')' && (par_line->prac > 0))
 			par_line->prac -= 1;
 		else if (command == ')' && par_line->prac == 0)
-		{
 			par_line->prac = 451454545;
-		}
 	}
+}
+
+t_lst	*check_parss_erres(t_parse parc_line, t_lst **node)
+{
+	if (parc_line.prac || parc_line.quot || err)
+	{
+		if (parc_line.prac)
+			write(2, "🍪: syntax error near unexpected token `)'\n", 46);
+		else if (err)
+			write(2, "🍪: syntax error near unexpected token `&'\n", 46);
+		else
+			write(2, "🍪: syntax error\n", 20);
+		lst_clear(*node);
+		return (NULL);
+	}
+	else
+		trime(*node);
+		fix_ls(node);
+	return (*node);
+}
+
+void	its_delimter(char *cmd, int *i, t_lst **node)
+{
+	if (((is_delimter(cmd[*i + 1]) < 5) && (is_delimter(cmd[*i]) < 5))
+		&& cmd[*i] == cmd[*i + 1])
+	{
+		lst_add_back(node, lst_new(ft_monstrdup(&cmd[*i], 2)));
+		*i += 1;
+	}
+	else if (is_delimter(cmd[*i]) == SINGL_AND && is_delimter(cmd[*i + 1]) != SINGL_AND)
+		err = 1;
+	else
+		lst_add_back(node, lst_new(ft_monstrdup(&cmd[*i], 1)));
 }
 
 void	tokens_contu(t_lst **node, char *command, int *i, t_parse *par_line)
@@ -63,19 +94,6 @@ void	tokens_contu(t_lst **node, char *command, int *i, t_parse *par_line)
 	}
 }
 
-t_lst	*check_parss_erres(t_parse parc_line, t_lst **node)
-{
-	if (parc_line.prac)
-	{
-		write(2, "parse errer!\n", 14);
-		lst_clear(*node);
-		return (NULL);
-	}
-	else
-		trime(*node);
-	return (*node);
-}
-
 t_lst	*tokens_lst(char *cmd)
 {
 	t_lst	*node;
@@ -86,16 +104,14 @@ t_lst	*tokens_lst(char *cmd)
 	par_line.prac = 0;
 	par_line.quot = 0;
 	node = NULL;
-	while (cmd[i])
+	while ( cmd && cmd[i])
 	{
+		while (cmd[i] && (cmd[i] == ' ' || cmd[i] == '\t'))
+			i++;
 		is_quot_parc_open(&par_line, cmd[i], 2);
 		if (cmd[i] && (is_delimter(cmd[i]) > 0) && par_line.quot == 0)
 		{
-			if (((is_delimter(cmd[i + 1]) < 5) && (is_delimter(cmd[i]) < 5))
-				&& cmd[i] == cmd[i + 1])
-				lst_add_back(&node, lst_new(ft_monstrdup(&cmd[i++], 2)));
-			else
-				lst_add_back(&node, lst_new(ft_monstrdup(&cmd[i], 1)));
+			its_delimter(cmd, &i, &node);
 		}
 		else
 			tokens_contu(&node, cmd, &i, &par_line);

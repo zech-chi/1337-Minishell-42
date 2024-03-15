@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 22:27:36 by ymomen            #+#    #+#             */
-/*   Updated: 2024/03/07 00:32:50 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/03/14 16:42:31 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ t_lst	*lastone(t_lst *head)
 
 void	is_operateur(t_lst **node)
 {
+	if (!*node)
+		return ;
 	if (!ft_strcmp((*node)->value, "("))
 	{
 		(*node)->prio = open_par;
@@ -63,25 +65,25 @@ void	is_operateur(t_lst **node)
 	{
 		(*node)->prio = (redir);
 		(*node)->type = REDIRECTION;
-		(*node)->read = (L_R_R_L);
+		(*node)->read = (L_TO_R);
 	}
 	else if (!ft_strcmp((*node)->value, ">>"))
 	{
 		(*node)->prio = (appand);
 		(*node)->type = APPEND_REDIRECTION;
-		(*node)->read = (L_R_R_L);
+		(*node)->read = (L_TO_R);
 	}
 	else if (!ft_strcmp((*node)->value, "<<"))
 	{
 		(*node)->prio = (here_doc);
 		(*node)->type = HERE_DOC;
-		(*node)->read = (L_R_R_L);
+		(*node)->read = (L_TO_R);
 	}
 	else if (!ft_strcmp((*node)->value, "<"))
 	{
 		(*node)->prio = (input);
 		(*node)->type = INPUT;
-		(*node)->read = (L_R_R_L);
+		(*node)->read = (L_TO_R);
 	}
 	else
 	{
@@ -96,13 +98,25 @@ void	init_type(t_lst *prev, t_lst *node)
 	if (prev && node)
 	{
 		if (prev->type == REDIRECTION)
-			node->type = OUTFILE;
+			{
+				node->read = L_TO_R;
+				node->type = OUTFILE;
+			}
 		else if (prev->type == INPUT)
-			node->type = INFILE;
+			{
+				node->read = L_TO_R;
+				node->type = INFILE;
+			}
 		else if (prev->type == APPEND_REDIRECTION)
-			node->type = OUTFILE_APPAND;
+			{
+				node->read = L_TO_R;
+				node->type = OUTFILE_APPAND;
+			}
 		else if (prev->type == HERE_DOC)
-			node->type = LIMITER;
+			{
+				node->read = L_TO_R;
+				node->type = LIMITER;
+			}
 		else
 			 if (node->type == 0)
 			 {
@@ -110,5 +124,35 @@ void	init_type(t_lst *prev, t_lst *node)
                 node->prio = 0;
                 node->read = R_TO_L; 
 			 }
+	}
+}
+void fix_ls(t_lst **node)
+{
+	t_lst *cur;
+	t_lst *cmd =NULL;
+	t_lst *operater = NULL;
+	char *tmp;
+	cur = *node;
+	while (cur)
+	{
+		if (cur->type == 0 && cur->next && cur->next->type > 0)
+		{
+			cmd = cur;
+			operater = cmd->next;
+		}
+		else if (cur->type < 0 && cmd && operater && operater->type> 0)
+		{
+			t_lst *hlf = cur->next;
+			if (hlf && hlf->type == 0)
+			{
+				tmp = cmd->value;
+				cmd ->value = ft_strjoin(cmd->value, ft_strdup(" "));
+				cmd->value = ft_strjoin(cmd->value, hlf->value);
+				cur->next = hlf->next;
+				free(hlf);
+			}
+		}
+		
+		cur = cur->next;
 	}
 }

@@ -8,7 +8,7 @@ CFLAGS = -Wall -Wextra -Werror
 
 READLINEFLAG = -lreadline
 
-SRCS =	main.c  tree.c  token_lst.c ft_strtrim.c ft_strlcpy.c ft_stdup.c ft_strchr.c ft_strlen.c linked_lst.c oltils.c linked_lst2.c infix_to_Postfix.c
+SRCS =	main.c  tree.c  token_lst.c ft_strtrim.c ft_strlcpy.c ft_stdup.c ft_strchr.c ft_strlen.c linked_lst.c oltils.c linked_lst2.c infix_to_Postfix.c ft_strjoin.c print_tree.c
 
 OBJS = $(SRCS:.c=.o)
 
