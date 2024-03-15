@@ -1,30 +1,58 @@
-#NAME = minishell
+NAME = minishell
 
-#RM = rm -f
+RM = rm -f
 
-#CC = cc
+CC = cc
 
-#CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 
-#//SRCS = 
+READLINEFLAG = -lreadline
 
-#OBJS = $(SRCS:.c=.o)
+SRCS =	parsing/ft_stdup.c \
+		parsing/ft_strchr.c \
+		parsing/ft_strjoin.c \
+		parsing/ft_strlcpy.c \
+		parsing/ft_strlen.c \
+		parsing/ft_strtrim.c \
+		parsing/infix_to_Postfix.c \
+		parsing/linked_lst.c \
+		parsing/linked_lst2.c \
+		parsing/oltils.c \
+		parsing/print_tree.c \
+		parsing/token_lst.c \
+		parsing/tree.c \
+		main/main.c \
+		execution/execute/execute.c \
+		execution/builtins/echo.c \
+		execution/builtins/env.c \
+		execution/expanding/expand.c \
+		execution/libft_tools/itoa.c \
+		execution/libft_tools/linked_list.c \
+		execution/libft_tools/split.c \
+		execution/libft_tools/strcmp.c \
+		execution/libft_tools/strdup.c \
+		execution/libft_tools/strjoin.c \
+		execution/libft_tools/strlen.c \
+		execution/libft_tools/strncmp.c \
+		execution/libft_tools/strtrim.c
 
-#all: $(NAME)
+OBJS = $(SRCS:.c=.o)
 
-#$(NAME): $(OBJS)
-#	$(CC) $(CFLAGS) $^ -o $@
+all: print_header $(NAME)
 
-#%.o: %.c mandatory/minishell.h
-#	$(CC) $(CFLAGS) -c $< -o $@
+$(NAME): $(OBJS)
+	$(CC) $(CFLAGS) $(READLINEFLAG) $^ -o $@
 
-#clean:
-#	$(RM) $(OBJS)
+%.o: %.c minishell_v1.h 
+	$(CC) $(CFLAGS) -c $< -o $@
 
-#fclean: clean
-#	$(RM) $(NAME)
+clean:
+	$(RM) $(OBJS)
 
-#re: fclean all
+fclean: clean
+	$(RM) $(NAME)
+
+re: fclean all
 
 print_header:
 	@echo "\033[38;2;116;226;145m"
@@ -37,7 +65,5 @@ print_header:
 	@echo "\033[38;2;89;180;195m"
 	@echo "                       by: ymomen, zech-chi                       "
 	@echo "\033[0m"
-#.PHONY: all clean fclean re
 
-
-
+.PHONY: all clean fclean re
