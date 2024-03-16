@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_common.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
+/*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/15 18:12:58 by zech-chi          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/03/16 07:44:24 by ymomen           ###   ########.fr       */
-=======
-/*   Updated: 2024/03/16 17:07:43 by zech-chi         ###   ########.fr       */
->>>>>>> v3
+/*   Created: 2024/03/16 21:27:47 by zech-chi          #+#    #+#             */
+/*   Updated: 2024/03/16 21:27:49 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,23 +24,23 @@
 # include <dirent.h>
 # include <string.h>
 
-<<<<<<< HEAD
+//<<<<<<< HEAD
 enum e_peroirty { open_par = 6 , close_par = 6, and = 5, or = 5, pip = 3, redir = 1, appand = 1, here_doc = 1, input = 1};
-=======
-enum e_peroirty
-{
-	open_par = 6,
-	close_par = 6,
-	and = 5,
-	or = 5,
-	pip = 3,
-	redir = 1,
-	appand = 1,
-	here_doc = 2,
-	input = 1
-};
+//=======
+//enum e_peroirty
+//{
+//	open_par = 6,
+//	close_par = 6,
+//	and = 5,
+//	or = 5,
+//	pip = 3,
+//	redir = 1,
+//	appand = 1,
+//	here_doc = 2,
+//	input = 1
+//};
 
->>>>>>> v3
+//>>>>>>> v3
 # define REDIRECTION 1
 # define INPUT 2
 # define PIPE 3

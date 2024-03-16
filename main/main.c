@@ -5,12 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/21 17:40:33 by ymomen            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/03/16 20:10:51 by zech-chi         ###   ########.fr       */
-=======
-/*   Updated: 2024/03/16 20:24:09 by zech-chi         ###   ########.fr       */
->>>>>>> v3
+/*   Created: 2024/03/16 21:23:31 by zech-chi          #+#    #+#             */
+/*   Updated: 2024/03/16 21:30:07 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +46,9 @@ int	main(int ac, char **av, char **ev)
 	while (1)
 	{
 		line = ft_get_prompt(exit_status);
-		tree = parsing(line);
+		tree = parsing(line, &exit_status);
 		//atexit(f);
-<<<<<<< HEAD
-=======
-		//print_tree_2d(tree);
->>>>>>> v3
+		print_tree_2d(tree);
 		ft_execute(tree, &env, &exit_status);
 	}
 	return (SUCCESS);

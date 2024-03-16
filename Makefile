@@ -8,15 +8,12 @@ CFLAGS = -Wall -Wextra -Werror
 
 READLINEFLAG = -lreadline
 
-<<<<<<< HEAD
-SRCS =	parsing/ft_putstr_fd.c \
-		parsing/ft_stdup.c \
-=======
+
 #READLINE_L = $(shell brew --prefix readline)/lib
 #READLINE_I = $(shell brew --prefix readline)/include
 
 SRCS =	parsing/ft_stdup.c \
->>>>>>> v3
+		parsing/ft_putstr_fd.c \
 		parsing/ft_strchr.c \
 		parsing/ft_strjoin.c \
 		parsing/ft_strlcpy.c \

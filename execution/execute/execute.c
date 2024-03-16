@@ -3,17 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
+/*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/15 17:57:09 by zech-chi          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/03/16 02:20:58 by ymomen           ###   ########.fr       */
-=======
-/*   Updated: 2024/03/16 16:29:29 by zech-chi         ###   ########.fr       */
->>>>>>> v3
+/*   Created: 2024/03/16 21:28:34 by zech-chi          #+#    #+#             */
+/*   Updated: 2024/03/16 21:28:37 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../../header/minishell_execution.h"
 
