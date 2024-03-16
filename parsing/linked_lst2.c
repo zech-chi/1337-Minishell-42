@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 22:27:36 by ymomen            #+#    #+#             */
-/*   Updated: 2024/03/16 00:51:21 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/03/16 02:19:55 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,26 +157,26 @@ void fix_ls(t_lst **node)
 		cur = cur->next;
 	}
 }
-void fix_ls2(t_lst **head)
-{
-	t_lst *lst_op;
-	t_lst *cmd;
-	t_lst *file;
-	t_lst *node;
+// void fix_ls2(t_lst **head)
+// {
+// 	t_lst *lst_op;
+// 	t_lst *cmd;
+// 	t_lst *file;
+// 	t_lst *node;
 
-	node = *head;
-	while (node)
-	{
-		if (node->type == 0 && node->next &&(node->next->type == REDIRECTION || node->next->type == INPUT || node->next->type == APPEND_REDIRECTION || node->next->type == HERE_DOC))
-		{
-			cmd = node;
-			file = cmd->next;
-			node = file->next;
-			while (node && node->type < 0 && (node->type == REDIRECTION || node->type == INPUT || node->type == APPEND_REDIRECTION || node->type == HERE_DOC))
-				node = node->next;
+// 	node = *head;
+// 	while (node)
+// 	{
+// 		if (node->type == 0 && node->next &&(node->next->type == REDIRECTION || node->next->type == INPUT || node->next->type == APPEND_REDIRECTION || node->next->type == HERE_DOC))
+// 		{
+// 			cmd = node;
+// 			file = cmd->next;
+// 			node = file->next;
+// 			while (node && node->type < 0 && (node->type == REDIRECTION || node->type == INPUT || node->type == APPEND_REDIRECTION || node->type == HERE_DOC))
+// 				node = node->next;
 			
 				
-		}
-		node = node->next;
-	}
-}
+// 		}
+// 		node = node->next;
+// 	}
+// }

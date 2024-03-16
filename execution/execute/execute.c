@@ -6,13 +6,10 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:57:09 by zech-chi          #+#    #+#             */
-<<<<<<< Updated upstream
-/*   Updated: 2024/03/16 02:02:25 by zech-chi         ###   ########.fr       */
-=======
-/*   Updated: 2024/03/15 22:53:09 by ymomen           ###   ########.fr       */
->>>>>>> Stashed changes
+/*   Updated: 2024/03/16 02:20:58 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../../header/minishell_execution.h"
 

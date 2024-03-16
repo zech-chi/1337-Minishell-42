@@ -6,13 +6,10 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:40:33 by ymomen            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/03/15 23:47:17 by ymomen           ###   ########.fr       */
-=======
-/*   Updated: 2024/03/16 01:30:12 by zech-chi         ###   ########.fr       */
->>>>>>> 35e0fd4f10c0d2490565a07fab44e67931e16be6
+/*   Updated: 2024/03/16 04:07:12 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../header/minishell_execution.h"
 #include "../header/minishell_parsing.h"
@@ -100,10 +97,9 @@ int	main(int ac, char **av, char **ev)
 	while (1)
 	{
 		line = ft_get_prompt(exit_status);
-		tree = parsing(line);
-		print_tree_2d(tree);
+		// print_tree_2d(tree);
+		tree = parsing(line, &exit_status);
 		ft_execute(tree, &env, &exit_status);
-		//print_tree_2d(tree);
 	}
 	return (SUCCESS);
 }

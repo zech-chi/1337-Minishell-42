@@ -8,7 +8,8 @@ CFLAGS = -Wall -Wextra -Werror
 
 READLINEFLAG = -lreadline
 
-SRCS =	parsing/ft_stdup.c \
+SRCS =	parsing/ft_putstr_fd.c \
+		parsing/ft_stdup.c \
 		parsing/ft_strchr.c \
 		parsing/ft_strjoin.c \
 		parsing/ft_strlcpy.c \
