@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 18:12:58 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/16 05:34:07 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/03/16 07:44:24 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <dirent.h>
 # include <string.h>
 
-enum e_peroirty { open_par = 6 , close_par = 6, and = 5, or = 5, pip = 3, redir = 1, appand = 1, here_doc = 2, input = 1};
+enum e_peroirty { open_par = 6 , close_par = 6, and = 5, or = 5, pip = 3, redir = 1, appand = 1, here_doc = 1, input = 1};
 # define REDIRECTION 1
 # define INPUT 2
 # define PIPE 3

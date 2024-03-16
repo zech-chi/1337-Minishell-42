@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:40:33 by ymomen            #+#    #+#             */
-/*   Updated: 2024/03/16 04:07:12 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/03/16 07:32:41 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,8 @@ int	main(int ac, char **av, char **ev)
 	while (1)
 	{
 		line = ft_get_prompt(exit_status);
-		// print_tree_2d(tree);
 		tree = parsing(line, &exit_status);
+		print_tree_2d(tree);
 		ft_execute(tree, &env, &exit_status);
 	}
 	return (SUCCESS);
