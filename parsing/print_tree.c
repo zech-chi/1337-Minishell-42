@@ -3,24 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   print_tree.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 01:23:32 by ymomen            #+#    #+#             */
-/*   Updated: 2024/03/15 17:10:49 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/16 03:52:14 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell_parsing.h"
 
 
-t_tree *parsing (char * line)
+t_tree *parsing (char * line, int *err)
 {
     t_lst *post;
 	t_tree *tree;
     t_lst *node;
     
-    node = tokens_lst(line);
-        // update_lst(&node);
+    node = tokens_lst(line, err);
 	post = from_infix_to_Postfix(node);
 	tree = postfix_tree(post);
 	free(post);

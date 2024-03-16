@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   infix_to_Postfix.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:34:06 by ymomen            #+#    #+#             */
-/*   Updated: 2024/03/15 17:10:33 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/16 05:27:25 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,6 @@ t_tree *postfix_tree(t_lst *postfix)
 {
     t_lst *stack = NULL;
     t_tree *tree = NULL;
-    t_tree *l;
-    t_tree *r;
-    
 
     while(postfix)
     {
@@ -67,23 +64,8 @@ t_tree *postfix_tree(t_lst *postfix)
         else
         {
             tree = new_node(postfix->value);
-            r = (t_tree *)(pop_last(&stack));
-            l = (t_tree *)(pop_last(&stack));
-            // if (tree->type == PIPE && ((r && r->type == PIPE) || (l && l->type == PIPE)))
-            // {
-            //     node = l;
-            //     while (node->right->type == PIPE)
-            //         node = node->right;
-            //    tree->left = node->right;
-            //    node->right = tree;
-            //    tree->right = r;
-            //    tree = l;
-            // }
-            // else
-            // {
-                tree->right = r;
-                tree->left = l;
-            // }
+            tree->right = (t_tree *)(pop_last(&stack));
+            tree->left = (t_tree *)(pop_last(&stack));
             lst_add_back(&stack, lst_new(tree));
         }
         postfix = postfix->next;
@@ -91,6 +73,7 @@ t_tree *postfix_tree(t_lst *postfix)
     tree = pop_last(&stack);
     if (stack)
     {
+        printf("here - 1\n") ;
         tree->right = pop_last(&stack);
         tree->left = pop_last(&stack);
     }
