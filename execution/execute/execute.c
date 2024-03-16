@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:57:09 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/15 19:52:20 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/15 21:55:20 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	ft_execute_builtins(char **cmd_2d, t_env **env)
 	else if (!ft_strcmp2("echo", cmd_2d[0]))
 		return (ft_echo(cmd_2d), SUCCESS);
 	else
-		return (FAILED); 
+		return (FAILED);
 }
 
 void	ft_execute_search_in_path(char **cmd_2d, t_env *env)
@@ -85,7 +85,7 @@ void	ft_cmd_execute(char *cmd, t_env **env, int *exit_status)
 	{
 		execve(cmd_2d[0], cmd_2d, ft_env_create_2d(*env));
 		ft_execute_search_in_path(cmd_2d, *env);
-		printf("Execution Error: %s command not found\n", cmd_2d[0]);
+		perror("Execution Error");
 		exit(FAILED);
 	}
 	else
@@ -122,7 +122,7 @@ void	ft_cmd_execute2(char *cmd, t_env **env, int *exit_status, int std)
 		close(fd[1]);
 		execve(cmd_2d[0], cmd_2d, ft_env_create_2d(*env));
 		ft_execute_search_in_path(cmd_2d, *env);
-		printf("Execution Error: command not found\n");
+		perror("Execution Error");
 		exit(FAILED);
 	}
 	//wait(exit_status);
