@@ -6,18 +6,25 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:40:33 by ymomen            #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/03/15 23:47:17 by ymomen           ###   ########.fr       */
+=======
+/*   Updated: 2024/03/16 01:30:12 by zech-chi         ###   ########.fr       */
+>>>>>>> 35e0fd4f10c0d2490565a07fab44e67931e16be6
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell_execution.h"
 #include "../header/minishell_parsing.h"
 
-char	*ft_get_prompt()
+char	*ft_get_prompt(int exit_status)
 {
 	char	*prompt;
 
-	prompt = readline("🍪🍪🍪\033[0;32m>$ \033[0m");
+	if (exit_status == 0)
+		prompt = readline("🍪🍪🍪"GREEN_COLOR">$ "RESET_COLOR);
+	else
+		prompt = readline("🍪🍪🍪"RED_COLOR">$ "RESET_COLOR);
 	if (prompt && prompt[0])
 		add_history(prompt);
 	return (prompt);
@@ -92,7 +99,7 @@ int	main(int ac, char **av, char **ev)
 	exit_status = 0;
 	while (1)
 	{
-		line = ft_get_prompt();
+		line = ft_get_prompt(exit_status);
 		tree = parsing(line);
 		print_tree_2d(tree);
 		ft_execute(tree, &env, &exit_status);

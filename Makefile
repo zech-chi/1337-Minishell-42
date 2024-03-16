@@ -26,6 +26,7 @@ SRCS =	parsing/ft_stdup.c \
 		execution/builtins/echo.c \
 		execution/builtins/env.c \
 		execution/expanding/expand.c \
+		execution/expanding/expand_tools.c \
 		execution/libft_tools/itoa.c \
 		execution/libft_tools/linked_list.c \
 		execution/libft_tools/split.c \

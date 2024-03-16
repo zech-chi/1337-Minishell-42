@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:07:18 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/15 19:24:19 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/16 01:51:55 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@
 
 #define SUCCESS 0
 #define FAILED 1
+
+//colors
+#define RED_COLOR   "\x1b[31m"
+#define GREEN_COLOR "\x1b[32m"
+#define RESET_COLOR "\x1b[0m"
 
 typedef struct s_list
 {
@@ -71,7 +76,22 @@ int		ft_env_size(t_env *env);
 char	**ft_env_create_2d(t_env *env);
 
 // expand.c
+typedef struct s_expand {
+	t_list	*head;
+	int		open;
+	char	*buff_exp;
+	char	*buff_env;
+	char	**cmd_2d;
+	int		i;
+	int		is_wild_card;
+}	t_expand;
+
 char	*ft_char_to_str(char c);
+int	ft_is_char_in_str(char c, char *set);
+void	ft_print_lst(t_list *node); // to remove
+char	**ft_lst_to_2d_char(t_list *head);
+void	ft_list_cwd(t_list **head, t_env *env);
+void	ft_exp_init(t_expand *exp);
 char	**ft_expand(char *prompt, t_env *env, int exit_status);
 
 // execute.c
