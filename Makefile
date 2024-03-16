@@ -30,6 +30,7 @@ SRCS =	parsing/ft_stdup.c \
 		execution/execute/execute.c \
 		execution/execute/execute_pipe.c \
 		execution/execute/execute_builtins.c \
+		execution/execute/execute_redirection_out.c \
 		execution/builtins/echo.c \
 		execution/builtins/cd.c \
 		execution/builtins/pwd.c \

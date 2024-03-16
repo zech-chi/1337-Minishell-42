@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:28:34 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/16 21:28:37 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/16 22:34:02 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,32 +86,14 @@ static void	ft_execute_or(t_tree *root, t_env **env, int *exit_status)
 		ft_execute(root->right, env, exit_status);
 }
 
-//int			fd;
-//else if (root->type == REDIRECT_OUTPUT ||
-//	root->type == REDIRECT_OUTPUT_APPEND)
-//{
-//	if (fork() == 0)
-//	{
-//		fd = ft_open_file(root->right->data, root->type);
-//		if (i == 0)
-//		{
-//			dup2(fd, STDOUT_FILENO);
-//			i++;
-//		}
-//		close(fd);
-//		if (root->left)
-//			ft_execute(root->left, env, exit_status, std_in);
-//		exit(*exit_status);
-//	}
-//	else 
-//		wait(exit_status);
-//}
 void	ft_execute(t_tree *root, t_env **env, int *exit_status)
 {
 	if (!root)
 		return ;
 	else if (root->type == PIPE)
 		ft_execute_pipe(root, env, exit_status);
+	else if (root->type == REDIRECTION || root->type == APPEND_REDIRECTION)
+		ft_execute_redirection_out(root, env, exit_status);
 	else if (root->type == AND)
 		ft_execute_and(root, env, exit_status);
 	else if (root->type == OR)
