@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:07:18 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/16 17:53:09 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/16 21:59:02 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,6 @@ void	ft_exp_init(t_expand *exp);
 char	**ft_expand(char *prompt, t_env *env, int exit_status);
 
 // execute.c
-int		ft_open_file(char *file_path, int redirection_type);
 void	ft_execute_search_in_path(char **cmd_2d, t_env *env);
 void	ft_execute_cmd(char *cmd, t_env **env, int *exit_status);
 void	ft_execute(t_tree *root, t_env **env, int *exit_status);
@@ -116,5 +115,8 @@ void	ft_execute_pipe(t_tree *root, t_env **env, int *exit_status);
 
 // execute_builtins.c
 int		ft_execute_builtins(char **cmd_2d, t_env **env, int *exit_status);
+
+// execute_redirection_out.c
+void	ft_execute_redirection_out(t_tree *root, t_env **env, int *exit_status);
 
 #endif
