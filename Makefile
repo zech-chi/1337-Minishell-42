@@ -8,8 +8,15 @@ CFLAGS = -Wall -Wextra -Werror
 
 READLINEFLAG = -lreadline
 
+<<<<<<< HEAD
 SRCS =	parsing/ft_putstr_fd.c \
 		parsing/ft_stdup.c \
+=======
+#READLINE_L = $(shell brew --prefix readline)/lib
+#READLINE_I = $(shell brew --prefix readline)/include
+
+SRCS =	parsing/ft_stdup.c \
+>>>>>>> v3
 		parsing/ft_strchr.c \
 		parsing/ft_strjoin.c \
 		parsing/ft_strlcpy.c \
@@ -24,10 +31,18 @@ SRCS =	parsing/ft_putstr_fd.c \
 		parsing/tree.c \
 		main/main.c \
 		execution/execute/execute.c \
+		execution/execute/execute_pipe.c \
+		execution/execute/execute_builtins.c \
 		execution/builtins/echo.c \
-		execution/builtins/env.c \
+		execution/builtins/cd.c \
+		execution/builtins/pwd.c \
+		execution/builtins/export.c \
+		execution/builtins/unset.c \
+		execution/builtins/env1.c \
+		execution/builtins/env2.c \
 		execution/expanding/expand.c \
 		execution/expanding/expand_tools.c \
+		execution/expanding/print_lst.c \
 		execution/libft_tools/itoa.c \
 		execution/libft_tools/linked_list.c \
 		execution/libft_tools/split.c \
