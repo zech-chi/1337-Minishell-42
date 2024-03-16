@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:57:09 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/15 21:55:20 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/16 02:02:25 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@
 //	return (fd);
 //}
 
-int	ft_execute_builtins(char **cmd_2d, t_env **env)
+int	ft_execute_builtins(char **cmd_2d, t_env **env, int *exit_status)
 {
 	if (!cmd_2d || !(*cmd_2d))
 		return (SUCCESS);
 	else if (!ft_strcmp2("env", cmd_2d[0]))
-		return (ft_env_print(*env), SUCCESS);
+		return (ft_env_print(*env), *exit_status = 0, SUCCESS);
 	else if (!ft_strcmp2("exit", cmd_2d[0]))
 		return (printf("exit\n") ,exit(SUCCESS), SUCCESS);
 	//else if (!ft_strcmp2(PWD, cmd_2d[0]))
@@ -44,7 +44,7 @@ int	ft_execute_builtins(char **cmd_2d, t_env **env)
 	//else if (!ft_strcmp2("echo", cmd_2d[0]) && !ft_strcmp2("$?", cmd_2d[1]))
 	//	return (printf("%d\n", status % 255), 0);
 	else if (!ft_strcmp2("echo", cmd_2d[0]))
-		return (ft_echo(cmd_2d), SUCCESS);
+		return (ft_echo(cmd_2d), *exit_status = 0, SUCCESS);
 	else
 		return (FAILED);
 }
@@ -73,7 +73,7 @@ void	ft_cmd_execute(char *cmd, t_env **env, int *exit_status)
 	cmd_2d = ft_expand(cmd, *env, *exit_status);
 	if (!cmd_2d)
 		exit(FAILED);
-	if (ft_execute_builtins(cmd_2d, env) == SUCCESS)
+	if (ft_execute_builtins(cmd_2d, env, exit_status) == SUCCESS)
 		return ;
 	pid = fork();
 	if (pid < 0)
@@ -106,7 +106,7 @@ void	ft_cmd_execute2(char *cmd, t_env **env, int *exit_status, int std)
 	pipe(fd);
 	if (!cmd_2d)
 		exit(FAILED);
-	if (ft_execute_builtins(cmd_2d, env) == SUCCESS)
+	if (ft_execute_builtins(cmd_2d, env, exit_status) == SUCCESS)
 		return ;
 	pid = fork();
 	if (pid < 0)
@@ -187,8 +187,8 @@ void	ft_execute_pipe(t_tree *root, t_env **env, int *exit_status)
 	}
 	close(fd[0]);
 	close(fd[1]);
-	//waitpid(pid1, exit_status, 0);
-	//waitpid(pid2, exit_status, 0);
+	waitpid(pid1, exit_status, 0);
+	waitpid(pid2, exit_status, 0);
 }
 
 void	ft_execute(t_tree *root, t_env **env, int *exit_status)
@@ -198,10 +198,7 @@ void	ft_execute(t_tree *root, t_env **env, int *exit_status)
 	if (!root)
 		return ;
 	else if (root->type == PIPE)
-	{
 		ft_execute_pipe(root, env, exit_status);
-		while (wait(exit_status) != -1);
-	}
 	//else if (root->type == REDIRECT_OUTPUT || root->type == REDIRECT_OUTPUT_APPEND)
 	//{
 	//	if (fork() == 0)
