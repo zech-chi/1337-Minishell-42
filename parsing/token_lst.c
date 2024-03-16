@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_lst.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 23:32:33 by ymomen            #+#    #+#             */
-/*   Updated: 2024/03/15 17:10:52 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/15 23:43:05 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ t_lst	*check_parss_erres(t_parse parc_line, t_lst **node)
 	else
 		trime(*node);
 		fix_ls(node);
+		fix_ls2(node);
 	return (*node);
 }
 

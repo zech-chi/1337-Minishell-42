@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 16:55:53 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/15 18:20:04 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/15 23:46:40 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ t_lst *from_infix_to_Postfix(t_lst *head);
 t_tree *parsing (char * line);
 void print_tree_2d(t_tree *root);
 void fix_ls(t_lst **node);
+void fix_ls2(t_lst **node);
 void	update_lst(t_lst **node);
 char	*ft_strjoin(char const *s1, char const *s2);
 void	is_operateur_tree(t_tree **node);
