@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 01:48:23 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/16 01:53:28 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/16 17:22:09 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,6 @@ char	*ft_char_to_str(char c)
 	str[0] = c;
 	str[1] = 0;
 	return (ft_strdup2(str));
-}
-
-/// to remove
-void	ft_print_lst(t_list *node)
-{
-	while (node)
-	{
-		printf("{%s}\n", node->content);
-		node = node->next;
-	}
 }
 
 char	**ft_lst_to_2d_char(t_list *head)

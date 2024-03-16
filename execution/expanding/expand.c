@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 09:36:52 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/16 01:53:53 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/16 17:26:02 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,18 @@ static void	ft_expand_help2(t_expand *exp, char c)
 	}
 }
 
-static void	ft_expand_help3(t_expand *exp, t_env *env, char *cmd, int exit_status)
+static void	ft_expand_help3(t_expand *exp, t_env *env, char *cmd,
+	int exit_status)
 {
 	exp->is_wild_card = 0;
 	while (cmd[exp->i] && cmd[exp->i] == '$')
 	{
 		exp->buff_env = ft_char_to_str(cmd[(exp->i)++]);
-		while (cmd[exp->i] && !ft_is_char_in_str(cmd[exp->i], "$, +=?#@*\"'"))
-			exp->buff_env = ft_strjoin2(exp->buff_env, ft_char_to_str(cmd[(exp->i)++]));
-		exp->buff_exp = ft_strjoin2(exp->buff_exp, ft_env_search(env, exp->buff_env + 1));
+		while (cmd[exp->i] && !ft_is_char_in_str(cmd[exp->i], "$,. +=?#@*\"'"))
+			exp->buff_env = ft_strjoin2(exp->buff_env,
+					ft_char_to_str(cmd[(exp->i)++]));
+		exp->buff_exp = ft_strjoin2(exp->buff_exp,
+				ft_env_search(env, exp->buff_env + 1));
 		if (cmd[exp->i] == '?' && ft_strlen2(exp->buff_env) == 1)
 			exp->buff_exp = ft_strjoin2(exp->buff_exp, ft_itoa2(exit_status));
 		else if (cmd[exp->i] == ' ')
@@ -54,7 +57,8 @@ static void	ft_expand_help3(t_expand *exp, t_env *env, char *cmd, int exit_statu
 		else if (cmd[exp->i] == '"' || cmd[exp->i] == '\'')
 			ft_expand_help2(exp, cmd[exp->i]);
 		else if (cmd[exp->i] && cmd[exp->i] != '$' && cmd[exp->i] != ' ')
-			exp->buff_exp = ft_strjoin2(exp->buff_exp, ft_char_to_str(cmd[exp->i]));
+			exp->buff_exp = ft_strjoin2(exp->buff_exp,
+					ft_char_to_str(cmd[exp->i]));
 		else if (ft_strlen2(exp->buff_env) == 1 && !cmd[exp->i])
 			exp->buff_exp = ft_strjoin2(exp->buff_exp, exp->buff_env);
 		exp->buff_env = NULL;
