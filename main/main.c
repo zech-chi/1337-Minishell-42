@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:23:31 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/17 23:31:01 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/03/18 22:06:40 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	main(int ac, char **av, char **ev)
 		printf("-----------------------------------------\n");
 		//if (tree)
 		//	printf("%d\n", tree->type);
-		// ft_execute(tree, &env, &exit_status);
+		ft_execute(tree, &env, &exit_status);
 	}
 	return (SUCCESS);
 }
