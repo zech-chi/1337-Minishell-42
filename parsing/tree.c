@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:57:50 by ymomen            #+#    #+#             */
-/*   Updated: 2024/03/15 17:10:56 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/17 21:56:42 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ t_tree	*new_node(char *value)
         is_operateur_tree(&node);
 	return (node);
 }
+
 t_tree* insertIntoBST(t_tree* root, char *value) 
 {
    if (!root)

@@ -32,6 +32,7 @@ typedef struct s_parse
 }t_parse;
 
 /* FUNCTIONS */
+void redarection_prac_fix(t_lst **head);
 void redarection_perfix_lst(t_lst **head);
 void redarection_join_arg(t_lst **node);
 void	ft_putstr_fd(char *s, int fd);
