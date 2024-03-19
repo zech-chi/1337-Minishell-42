@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 01:23:32 by ymomen            #+#    #+#             */
-/*   Updated: 2024/03/18 03:22:09 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/03/19 00:20:32 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@ t_tree *parsing (char * line, int *err)
     t_lst *node;
     
     node = tokens_lst(line, err);
+    // while(node)
+    // {
+    //     printf("%s\n", node->value);
+    //     node = node->next;
+    // }
 	post = from_infix_to_Postfix(node);
 	tree = postfix_tree(post);
 	free(post);

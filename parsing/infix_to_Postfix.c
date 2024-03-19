@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:34:06 by ymomen            #+#    #+#             */
-/*   Updated: 2024/03/18 01:41:11 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/03/18 23:51:46 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@ t_tree *postfix_tree(t_lst *postfix)
 {
     t_lst *stack = NULL;
     t_tree *tree = NULL;
-    t_tree *l;
-    t_tree *r;
 
     while(postfix)
     {
@@ -66,18 +64,8 @@ t_tree *postfix_tree(t_lst *postfix)
         else
         {
             tree = new_node(postfix->value);
-            r = (t_tree *)(pop_last(&stack));
-            l = (t_tree *)(pop_last(&stack));
-            // if ((tree->type == REDIRECTION || tree->type == INPUT || tree->type == HERE_DOC || tree->type == APPEND_REDIRECTION) && l->left && (l->left->type != OUTFILE && l->left->type != OUTFILE_APPAND && l->left->type != LIMITER && l->left->type != INFILE))
-            // {
-            //     tree->right = l;
-            //     tree->left = r;
-            // }
-            // else
-            {
-                tree->left = l;
-                tree->right = r;
-            }
+            tree->right = (t_tree *)(pop_last(&stack));
+            tree->left = (t_tree *)(pop_last(&stack));
             lst_add_back(&stack, lst_new(tree));
         }
         postfix = postfix->next;

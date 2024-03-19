@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 22:27:36 by ymomen            #+#    #+#             */
-/*   Updated: 2024/03/18 03:20:54 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/03/18 23:41:48 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,28 +132,23 @@ void redarection_join_arg(t_lst **node)
 	t_lst *cur;
 	t_lst *cmd =NULL;
 	t_lst *operater = NULL;
-	char *tmp;
+	t_lst *hlf;
 	cur = *node;
 	while (cur)
 	{
-		if (cur->type == 0 && cur->next && cur->next && (cur->next->type == INPUT || cur->next->type == REDIRECTION || cur->next->type == APPEND_REDIRECTION || cur->next->type == HERE_DOC))
+		if (cur->type == 0 && cur->next && (cur->next->type == INPUT || cur->next->type == REDIRECTION || cur->next->type == APPEND_REDIRECTION || cur->next->type == HERE_DOC))
 		{
 			cmd = cur;
 			operater = cmd->next;
 		}
-		else if (cur->type < 0 && cmd && operater && cur->next && ( cur->next->type == INPUT || cur->next->type == REDIRECTION || cur->next->type == APPEND_REDIRECTION || cur->next->type == HERE_DOC))
+		else if (cur->type < 0 && cmd && operater && cur->next && cur->next->type == 0)
 		{
-			t_lst *hlf = cur->next;
-			if (hlf && hlf->type == 0)
-			{
-				tmp = cmd->value;
+				hlf = cur->next;
 				cmd ->value = ft_strjoin(cmd->value, ft_strdup(" "));
 				cmd->value = ft_strjoin(cmd->value, hlf->value);
 				cur->next = hlf->next;
 				free(hlf);
-			}
 		}
-		
 		cur = cur->next;
 	}
 }
