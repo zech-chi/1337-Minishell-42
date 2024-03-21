@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 00:21:31 by ymomen            #+#    #+#             */
-/*   Updated: 2024/03/19 00:21:49 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/03/21 00:40:25 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,24 +79,9 @@ void	trime(t_lst *head)
 	}
 }
 
-void update_lst(t_lst **head)
+int is_redarection(t_lst *node)
 {
-    t_lst *node;
-    char *str;
-	t_lst *temp;
-
-    node = *head;
-    while (node && node->next)
-    {
-        if (node->type == REDIRECTION && node->next->type == OUTFILE)
-        {
-            str = ft_strjoin(node->value, node->next->value);
-            node->value = str;
-            temp = node->next;
-			node->prio = node->next->prio;
-            node->next = node->next->next;
-            free(temp);
-        }
-    	node = node->next;
-    }
+	if ( node && (node->type == REDIRECTION || node->type == INPUT || node->type == APPEND_REDIRECTION || node->type == HERE_DOC))
+		return (1);
+	return (0);
 }

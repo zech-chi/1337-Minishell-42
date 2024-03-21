@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_redirection_out.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:43:45 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/16 22:34:19 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/21 01:06:32 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ void	ft_execute_redirection_out(t_tree *root, t_env **env, int *exit_status)
 
 	out = dup(1);
 	fd = -1;
+	printf("here\n");
 	if (root->left)
 		fd = ft_open_file(root->left->value, root->type);
-	if (root->right && root->right->type == 0)
-		dup2(fd, 1);
+	dup2(fd, 1);
 	if (fd >= 0)
 		close(fd);
 	ft_execute(root->right, env, exit_status);

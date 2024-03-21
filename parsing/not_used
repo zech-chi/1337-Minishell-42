@@ -1,0 +1,46 @@
+void update_lst(t_lst **head)
+{
+    t_lst *node;
+    char *str;
+	t_lst *temp;
+
+    node = *head;
+    while (node && node->next)
+    {
+        if (node->type == REDIRECTION && node->next->type == OUTFILE)
+        {
+            str = ft_strjoin(node->value, node->next->value);
+            node->value = str;
+            temp = node->next;
+			node->prio = node->next->prio;
+            node->next = node->next->next;
+            free(temp);
+        }
+    	node = node->next;
+    }
+}
+
+void	 lst_add_front(t_lst **lst, t_lst *new)
+{
+	t_lst	*tmp;
+	if (!lst || !new)
+		return ;
+	if (!*lst)
+	{
+		*lst = new;
+		(*lst)->next = NULL;
+		return ;
+	}
+	tmp = *lst;
+	new->next = tmp;
+	*lst = new;
+}
+
+t_lst *lst_pop(t_lst **lst)
+{
+	t_lst	*top;
+
+	top = *lst;
+	*lst = (*lst)->next;
+	return (*lst);
+}

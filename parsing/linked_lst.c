@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 17:39:11 by ymomen            #+#    #+#             */
-/*   Updated: 2024/03/19 00:00:28 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/03/21 00:48:06 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,28 +117,4 @@ void	*pop_last(t_lst **stack)
 	prv->next = NULL;
 	*stack = tmp;
 	return (ptr);
-}
-void	 lst_add_front(t_lst **lst, t_lst *new)
-{
-	t_lst	*tmp;
-	if (!lst || !new)
-		return ;
-	if (!*lst)
-	{
-		*lst = new;
-		(*lst)->next = NULL;
-		return ;
-	}
-	tmp = *lst;
-	new->next = tmp;
-	*lst = new;
-}
-
-t_lst *lst_pop(t_lst **lst)
-{
-	t_lst	*top;
-
-	top = *lst;
-	*lst = (*lst)->next;
-	return (*lst);
 }
