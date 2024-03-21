@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:43:45 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/21 01:06:32 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/03/21 01:30:15 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	ft_execute_redirection_out(t_tree *root, t_env **env, int *exit_status)
 
 	out = dup(1);
 	fd = -1;
-	printf("here\n");
 	if (root->left)
 		fd = ft_open_file(root->left->value, root->type);
 	dup2(fd, 1);
