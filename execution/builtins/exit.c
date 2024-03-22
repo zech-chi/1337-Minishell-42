@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 00:50:36 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/22 21:45:48 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/22 22:13:15 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	ft_get_modulo(long long ll)
 	return (ll - (ll / 256) * 256 + 256);
 }
 
-static void	ft_atoll(char *str, int *exit_status)
+static void	ft_atoll(char *str)
 {
 	long long	ll;
 	int			i;
@@ -70,8 +70,7 @@ static void	ft_atoll(char *str, int *exit_status)
 	if (str[i])
 		ft_print_error("🍪: exit: invalid argument\n", 1);
 	printf("exit\n");
-	*exit_status = ft_get_modulo(ll * signe);
-	exit(*exit_status);
+	exit(ft_get_modulo(ll * signe));
 }
 
 void	ft_exit(char **cmd_2d, t_env **env, int *exit_status)
@@ -82,16 +81,13 @@ void	ft_exit(char **cmd_2d, t_env **env, int *exit_status)
 		exit(0);
 	}
 	else if (ft_non_numeric(cmd_2d[1]))
-	{
 		ft_print_error("🍪: exit: invalid argument\n", 1);
-		*exit_status = 255;
-	}
 	else if (cmd_2d[2])
 	{
 		ft_print_error("🍪: exit: invalid argument\n", 0);
 		*exit_status = 255;
 	}
 	else
-		ft_atoll(cmd_2d[1], exit_status);
+		ft_atoll(cmd_2d[1]);
 	(void)env;
 }
