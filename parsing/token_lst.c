@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 23:32:33 by ymomen            #+#    #+#             */
-/*   Updated: 2024/03/16 08:08:31 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/03/21 00:38:20 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,19 @@ t_lst	*check_parss_erres(t_parse parc_line, t_lst **node, int *err)
 {
 	t_lst	*tmp;
 	tmp = *node;
+	if (tmp && (tmp->type == AND || tmp->type == OR || tmp->type == PIPE ))
+	{
+		*err = 258;
+		write(2, "🍪: syntax error near unexpected token `", 43);
+		ft_putstr_fd(tmp->value, 2);
+		write(2, "'\n", 2);
+		return (NULL);
+	}
 	while (tmp)
 	{
-		if((tmp ->prio > 0 && !tmp->next && tmp->type != CLOSE_PARENTH) || (tmp->next && ( tmp->prio > 2 && tmp->prio < 6 && tmp->next->prio > 2 && tmp->next->prio < 6))
-			|| (tmp->next && tmp->next->prio == tmp->prio) || (tmp->next && tmp->type > 0  && tmp->next->type > 0 &&tmp->type != CLOSE_PARENTH && tmp->next->type != OPEN_PARENTH  && tmp->next->type != 9 && tmp->next->type != 10 && tmp->type != 9 && tmp->type != 10 && tmp->next->type != 1 && tmp->type != 1 && tmp->next->type != 2 && tmp->type != 2)
-			|| ((tmp->type == 1 || tmp->type == 2 || tmp->type == 9 || tmp->type == 10) && !(tmp->next->type < 0)) || ((tmp->type <= 0 && tmp->next && tmp->next->type == OPEN_PARENTH) || (tmp->type == CLOSE_PARENTH && tmp->next && tmp->next->type == 0)))
+		if((tmp ->prio > 0 && !tmp->next && tmp->type != CLOSE_PARENTH) || (tmp->next && ( tmp->prio > 2 && tmp->prio < 6 && tmp->next->prio > 0 && tmp->next->prio < 6))
+			|| (tmp->next && tmp->type > 0  && tmp->next->type > 0 && tmp->type != CLOSE_PARENTH && tmp->next->type != OPEN_PARENTH  && !is_redarection(tmp) && !is_redarection(tmp->next))
+			|| (is_redarection(tmp) && !(tmp->next->type < 0)) || ((tmp->type <= 0 && tmp->next && tmp->next->type == OPEN_PARENTH) || (tmp->type == CLOSE_PARENTH && tmp->next && tmp->next->type == 0)))
 		{
 			*err = 258;
 			write(2, "🍪: syntax error near unexpected token `", 43);

@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 22:27:36 by ymomen            #+#    #+#             */
-/*   Updated: 2024/03/16 07:39:13 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/03/21 00:42:08 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,61 +127,5 @@ void	init_type(t_lst *prev, t_lst *node)
 	}
 }
 
-void redarection_join_arg(t_lst **node)
-{
-	t_lst *cur;
-	t_lst *cmd =NULL;
-	t_lst *operater = NULL;
-	char *tmp;
-	cur = *node;
-	while (cur)
-	{
-		if (cur->type == 0 && cur->next && cur->next->type > 0)
-		{
-			cmd = cur;
-			operater = cmd->next;
-		}
-		else if (cur->type < 0 && cmd && operater && operater->type> 0)
-		{
-			t_lst *hlf = cur->next;
-			if (hlf && hlf->type == 0)
-			{
-				tmp = cmd->value;
-				cmd ->value = ft_strjoin(cmd->value, ft_strdup(" "));
-				cmd->value = ft_strjoin(cmd->value, hlf->value);
-				cur->next = hlf->next;
-				free(hlf);
-			}
-		}
-		
-		cur = cur->next;
-	}
-}
-void redarection_perfix_lst(t_lst **head)
-{
-	t_lst *cmd;
-	t_lst *red;
-	t_lst *node;
-	t_lst *prev = NULL;
 
-	node = *head;
-	while (node)
-	{
-		if (node->type == 0 && node->next &&(node->next->type == REDIRECTION || node->next->type == INPUT || node->next->type == APPEND_REDIRECTION || node->next->type == HERE_DOC))
-		{
-			cmd = node;
-			red = cmd->next;
-			node = red->next;
-			if(prev)
-				prev->next = cmd->next;
-			else
-				*head = cmd->next;
-			while (node && node->next && (node->next->type < 0 || node->next->type == REDIRECTION || node->next->type == INPUT || node->next->type == APPEND_REDIRECTION || node->next->type == HERE_DOC))
-				node = node->next;
-			cmd->next = node->next;
-			node->next = cmd;
-		}
-		prev = node;
-		node = node->next;
-	}
-}
+

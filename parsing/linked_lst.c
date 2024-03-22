@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   linked_lst.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 17:39:11 by ymomen            #+#    #+#             */
-/*   Updated: 2024/03/15 17:10:38 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/21 00:48:06 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ t_lst	*lst_new(void *str)
 		return (NULL);
 	node = (t_lst *) malloc(sizeof(t_lst));
 	if (!node)
+	{
+		free(str);
 		return (NULL);
+	}
 	node->value = str;
 	is_operateur(&node);
 	node->next = NULL;
@@ -114,28 +117,4 @@ void	*pop_last(t_lst **stack)
 	prv->next = NULL;
 	*stack = tmp;
 	return (ptr);
-}
-void	 lst_add_front(t_lst **lst, t_lst *new)
-{
-	t_lst	*tmp;
-	if (!lst || !new)
-		return ;
-	if (!*lst)
-	{
-		*lst = new;
-		(*lst)->next = NULL;
-		return ;
-	}
-	tmp = *lst;
-	new->next = tmp;
-	*lst = new;
-}
-
-t_lst *lst_pop(t_lst **lst)
-{
-	t_lst	*top;
-
-	top = *lst;
-	*lst = (*lst)->next;
-	return (*lst);
 }

@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 01:23:32 by ymomen            #+#    #+#             */
-/*   Updated: 2024/03/16 03:52:14 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/03/21 00:50:38 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@ t_tree *parsing (char * line, int *err)
     t_lst *node;
     
     node = tokens_lst(line, err);
+    // while(node)
+    // {
+    //     printf("%s\n", node->value);
+    //     node = node->next;
+    // }
 	post = from_infix_to_Postfix(node);
 	tree = postfix_tree(post);
 	free(post);
@@ -29,7 +34,8 @@ t_tree *parsing (char * line, int *err)
     return (tree);
 }
 
-int get_height(t_tree *root) {
+int get_height(t_tree *root) 
+{
     if (root == NULL) {
         return 0;
     }
@@ -38,37 +44,29 @@ int get_height(t_tree *root) {
     return 1 + (left_height > right_height ? left_height : right_height);
 }
 
-// Function to print spaces for formatting
-void print_spaces(int n) {
+void print_spaces(int n)
+{
     for (int i = 0; i < n; i++) {
         printf(" ");
 		fflush(stdout);
     }
 }
 
-// Recursive function to print the tree in 2D
-void print_tree_2d_util(t_tree *root, int level, int space) {
+void print_tree_2d_util(t_tree *root, int level, int space)
+{
     if (root == NULL) {
         return;
     }
-
-    // Increase space for next level
     space += level;
-
-    // Process right child first for right-angled tree (in-order traversal)
     print_tree_2d_util(root->right, level, space);
-
-    // Print current node after padding
     print_spaces(space);
     printf("%s\n", root->value);
 	fflush(stdout);
-
-    // Process left child
     print_tree_2d_util(root->left, level, space);
 }
 
-// Function to print the tree in 2D
-void print_tree_2d(t_tree *root) {
+void print_tree_2d(t_tree *root)
+{
     int height = get_height(root);
     print_tree_2d_util(root, height, 0);
 }
