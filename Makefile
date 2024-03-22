@@ -38,6 +38,7 @@ SRCS =	parsing/ft_stdup.c \
 		execution/builtins/unset.c \
 		execution/builtins/env1.c \
 		execution/builtins/env2.c \
+		execution/builtins/exit.c \
 		execution/expanding/expand.c \
 		execution/expanding/expand_tools.c \
 		execution/expanding/print_lst.c \
@@ -49,7 +50,8 @@ SRCS =	parsing/ft_stdup.c \
 		execution/libft_tools/strjoin.c \
 		execution/libft_tools/strlen.c \
 		execution/libft_tools/strncmp.c \
-		execution/libft_tools/strtrim.c
+		execution/libft_tools/strtrim.c \
+		execution/libft_tools/putstr_fd.c
 
 OBJS = $(SRCS:.c=.o)
 

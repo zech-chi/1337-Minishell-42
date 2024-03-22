@@ -6,20 +6,20 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 01:48:23 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/16 17:22:09 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/20 17:47:14 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell_execution.h"
 
-int	ft_is_char_in_str(char c, char *set)
+int	ft_is_delimiter(char c)
 {
 	int	i;
 
 	i = 0;
-	while (set[i])
+	while (DELIMITERS[i])
 	{
-		if (set[i] == c)
+		if (DELIMITERS[i] == c)
 			return (1);
 		i++;
 	}
@@ -54,12 +54,12 @@ char	**ft_lst_to_2d_char(t_list *head)
 	return (char_2d);
 }
 
-void	ft_list_cwd(t_list **head, t_env *env)
+void	ft_list_cwd(t_list **head)
 {
 	DIR				*dir;
 	struct dirent	*entry;
 
-	dir = opendir(ft_env_search(env, "PWD"));
+	dir = opendir(".");
 	if (dir == NULL)
 	{
 		perror("Error");
@@ -83,6 +83,8 @@ void	ft_exp_init(t_expand *exp)
 	exp->cmd_2d = NULL;
 	exp->head = NULL;
 	exp->i = -1;
-	exp->open = 0;
-	exp->is_wild_card = 1;
+	exp->quote = 0;
+	exp->noting_before_quote = 0;
+	exp->found_star = 0;
+	exp->found_another_char = 0;
 }

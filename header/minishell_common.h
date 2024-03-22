@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:27:47 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/16 21:40:37 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/21 22:11:27 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <fcntl.h>
 # include <dirent.h>
 # include <string.h>
+# include <limits.h>
 
 
 enum e_peroirty { open_par = 6 , close_par = 6, and = 5, or = 5, pip = 3, redir = 1, appand = 1, here_doc = 1, input = 1};

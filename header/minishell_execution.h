@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:07:18 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/16 21:59:02 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/21 01:46:13 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ size_t	ft_strlen2(const char *s);
 int		ft_strncmp2(const char *s1, const char *s2, size_t n);
 char	*ft_strtrim2(char const *s1, char const *set);
 char	*ft_itoa2(int n);
-
+void	ft_putstr_fd2(char *s, int fd);
 /* builtins */
 
 // echo
@@ -85,23 +85,31 @@ void	ft_pwd_print(void);
 // unset
 int ft_unset(t_env **env, char **splited_prompt);
 
+// exit
+void	ft_exit(char **cmd_2d, t_env **env, int *exit_status);
+
 // expand.c
+
+# define DELIMITERS "$%!^~,. +=&?#@*[]()-/\"'"
+
 typedef struct s_expand
 {
 	t_list	*head;
-	int		open;
+	int		quote;
+	int		noting_before_quote;
 	char	*buff_exp;
 	char	*buff_env;
 	char	**cmd_2d;
 	int		i;
-	int		is_wild_card;
+	int		found_star;
+	int		found_another_char;
 }	t_expand;
 
 char	*ft_char_to_str(char c);
-int		ft_is_char_in_str(char c, char *set);
+int		ft_is_delimiter(char c);
 void	ft_print_lst(t_list *node); // to remove
 char	**ft_lst_to_2d_char(t_list *head);
-void	ft_list_cwd(t_list **head, t_env *env);
+void	ft_list_cwd(t_list **head);
 void	ft_exp_init(t_expand *exp);
 char	**ft_expand(char *prompt, t_env *env, int exit_status);
 
