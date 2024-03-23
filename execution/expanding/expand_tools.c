@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 01:48:23 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/20 17:47:14 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/23 00:00:02 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,13 @@ void	ft_exp_init(t_expand *exp)
 {
 	exp->buff_exp = NULL;
 	exp->buff_env = NULL;
+	exp->buff_star = NULL;
 	exp->cmd_2d = NULL;
 	exp->head = NULL;
 	exp->i = -1;
 	exp->quote = 0;
 	exp->noting_before_quote = 0;
+	exp->noting_before_env_var = 1;
 	exp->found_star = 0;
 	exp->found_another_char = 0;
 }
