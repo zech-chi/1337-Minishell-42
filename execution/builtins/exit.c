@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 00:50:36 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/22 22:13:15 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/23 21:21:55 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	ft_atoll(char *str)
 
 	ll = 0;
 	i = 0;
-	while (str[i] == ' ')
+	while (ft_isspace(str[i]))
 		i++;
 	signe = 1 - 2 * (str[i] == '-');
 	if (str[i] == '-' || str[i] == '+')
@@ -73,7 +73,7 @@ static void	ft_atoll(char *str)
 	exit(ft_get_modulo(ll * signe));
 }
 
-void	ft_exit(char **cmd_2d, t_env **env, int *exit_status)
+void	ft_exit(char **cmd_2d, int *exit_status)
 {
 	if (!cmd_2d[1])
 	{
@@ -89,5 +89,4 @@ void	ft_exit(char **cmd_2d, t_env **env, int *exit_status)
 	}
 	else
 		ft_atoll(cmd_2d[1]);
-	(void)env;
 }

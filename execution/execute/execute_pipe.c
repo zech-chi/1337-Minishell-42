@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:55:59 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/22 21:56:58 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/23 21:12:37 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	ft_l_child(t_tree *root, t_env **env, int *exit_status, int fd[2])
 	close(fd[0]);
 	if (dup2(fd[1], 1) == -1)
 	{
-		perror("Error");
+		ft_put_error("🍪: dup2 Error\n");
 		exit(FAILED);
 	}
 	close(fd[1]);
@@ -30,7 +30,7 @@ static void	ft_r_child(t_tree *root, t_env **env, int *exit_status, int fd[2])
 	close(fd[1]);
 	if (dup2(fd[0], 0) == -1)
 	{
-		perror("Error");
+		ft_put_error("🍪: dup2 Error\n");
 		exit(FAILED);
 	}
 	close(fd[0]);
@@ -45,17 +45,17 @@ void	ft_execute_pipe(t_tree *root, t_env **env, int *exit_status)
 	int	fd[2];
 
 	if (pipe(fd) == -1)
-		return (perror("Error"));
+		return (ft_put_error("🍪: pipe Error\n"));
 	pid1 = 0;
 	pid2 = 0;
 	pid1 = fork();
 	if (pid1 < 0)
-		return (perror("Error"));
+		return (ft_put_error("🍪: fork Error\n"));
 	else if (pid1 == 0)
 		ft_l_child(root, env, exit_status, fd);
 	pid2 = fork();
 	if (pid2 == -1)
-		return (perror("Error"), exit(FAILED));
+		return (ft_put_error("🍪: fork Error\n"), exit(FAILED));
 	else if (pid2 == 0)
 		ft_r_child(root, env, exit_status, fd);
 	close(fd[0]);

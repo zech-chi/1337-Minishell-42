@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 09:36:52 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/23 02:16:54 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/23 21:23:52 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,13 @@ static void	ft_expand_help2(t_expand *exp, char *cmd)
 {
 	if (exp->quote == 0)
 	{
-		if (exp->i == 0 || cmd[exp->i - 1] == ' ')
+		if (exp->i == 0 || ft_isspace(cmd[exp->i - 1]))
 			exp->noting_before_quote = 1;
 		exp->quote = cmd[exp->i];
 	}
 	else if (exp->quote == cmd[exp->i])
 	{
-		if (exp->noting_before_quote && cmd[exp->i - 1] == exp->quote && (!cmd[exp->i + 1] || cmd[exp->i + 1] == ' '))
+		if (exp->noting_before_quote && cmd[exp->i - 1] == exp->quote && (!cmd[exp->i + 1] || ft_isspace(cmd[exp->i + 1])))
 			ft_lstadd_back(&(exp->head), ft_lstnew(ft_strdup2("")));
 		exp->quote = 0;
 		exp->noting_before_quote = 0;
@@ -94,15 +94,22 @@ void	ft_expand_help3(t_expand *exp, t_env *env, char *cmd, int exit_status)
 	else
 		exp->buff_exp = ft_strjoin2(exp->buff_exp, env_var);
 		
-	if (cmd[exp->i] == '*' && cmd[exp->i - 1] == '$')
-		(exp->i)++; 
-	else if (cmd[exp->i] == '*' && env_var && exp->noting_before_env_var && !(exp->quote))
-	{
-		while (cmd[exp->i] == '*')
-			exp->buff_star = ft_strjoin2(exp->buff_star, ft_char_to_str(cmd[(exp->i)++]));
-		exp->found_star = 1;
+	if (exp->buff_exp)
 		exp->found_another_char = 1;
-	}
+		
+	if (cmd[exp->i] == '*' && cmd[exp->i - 1] == '$')
+		(exp->i)++;
+	// I add this
+	else if (cmd[exp->i] == '*')
+		exp->found_star = 1;
+	/// remove this part is about matching
+	//else if (cmd[exp->i] == '*' && env_var && exp->noting_before_env_var && !(exp->quote))
+	//{
+	//	while (cmd[exp->i] == '*')
+	//		exp->buff_star = ft_strjoin2(exp->buff_star, ft_char_to_str(cmd[(exp->i)++]));
+	//	exp->found_star = 1;
+	//	exp->found_another_char = 1;
+	//}
 	else if (ft_strlen2(exp->buff_env) == 1)
 	{
 		if (cmd[exp->i] == '?')
@@ -142,7 +149,7 @@ char	**ft_expand(char *cmd, t_env *env, int exit_status)
 	ft_exp_init(&exp);
 	while (cmd[++(exp.i)])
 	{
-		if (cmd[exp.i] == ' ' && exp.quote == 0)
+		if (ft_isspace(cmd[exp.i]) && exp.quote == 0)
 			ft_expand_help1(&exp);
 		else if (cmd[exp.i] == '"' || cmd[exp.i] == '\'')
 			ft_expand_help2(&exp, cmd);

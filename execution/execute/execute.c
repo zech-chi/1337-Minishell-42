@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:28:34 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/16 22:34:02 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/23 21:10:32 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,16 @@ void	ft_execute_cmd(char *cmd, t_env **env, int *exit_status)
 	pid = fork();
 	if (pid < 0)
 	{
-		perror("Fork Error");
+		ft_put_error("🍪: Fork Error\n");
 		exit(FAILED);
 	}
 	else if (pid == 0)
 	{
 		execve(cmd_2d[0], cmd_2d, ft_env_create_2d(*env));
 		ft_execute_search_in_path(cmd_2d, *env);
-		perror("Execution Error");
+		ft_put_error("🍪: Execution Error: ");
+		ft_put_error(cmd_2d[0]);
+		ft_put_error(" command not found\n");
 		exit(FAILED);
 	}
 	else

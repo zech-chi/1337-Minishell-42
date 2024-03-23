@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:07:18 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/22 23:53:15 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/23 22:19:18 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ int		ft_strncmp2(const char *s1, const char *s2, size_t n);
 char	*ft_strtrim2(char const *s1, char const *set);
 char	*ft_itoa2(int n);
 void	ft_putstr_fd2(char *s, int fd);
+void	ft_put_error(char *s);
+int		ft_isspace(char c);
 /* builtins */
 
 // echo
@@ -83,10 +85,13 @@ int	ft_export(t_env **env, char **splited_prompt);
 void	ft_pwd_print(void);
 
 // unset
-int ft_unset(t_env **env, char **splited_prompt);
+void	ft_unset(t_env **env, char **cmd_2d, int *exit_status);
 
 // exit
-void	ft_exit(char **cmd_2d, t_env **env, int *exit_status);
+void	ft_exit(char **cmd_2d, int *exit_status);
+
+// env
+void	ft_env(t_env *env, char **cmd_2d, int *exit_status);
 
 // expand.c
 

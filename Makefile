@@ -37,22 +37,25 @@ SRCS =	parsing/ft_stdup.c \
 		execution/builtins/pwd.c \
 		execution/builtins/export.c \
 		execution/builtins/unset.c \
-		execution/builtins/env1.c \
-		execution/builtins/env2.c \
 		execution/builtins/exit.c \
+		execution/builtins/env.c \
+		execution/env/env1.c \
+		execution/env/env2.c \
 		execution/expanding/expand.c \
 		execution/expanding/expand_tools.c \
 		execution/expanding/print_lst.c \
-		execution/libft_tools/itoa.c \
-		execution/libft_tools/linked_list.c \
-		execution/libft_tools/split.c \
-		execution/libft_tools/strcmp.c \
-		execution/libft_tools/strdup.c \
-		execution/libft_tools/strjoin.c \
-		execution/libft_tools/strlen.c \
-		execution/libft_tools/strncmp.c \
-		execution/libft_tools/strtrim.c \
-		execution/libft_tools/putstr_fd.c
+		execution/tools/itoa.c \
+		execution/tools/linked_list.c \
+		execution/tools/split.c \
+		execution/tools/strcmp.c \
+		execution/tools/strdup.c \
+		execution/tools/strjoin.c \
+		execution/tools/strlen.c \
+		execution/tools/strncmp.c \
+		execution/tools/strtrim.c \
+		execution/tools/print_error.c \
+		execution/tools/isspace.c \
+		execution/tools/putstr_fd.c 
 
 OBJS = $(SRCS:.c=.o)
 
