@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 22:01:06 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/22 22:01:12 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/23 01:29:47 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ int	main(int ac, char **av, char **ev)
 		line = ft_get_prompt(exit_status);
 		tree = parsing(line, &exit_status);
 		//atexit(f);
-		printf("--------------- tree --------------------\n");
-		print_tree_2d(tree);
-		printf("-----------------------------------------\n");
+		//printf("--------------- tree --------------------\n");
+		//print_tree_2d(tree);
+		//printf("-----------------------------------------\n");
 		//if (tree)
 		//	printf("%d\n", tree->type);
 		ft_execute(tree, &env, &exit_status);

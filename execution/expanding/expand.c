@@ -6,11 +6,19 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 09:36:52 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/21 00:48:13 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/23 02:16:54 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell_execution.h"
+
+int	ft_is_valid_char(char c)
+{
+	return (('a' <= c && c <= 'z')
+			|| ('A' <= c && c <= 'Z')
+			|| ('0' <= c && c <= '9')
+			|| (c == '_'));
+}
 
 int	ft_is_numeric(char c)
 {
@@ -19,6 +27,8 @@ int	ft_is_numeric(char c)
 
 static void	ft_expand_help1(t_expand *exp)
 {
+	if (exp->buff_star)
+		exp->buff_star = NULL; // free
 	if (exp->buff_exp)
 	{
 		if (exp->found_star && !exp->found_another_char)
@@ -28,6 +38,8 @@ static void	ft_expand_help1(t_expand *exp)
 		exp->buff_exp = NULL;
 		exp->found_star = 0;
 		exp->found_another_char = 0;
+		exp->noting_before_env_var = 1;
+		exp->noting_before_quote = 0;
 	}
 }
 
@@ -48,6 +60,11 @@ static void	ft_expand_help2(t_expand *exp, char *cmd)
 	}
 	else
 	{
+		if (exp->buff_star)
+		{
+			exp->buff_exp = ft_strjoin2(exp->buff_exp, exp->buff_star);
+			exp->buff_star = NULL; // free
+		}
 		exp->buff_exp = ft_strjoin2(exp->buff_exp, ft_char_to_str(cmd[exp->i]));
 		exp->found_another_char = 1;
 	}
@@ -56,65 +73,61 @@ static void	ft_expand_help2(t_expand *exp, char *cmd)
 void	ft_expand_help3(t_expand *exp, t_env *env, char *cmd, int exit_status)
 {
 	char	*env_var;
-	char	*buff_star;
 
-	buff_star = NULL;
-	exp->found_another_char = 1;
-	while (cmd[exp->i] && cmd[exp->i] == '$')
+	if (exp->buff_exp)
+		exp->noting_before_env_var = 0;
+	exp->buff_env = ft_char_to_str(cmd[(exp->i)++]);
+	while (cmd[exp->i] && ft_is_valid_char(cmd[exp->i]))
 	{
-		exp->buff_env = ft_char_to_str(cmd[(exp->i)++]);
-		while (cmd[exp->i] && !ft_is_delimiter(cmd[exp->i]))
+		if (ft_is_numeric(cmd[exp->i]) && cmd[exp->i - 1] == '$')
 		{
-			if (ft_is_numeric(cmd[exp->i]) && cmd[exp->i - 1] == '$')
-			{
-				exp->buff_env = NULL;
-				break;
-			}
-			else
-				exp->buff_env = ft_strjoin2(exp->buff_env, ft_char_to_str(cmd[(exp->i)++]));
-		}
-		if (!exp->buff_env)
+			exp->buff_env = NULL; // free
 			break;
-		env_var = ft_env_search(env, exp->buff_env + 1);
-		exp->buff_exp = ft_strjoin2(exp->buff_exp, env_var);
-		if (!env_var && !exp->buff_exp && !exp->buff_env)
-			exp->found_another_char = 0;
-		if (cmd[exp->i] == '*')
-		{
-			while (cmd[exp->i] == '*')
-			{
-				buff_star = ft_strjoin2(buff_star, ft_char_to_str(cmd[exp->i++]));
-				(exp->i)++;
-			}
-			//exp->found_star = 1;
-			if (!(exp->found_another_char) && (!cmd[exp->i] || cmd[exp->i] == ' '))
-				ft_list_cwd(&(exp->head));
-			
 		}
-		else if (cmd[exp->i] == '?' && ft_strlen2(exp->buff_env) == 1)
-			exp->buff_exp = ft_strjoin2(exp->buff_exp, ft_itoa2(exit_status));
-		else if (cmd[exp->i] == ' ' && exp->quote == 0)
-			ft_expand_help1(exp);
-		else if (cmd[exp->i] == '"' || cmd[exp->i] == '\'')
-			ft_expand_help2(exp, cmd);
-		else if (cmd[exp->i] && cmd[exp->i] != '$' && cmd[exp->i] != ' ')
-			exp->buff_exp = ft_strjoin2(exp->buff_exp,
-					ft_char_to_str(cmd[exp->i]));
-		else if (ft_strlen2(exp->buff_env) == 1 && !cmd[exp->i])
-			exp->buff_exp = ft_strjoin2(exp->buff_exp, exp->buff_env);
-		exp->buff_env = NULL;
+		exp->buff_env = ft_strjoin2(exp->buff_env, ft_char_to_str(cmd[(exp->i)++]));
 	}
+	if (!exp->buff_env)
+		return ;
+	env_var = ft_env_search(env, exp->buff_env + 1);
+	if (!env_var && exp->quote)
+		exp->buff_exp = ft_strjoin2(exp->buff_exp, ft_strdup2(""));
+	else
+		exp->buff_exp = ft_strjoin2(exp->buff_exp, env_var);
+		
+	if (cmd[exp->i] == '*' && cmd[exp->i - 1] == '$')
+		(exp->i)++; 
+	else if (cmd[exp->i] == '*' && env_var && exp->noting_before_env_var && !(exp->quote))
+	{
+		while (cmd[exp->i] == '*')
+			exp->buff_star = ft_strjoin2(exp->buff_star, ft_char_to_str(cmd[(exp->i)++]));
+		exp->found_star = 1;
+		exp->found_another_char = 1;
+	}
+	else if (ft_strlen2(exp->buff_env) == 1)
+	{
+		if (cmd[exp->i] == '?')
+		{
+			exp->buff_exp = ft_strjoin2(exp->buff_exp, ft_itoa2(exit_status));
+			(exp->i)++;
+		}
+		else if ((cmd[exp->i] != '\'' && cmd[exp->i] != '"' && exp->quote == 0) || exp->quote != 0)
+		{
+			exp->buff_exp = ft_strjoin2(exp->buff_exp, ft_char_to_str('$'));
+			exp->found_another_char = 1;
+		}
+	}
+		
+	(exp->i)--;
+	(void)exit_status;
 }
-
-
-//static void	ft_expand_help3_1(t_expand *exp, t_env *env, char *cmd, int exit_status)
-//{
-//	exp->buff_env = ft_char_to_str(cmd[(exp->i)++]);
-//	while ()
-//}
 
 static void	ft_expand_help4(t_expand *exp, char c)
 {
+	if (exp->buff_star)
+	{
+		exp->buff_exp = ft_strjoin2(exp->buff_exp, exp->buff_star);
+		exp->buff_star = NULL; // free
+	}
 	exp->buff_exp = ft_strjoin2(exp->buff_exp, ft_char_to_str(c));
 	if (c != '*' || exp->quote != 0)
 		exp->found_another_char = 1;
