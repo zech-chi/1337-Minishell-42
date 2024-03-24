@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 16:49:44 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/16 17:15:17 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/24 03:56:58 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ft_env_update(t_env **env, char *key, char *newval)
 
 // add new key and value in env 
 // return 0 if all good, -1 otherwise
-int	ft_env_add(t_env **env, char *key, char *value)
+int	ft_env_add(t_env **env, char *key, char *value, int visible)
 {
 	t_env	*new;
 	t_env	*last;
@@ -42,6 +42,7 @@ int	ft_env_add(t_env **env, char *key, char *value)
 	new->key = key;
 	new->value = value;
 	new->next = NULL;
+	new->visible = visible;
 	last = *env;
 	if (!last)
 		return (*env = new, 0);
@@ -97,7 +98,8 @@ void	ft_env_print(t_env *env)
 {
 	while (env)
 	{
-		printf("%s=%s\n", env->key, env->value);
+		if (env->visible)
+			printf("%s=%s\n", env->key, env->value);
 		env = env->next;
 	}
 }

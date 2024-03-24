@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 16:50:15 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/24 02:05:04 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/24 03:59:59 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_env	*ft_env_create(char **ev)
 			else
 				value = ft_strjoin2(value, ft_strjoin2("=", splited_row[c]));
 		}
-		ft_env_add(&env, splited_row[0], value);
+		ft_env_add(&env, splited_row[0], value, 1);
 	}
 	return (env);
 }
@@ -52,7 +52,7 @@ t_env	*ft_env_duplicate(t_env *env)
 	env_dup = NULL;
 	while (env)
 	{
-		ft_env_add(&env_dup, ft_strdup2(env->key), ft_strdup2(env->value));
+		ft_env_add(&env_dup, ft_strdup2(env->key), ft_strdup2(env->value), env->visible);
 		env = env->next;
 	}
 	return (env_dup);
