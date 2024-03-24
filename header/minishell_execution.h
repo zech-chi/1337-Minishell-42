@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:07:18 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/23 22:19:18 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/24 01:50:27 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct s_env
 # define EQUAL '='
 
 t_env	*ft_env_create(char **ev);
+t_env	*ft_env_duplicate(t_env *env);
 int		ft_env_add(t_env **env, char *key, char *value);
 int		ft_env_update(t_env **env, char *key, char *newval);
 void	ft_env_delete(t_env **env, char *key);
@@ -79,7 +80,7 @@ char	**ft_env_create_2d(t_env *env);
 int	ft_cd(char **splited_prompt, t_env **env);
 
 // export
-int	ft_export(t_env **env, char **splited_prompt);
+void	ft_export(t_env **env, char **cmd_2d);
 
 // pwd
 void	ft_pwd_print(void);

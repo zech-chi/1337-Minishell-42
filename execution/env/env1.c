@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 16:50:15 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/16 17:17:11 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/24 02:05:04 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,19 @@ t_env	*ft_env_create(char **ev)
 	return (env);
 }
 
+t_env	*ft_env_duplicate(t_env *env)
+{
+	t_env	*env_dup;
+
+	env_dup = NULL;
+	while (env)
+	{
+		ft_env_add(&env_dup, ft_strdup2(env->key), ft_strdup2(env->value));
+		env = env->next;
+	}
+	return (env_dup);
+}
+
 char	**ft_env_create_2d(t_env *env)
 {
 	char	**env_2d;
@@ -52,7 +65,10 @@ char	**ft_env_create_2d(t_env *env)
 
 	env_2d = malloc(sizeof(char *) * (ft_env_size(env) + 1));
 	if (!env_2d)
+	{
+		ft_put_error("🍪: malloc failed\n");
 		return (NULL);
+	}
 	r = 0;
 	while (env)
 	{
