@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:39:39 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/24 04:15:44 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/24 18:21:03 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,8 @@ void	ft_export(t_env **env, char **cmd_2d)
 {
 	int		i;
 	t_env	*env_dup;
-	char	*part1;
-	char	*part2;
+	//char	*part1;
+	//char	*part2;
 	int		right;
 
 	if (!(cmd_2d[1]))
@@ -114,7 +114,7 @@ void	ft_export(t_env **env, char **cmd_2d)
 	while (cmd_2d[++i])
 	{
 		right = 0;
-		part1;
+		//part1;
 		//one_by_one = ft_split2(cmd_2d[i], '=');
 		//if (!one_by_one || !one_by_one[0] || !one_by_one[1])
 		//	continue ;
