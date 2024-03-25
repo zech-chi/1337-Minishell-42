@@ -6,16 +6,12 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 16:50:15 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/24 03:59:59 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/25 20:01:57 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell_execution.h"
 
-// creat linked list env
-// return env linked list on success, NULL otherwise
-// I should clear env !!!!
-// 		free(splited_row);
 t_env	*ft_env_create(char **ev)
 {
 	t_env	*env;
@@ -36,11 +32,13 @@ t_env	*ft_env_create(char **ev)
 		while (splited_row[++c])
 		{
 			if (c == 1)
-				value = ft_strjoin2(value, splited_row[c]);
+				value = ft_strjoin2(value, ft_strdup2(splited_row[c]));
 			else
-				value = ft_strjoin2(value, ft_strjoin2("=", splited_row[c]));
+				value = ft_strjoin2(value, ft_strjoin2(ft_strdup2("="), ft_strdup2(splited_row[c])));
 		}
-		ft_env_add(&env, splited_row[0], value, 1);
+		ft_env_add(&env, ft_strdup2(splited_row[0]), ft_strdup2(value), 1);
+		free(value);
+		ft_free_2d_char(splited_row);
 	}
 	return (env);
 }
@@ -93,7 +91,6 @@ int	ft_env_size(t_env *env)
 	return (size);
 }
 
-// free env linked list with all its staffs
 void	ft_env_clear(t_env **env)
 {
 	t_env	*cur_node;

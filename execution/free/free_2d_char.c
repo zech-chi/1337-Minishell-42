@@ -1,39 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   strjoin.c                                          :+:      :+:    :+:   */
+/*   free_2d_char.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/14 11:47:18 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/25 20:02:39 by zech-chi         ###   ########.fr       */
+/*   Created: 2024/03/25 19:44:48 by zech-chi          #+#    #+#             */
+/*   Updated: 2024/03/25 19:44:50 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell_execution.h"
 
-char	*ft_strjoin2(char *s1, char *s2)
+void	ft_free_2d_char(char **char_2d)
 {
-	char	*ptr;
-	size_t	i;
-	size_t	j;
+	int	r;
 
-	if (!s1 && !s2)
-		return (NULL);
-	if (!s1)
-		return (s2);
-	if (!s2)
-		return (s1);
-	ptr = malloc(ft_strlen2(s1) + ft_strlen2(s2) + 1);
-	if (ptr == NULL)
-		return (free(s1), free(s2), NULL);
-	i = 0;
-	j = 0;
-	while (s1[j])
-		ptr[i++] = s1[j++];
-	j = 0;
-	while (s2[j])
-		ptr[i++] = s2[j++];
-	ptr[i] = 0;
-	return (free(s1), free(s2), ptr);
+	if (!char_2d)
+		return ;
+	r = 0;
+	while (char_2d[r])
+	{
+		free(char_2d[r]);
+		r++;
+	}
+	free(char_2d);
 }

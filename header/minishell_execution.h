@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:07:18 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/24 21:44:46 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/25 19:46:05 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,5 +136,8 @@ int		ft_execute_builtins(char **cmd_2d, t_env **env, int *exit_status);
 
 // execute_redirection_out.c
 void	ft_execute_redirection_out(t_tree *root, t_env **env, int *exit_status);
+
+/*free*/
+void	ft_free_2d_char(char **char_2d);
 
 #endif
