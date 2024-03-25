@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 09:36:52 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/25 20:39:37 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/25 20:48:25 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void	ft_expand_help3(t_expand *exp, t_env *env, char *cmd, int exit_status)
 	{
 		if (ft_is_numeric(cmd[exp->i]) && cmd[exp->i - 1] == '$')
 		{
+			free(exp->buff_env);
 			exp->buff_env = NULL; // free
 			break;
 		}
@@ -93,11 +94,11 @@ void	ft_expand_help3(t_expand *exp, t_env *env, char *cmd, int exit_status)
 	if (!env_var && exp->quote)
 		exp->buff_exp = ft_strjoin2(exp->buff_exp, ft_strdup2(""));
 	else
-		exp->buff_exp = ft_strjoin2(exp->buff_exp, env_var);
+		exp->buff_exp = ft_strjoin2(exp->buff_exp, ft_strdup2(env_var));
 		
 	if (exp->buff_exp)
 		exp->found_another_char = 1;
-		
+
 	if (cmd[exp->i] == '*' && cmd[exp->i - 1] == '$')
 		(exp->i)++;
 	// I add this
@@ -127,6 +128,7 @@ void	ft_expand_help3(t_expand *exp, t_env *env, char *cmd, int exit_status)
 	(exp->i)--;
 	(void)exit_status;
 	free(exp->buff_env);
+	free(env_var);
 	exp->buff_env = NULL;
 }
 

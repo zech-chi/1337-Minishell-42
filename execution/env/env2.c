@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 16:49:44 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/24 20:57:35 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/25 20:49:41 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char	*ft_env_search(t_env *env, char *key)
 	while (env)
 	{
 		if (!ft_strcmp2(env->key, key))
-			return (env->value);
+			return (ft_strdup2(env->value));
 		env = env->next;
 	}
 	return (NULL);
