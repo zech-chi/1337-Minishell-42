@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:49:47 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/24 04:00:53 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/24 23:44:56 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	ft_is_valid_identifier(char *str)
 {
 	int	i;
 
-	if (!str)
+	if (!str || !str[0])
 		return (0);
 	i = 0;
 	while (str[i])

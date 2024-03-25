@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:29:33 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/16 17:37:20 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/25 00:03:21 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@ static void	ft_pwd_oldpwd_update(t_env **env)
 
 	prev_wd = ft_env_search(*env, "PWD");
 	getcwd(cur_wd, MAXPATHLEN);
-	ft_env_update(env, "OLDPWD", prev_wd);
-	ft_env_update(env, "PWD", ft_strdup2(cur_wd));
+	ft_env_delete(env, "OLDPWD");
+	ft_env_add(env, "OLDPWD", prev_wd, 1);
+	ft_env_update(env, "PWD", ft_strdup2(cur_wd), 0);
 }
 
 int	ft_cd(char **splited_prompt, t_env **env)

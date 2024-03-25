@@ -6,13 +6,13 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 16:49:44 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/24 03:56:58 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/24 20:57:35 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell_execution.h"
 
-int	ft_env_update(t_env **env, char *key, char *newval)
+int	ft_env_update(t_env **env, char *key, char *newval, int append_mod)
 {
 	t_env	*node;
 
@@ -21,7 +21,10 @@ int	ft_env_update(t_env **env, char *key, char *newval)
 	{
 		if (!ft_strcmp2(node->key, key))
 		{
-			node->value = newval;
+			if (append_mod)
+				node->value = ft_strjoin2(node->value, newval);
+			else
+				node->value = newval;
 			return (0);
 		}
 		node = node->next;

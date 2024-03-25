@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:39:39 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/24 18:21:03 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/24 21:55:31 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,15 @@ static int	ft_is_valid_identifier(char *str)
 {
 	int	i;
 
-	if (!str)
-		return (0);
+	if (!str || !str[0])
+		return (-1);
 	i = 0;
 	while (str[i])
 	{
+		if (str[i] == '+' && !str[i + 1] && i != 0)
+			return (1);
 		if ('0' <= str[i] && str[i] <= '9' && i == 0)
-			return (0);
+			return (-1);
 		if (
 			!(
 			('0' <= str[i] && str[i] <= '9')
@@ -31,10 +33,10 @@ static int	ft_is_valid_identifier(char *str)
 			|| str[i] == '_'
 			)
 		)
-			return (0);
+			return (-1);
 		i++;
 	}
-	return (1);
+	return (0);
 }
 
 static void	ft_swap(t_env	*node1, t_env	*node2)
@@ -79,32 +81,71 @@ static void	ft_print_sorted_env(t_env **env)
 	// must free env;
 }
 
-char	*ft_get_part(char *str, int	*right)
+char	*ft_get_slice(char *str, int *right, char stop)
 {
-	char	*first_part;
+	char	*slice;
 	int		left;
+	int		i;
 
 	if (!str)
 		return (NULL);
-	left = *right - 1;
-	while (str[*right] != '=')
+	left = *right;
+	while (str[*right] && str[*right] != stop)
 		(*right)++;
-	first_part = (char *)malloc(sizeof(char) * (*right + 1));
-	while (++left < *right)
-		first_part[left] = str[left];
-	first_part[left] = '\0';
-	return (first_part);
+	slice = (char *)malloc(sizeof(char) * (*right - left + 1));
+	i = 0;
+	while (left < *right)
+		slice[i++] = str[left++];
+	slice[left] = '\0';
+	return (slice);
 }
 
+void	ft_export_help(char *str, t_env **env, int *exit_status)
+{
+	char	*slice1;
+	char	*slice2;
+	int		right;
+	int		found_equal;
+	int		append_mod;
 
-void	ft_export(t_env **env, char **cmd_2d)
+	found_equal = 0;
+	right = 0;
+	slice1 = ft_get_slice(str, &right, '=');
+	if (str[right] == '=')
+	{
+		found_equal = 1;
+		right++;
+	}
+	slice2 = ft_get_slice(str, &right, '\0');
+	append_mod = ft_is_valid_identifier(slice1);
+	if (append_mod == -1)
+	{
+		ft_put_error("🍪: export: `");
+		ft_put_error(slice1);
+		if (found_equal)
+			ft_put_error("=");
+		ft_put_error(slice2);
+		ft_put_error("': not a valid identifier\n");
+		*exit_status = 1;
+		return ;
+	}
+	if (append_mod)
+		slice1 = ft_substr(slice1, 0, ft_strlen2(slice1) - 1);
+	if (ft_env_update(env, slice1, slice2, append_mod))
+	{
+		if (slice2 && slice2[0])
+			ft_env_add(env, slice1, slice2, 1);
+		else
+			ft_env_add(env, slice1, slice2, 0);
+	}
+}
+
+void	ft_export(t_env **env, char **cmd_2d, int *exit_status)
 {
 	int		i;
 	t_env	*env_dup;
-	//char	*part1;
-	//char	*part2;
-	int		right;
 
+	*exit_status = 0;
 	if (!(cmd_2d[1]))
 	{
 		env_dup = ft_env_duplicate(*env);
@@ -112,15 +153,5 @@ void	ft_export(t_env **env, char **cmd_2d)
 	}
 	i = 0;
 	while (cmd_2d[++i])
-	{
-		right = 0;
-		//part1;
-		//one_by_one = ft_split2(cmd_2d[i], '=');
-		//if (!one_by_one || !one_by_one[0] || !one_by_one[1])
-		//	continue ;
-		//if (ft_env_update(env, one_by_one[0], one_by_one[1]))
-		//	ft_env_add(env, one_by_one[0], one_by_one[1], 1);
-	}
-	ft_is_valid_identifier(NULL);
+		ft_export_help(cmd_2d[i], env, exit_status);
 }
-//aa=
