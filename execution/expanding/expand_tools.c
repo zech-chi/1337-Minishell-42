@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 01:48:23 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/23 00:00:02 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/25 20:27:01 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,22 +35,25 @@ char	*ft_char_to_str(char c)
 	return (ft_strdup2(str));
 }
 
-char	**ft_lst_to_2d_char(t_list *head)
+char	**ft_lst_to_2d_char(t_list **head)
 {
 	char	**char_2d;
 	int		r;
+	t_list	*cur;
 
-	char_2d = (char **)malloc(sizeof(char *) * (ft_lstsize(head) + 1));
+	char_2d = (char **)malloc(sizeof(char *) * (ft_lstsize(*head) + 1));
 	if (!char_2d)
 		return (NULL);
 	r = 0;
-	while (head)
+	cur = *head;
+	while (cur)
 	{
-		char_2d[r] = head->content;
-		head = head->next;
+		char_2d[r] = ft_strdup2(cur->content);
+		cur = cur->next;
 		r++;
 	}
 	char_2d[r] = NULL;
+	ft_lstclear(head);
 	return (char_2d);
 }
 
