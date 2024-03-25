@@ -55,6 +55,7 @@ SRCS =	parsing/ft_stdup.c \
 		execution/tools/strtrim.c \
 		execution/tools/print_error.c \
 		execution/tools/isspace.c \
+		execution/tools/substr.c \
 		execution/tools/putstr_fd.c 
 
 OBJS = $(SRCS:.c=.o)

@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 16:03:03 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/23 22:18:46 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/24 21:44:26 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	ft_execute_builtins(char **cmd_2d, t_env **env, int *exit_status)
 	else if (!ft_strcmp2("cd", cmd_2d[0]))
 		return (ft_cd(cmd_2d, env), *exit_status = 0, SUCCESS);
 	else if (!ft_strcmp2("export", cmd_2d[0]))
-		return (ft_export(env, cmd_2d), *exit_status = 0, SUCCESS);
+		return (ft_export(env, cmd_2d, exit_status), SUCCESS);
 	else if (!ft_strcmp2("pwd", cmd_2d[0]))
 		return (ft_pwd_print(), *exit_status = 0, SUCCESS);
 	else if (!ft_strcmp2("unset", cmd_2d[0]))
