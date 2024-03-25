@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 18:05:09 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/15 17:52:08 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/25 20:39:15 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*ft_strdup2(const char *s1)
 	size_t	i;
 	char	*ptr;
 
+	if (!s1)
+		return (NULL);
 	len = ft_strlen2(s1);
 	ptr = malloc(sizeof(char) * (len + 1));
 	if (ptr == NULL)

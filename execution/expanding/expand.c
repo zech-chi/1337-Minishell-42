@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 09:36:52 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/25 20:26:21 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/25 20:39:37 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,8 @@ void	ft_expand_help3(t_expand *exp, t_env *env, char *cmd, int exit_status)
 	}
 	(exp->i)--;
 	(void)exit_status;
+	free(exp->buff_env);
+	exp->buff_env = NULL;
 }
 
 static void	ft_expand_help4(t_expand *exp, char c)
