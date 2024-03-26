@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 22:27:36 by ymomen            #+#    #+#             */
-/*   Updated: 2024/03/21 00:42:08 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/03/25 01:58:09 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	is_operateur(t_lst **node)
 {
 	if (!*node)
 		return ;
+	(*node)->lvl = 0;
 	if (!ft_strcmp((*node)->value, "("))
 	{
 		(*node)->prio = open_par;

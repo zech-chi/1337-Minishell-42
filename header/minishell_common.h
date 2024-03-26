@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:27:47 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/20 23:33:31 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/03/24 23:43:34 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ enum e_peroirty { open_par = 6 , close_par = 6, and = 5, or = 5, pip = 3, redir 
 
 # define L_TO_R 3
 # define R_TO_L 2
-# define L_R_R_L 1
 # define OPERAND 0
 
 typedef struct s_tree

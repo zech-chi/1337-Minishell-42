@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:25:53 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/16 21:37:23 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/23 22:29:50 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef struct s_lst
 	int				read;
 	int				type;
 	struct s_lst	*next;
+	int 			lvl;
 }	t_lst;
 
 typedef struct s_parse
@@ -32,7 +33,7 @@ typedef struct s_parse
 }t_parse;
 
 /* FUNCTIONS */
-int is_redarection(t_lst *node);
+int is_redarection(int type);
 void redarection_prac_fix(t_lst **head);
 void redarection_perfix_lst(t_lst **head);
 void redarection_join_arg(t_lst **node);
