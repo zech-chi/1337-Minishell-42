@@ -20,27 +20,22 @@ void update_lst(t_lst **head)
     }
 }
 
-void	 lst_add_front(t_lst **lst, t_lst *new)
-{
-	t_lst	*tmp;
-	if (!lst || !new)
-		return ;
-	if (!*lst)
-	{
-		*lst = new;
-		(*lst)->next = NULL;
-		return ;
-	}
-	tmp = *lst;
-	new->next = tmp;
-	*lst = new;
-}
 
-t_lst *lst_pop(t_lst **lst)
-{
-	t_lst	*top;
 
-	top = *lst;
-	*lst = (*lst)->next;
-	return (*lst);
+
+
+
+
+t_tree* insertIntoBST(t_tree* root, char *value) 
+{
+   if (!root)
+        return (new_node(value));
+    else
+    {
+        if (root->value < value)
+            root -> right = insertIntoBST(root->right, value);
+        else if (root->value > value)
+           root->left = insertIntoBST(root->left, value);
+    }
+    return (root);
 }

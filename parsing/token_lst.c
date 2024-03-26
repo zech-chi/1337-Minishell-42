@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 23:32:33 by ymomen            #+#    #+#             */
-/*   Updated: 2024/03/21 00:38:20 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/03/26 00:45:05 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ t_lst	*check_parss_erres(t_parse parc_line, t_lst **node, int *err)
 	while (tmp)
 	{
 		if((tmp ->prio > 0 && !tmp->next && tmp->type != CLOSE_PARENTH) || (tmp->next && ( tmp->prio > 2 && tmp->prio < 6 && tmp->next->prio > 0 && tmp->next->prio < 6))
-			|| (tmp->next && tmp->type > 0  && tmp->next->type > 0 && tmp->type != CLOSE_PARENTH && tmp->next->type != OPEN_PARENTH  && !is_redarection(tmp) && !is_redarection(tmp->next))
-			|| (is_redarection(tmp) && !(tmp->next->type < 0)) || ((tmp->type <= 0 && tmp->next && tmp->next->type == OPEN_PARENTH) || (tmp->type == CLOSE_PARENTH && tmp->next && tmp->next->type == 0)))
+			|| (tmp->next && tmp->type > 0  && tmp->next->type > 0 && tmp->type != CLOSE_PARENTH && tmp->next->type != OPEN_PARENTH  && !is_redarection(tmp->type) && !is_redarection(tmp->next->type))
+			|| (is_redarection(tmp->type) && !(tmp->next->type < 0)) || ((tmp->type <= 0 && tmp->next && tmp->next->type == OPEN_PARENTH) || (tmp->type == CLOSE_PARENTH && tmp->next && tmp->next->type == 0)))
 		{
 			*err = 258;
 			write(2, "🍪: syntax error near unexpected token `", 43);
@@ -70,7 +70,6 @@ t_lst	*check_parss_erres(t_parse parc_line, t_lst **node, int *err)
 		lst_clear(*node);
 		return (NULL);
 	}
-	else
 		trime(*node);
 		redarection_join_arg(node);
 		redarection_perfix_lst(node);
