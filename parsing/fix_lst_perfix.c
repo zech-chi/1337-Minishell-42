@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 00:42:19 by ymomen            #+#    #+#             */
-/*   Updated: 2024/03/25 23:49:13 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/03/21 00:42:32 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,54 +38,6 @@ void redarection_join_arg(t_lst **node)
 		cur = cur->next;
 	}
 }
-void init_lvs(t_lst **head)
-{
-    t_lst *node;
-    int i = 0;
-    
-    node = *head;
-    while (node)
-    {
-        if (node->type == OPEN_PARENTH)
-            i++;
-        node->lvl = i;
-        if (node->type == CLOSE_PARENTH)
-            i--;
-		node = node->next;
-    }
- 
-}
-int deal_with_prac_dep(t_lst **head, t_lst *prev)
-{
-	t_lst *node;
-	t_lst *close_par_lvl;
-
-	node = *head;
-	while(node && node->next)
-	{
-		if (node->next->type == CLOSE_PARENTH &&  (*head)->type == OPEN_PARENTH && node->next->lvl == (*head)->lvl)
-			break;
-		node = node->next;
-	}
-	node = node->next;
-	close_par_lvl = node;
-	if (node->next && is_redarection(node->next->type))
-	{
-		node = node->next;
-		t_lst *fst = node;
-		while (node->next && (is_redarection(node->next->type) || node->next->type < 0))
-			node = node->next;
-		close_par_lvl->next = node->next;
-		node->next = *head;
-		if (prev)
-			prev->next = fst;
-		else
-			*head = fst;
-		return (1);
-	}
-	return (0);
-}
-
 void redarection_perfix_lst(t_lst **head)
 {
 	t_lst *cmd;
@@ -93,16 +45,11 @@ void redarection_perfix_lst(t_lst **head)
 	t_lst *node;
 	t_lst *prev = NULL;
 
-	init_lvs(head);
 	node = *head;
+	redarection_prac_fix(head);
 	while (node)
 	{
-		if (node->type == OPEN_PARENTH) {
-			deal_with_prac_dep(&node, prev);
-			if (!prev)
-				*head = node;
-		}
-		else if (node->type == 0 && node->next && is_redarection(node->next->type))
+		if (node->type == 0 && node->next &&(node->next->type == REDIRECTION || node->next->type == INPUT || node->next->type == APPEND_REDIRECTION || node->next->type == HERE_DOC))
 		{
 			cmd = node;
 			red = cmd->next;
@@ -111,7 +58,7 @@ void redarection_perfix_lst(t_lst **head)
 				prev->next = cmd->next;
 			else
 				*head = cmd->next;
-			while (node && node->next && (node->next->type < 0 || is_redarection(node->next->type)))
+			while (node && node->next && (node->next->type < 0 || node->next->type == REDIRECTION || node->next->type == INPUT || node->next->type == APPEND_REDIRECTION || node->next->type == HERE_DOC))
 				node = node->next;
 			cmd->next = node->next;
 			node->next = cmd;
@@ -119,6 +66,42 @@ void redarection_perfix_lst(t_lst **head)
 		prev = node;
 		node = node->next;
 	}
-	node = *head;
 }
 
+void redarection_prac_fix(t_lst **head)
+{
+	t_lst *node;
+	t_lst *open_p = NULL;
+	t_lst *close_p = NULL;
+	t_lst *prev = NULL;
+	t_lst *red = NULL;
+	t_lst *red_file = NULL;
+	
+	node = *head;
+	while (node)
+	{
+		if (node->type == OPEN_PARENTH)
+		{
+			open_p = node;
+			close_p = node->next;
+			while (close_p && close_p->type != CLOSE_PARENTH)
+				close_p = close_p->next;
+			
+			if (close_p && close_p ->type == CLOSE_PARENTH && close_p->next && (close_p->next->type == REDIRECTION || close_p->next->type == INPUT || close_p->next->type == APPEND_REDIRECTION || close_p->next->type == HERE_DOC))
+			{
+				red = close_p->next;
+				red_file = red->next;
+				while (red_file && red_file->next && (red_file->next->type < 0 || red_file->next->type == REDIRECTION || red_file->next->type == INPUT || red_file->next->type == APPEND_REDIRECTION || red_file->next->type == HERE_DOC))
+					red_file = red_file->next;
+				close_p->next = red_file->next;
+				if (prev)
+					prev->next = red;
+				else
+					*head = red;
+				red_file->next = open_p;
+			}
+		}
+		prev = node;
+		node = node->next;
+	}
+}

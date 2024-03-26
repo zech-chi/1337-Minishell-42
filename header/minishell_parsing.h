@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
+/*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:25:53 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/26 00:12:10 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/03/16 21:37:23 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ typedef struct s_lst
 	int				read;
 	int				type;
 	struct s_lst	*next;
-	int 			lvl;
 }	t_lst;
 
 typedef struct s_parse
@@ -33,10 +32,10 @@ typedef struct s_parse
 }t_parse;
 
 /* FUNCTIONS */
-int 	is_redarection(int type);
-void 	redarection_prac_fix(t_lst **head);
-void 	redarection_perfix_lst(t_lst **head);
-void 	redarection_join_arg(t_lst **node);
+int is_redarection(t_lst *node);
+void redarection_prac_fix(t_lst **head);
+void redarection_perfix_lst(t_lst **head);
+void redarection_join_arg(t_lst **node);
 void	ft_putstr_fd(char *s, int fd);
 t_tree *parsing (char * line, int *err);
 void 	print_tree_2d(t_tree *root);
