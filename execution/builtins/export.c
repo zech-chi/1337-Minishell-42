@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:39:39 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/26 21:41:35 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/26 21:44:38 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,33 +52,31 @@ static void	ft_swap(t_env	*node1, t_env	*node2)
 	node2->value = tmp_value;
 }
 
-static void	ft_print_sorted_env(t_env **env)
+static void	ft_print_sorted_env(t_env **env_dup)
 {
 	t_env	*left;
 	t_env	*right;
 	t_env	*cur;
 
-	left = *env;
+	left = *env_dup;
 	while (left && left->next)
 	{
 		right = left->next;
 		while (right)
 		{
 			if (ft_strcmp2(left->key, right->key) > 0)
-			{
 				ft_swap(left, right);
-			}
 			right = right->next;
 		}
 		left = left->next;
 	}
-	cur = *env;
+	cur = *env_dup;
 	while (cur)
 	{
 		printf("declare -x %s=\"%s\"\n", cur->key, cur->value);
 		cur = cur->next;
 	}
-	// must free env;
+	ft_env_clear(env_dup);
 }
 
 char	*ft_get_slice(char *str, int *right, char stop)
