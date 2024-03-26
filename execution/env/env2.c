@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 16:49:44 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/26 21:23:55 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/26 22:04:24 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,11 @@ int	ft_env_update(t_env **env, char *key, char *newval, int append_mod)
 			if (append_mod)
 				node->value = ft_strjoin2(node->value, newval);
 			else
+			{
+				free(node->value);
 				node->value = newval;
+			}
+			free(key);
 			return (0);
 		}
 		node = node->next;

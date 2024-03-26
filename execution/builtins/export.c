@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:39:39 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/26 21:44:38 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/26 21:55:02 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ void	ft_export_help(char *str, t_env **env, int *exit_status)
 {
 	char	*slice1;
 	char	*slice2;
+	char	*old_slice1;
 	int		right;
 	int		found_equal;
 	int		append_mod;
@@ -114,8 +115,8 @@ void	ft_export_help(char *str, t_env **env, int *exit_status)
 		found_equal = 1;
 		right++;
 	}
-	slice2 = ft_get_slice(str, &right, '\0');
 	append_mod = ft_is_valid_identifier(slice1);
+	slice2 = ft_get_slice(str, &right, '\0');
 	if (append_mod == -1)
 	{
 		ft_put_error("🍪: export: `");
@@ -124,11 +125,17 @@ void	ft_export_help(char *str, t_env **env, int *exit_status)
 			ft_put_error("=");
 		ft_put_error(slice2);
 		ft_put_error("': not a valid identifier\n");
+		free(slice1);
+		free(slice2);
 		*exit_status = 1;
 		return ;
 	}
 	if (append_mod)
+	{
+		old_slice1 = slice1;
 		slice1 = ft_substr(slice1, 0, ft_strlen2(slice1) - 1);
+		free(old_slice1);
+	}
 	if (ft_env_update(env, slice1, slice2, append_mod))
 	{
 		if (slice2 && slice2[0])
