@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:27:47 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/26 00:50:05 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/03/26 02:16:49 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,6 @@
 # include <string.h>
 # include <limits.h>
 
-
-enum e_peroirty { open_par = 6 , close_par = 6, and = 5, or = 5, pip = 3, redir = 1, appand = 1, here_doc = 1, input = 1};
-
 # define REDIRECTION 1
 # define INPUT 2
 # define PIPE 3
@@ -40,6 +37,7 @@ enum e_peroirty { open_par = 6 , close_par = 6, and = 5, or = 5, pip = 3, redir 
 # define HERE_DOC 10
 # define CLOSE_PARENTH 11
 # define OPEN_PARENTH 12
+# define OPERAND 0
 # define OUTFILE -2
 # define INFILE -3
 # define LIMITER -4
@@ -47,7 +45,19 @@ enum e_peroirty { open_par = 6 , close_par = 6, and = 5, or = 5, pip = 3, redir 
 
 # define L_TO_R 3
 # define R_TO_L 2
-# define OPERAND 0
+
+enum e_peroirty
+{
+	open_par = 6 ,
+	close_par = 6,
+	and = 5,
+	or = 5,
+	pip = 3,
+	redir = 1,
+	appand = 1,
+	here_doc = 1,
+	input = 1
+};
 
 typedef struct s_tree
 {

@@ -6,17 +6,11 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 22:27:36 by ymomen            #+#    #+#             */
-/*   Updated: 2024/03/26 00:06:58 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/03/26 02:00:02 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell_parsing.h"
-
-void	ft_lstadd_front(t_lst **lst, t_lst *new)
-{
-	new->next = *lst;
-	*lst = new;
-}
 
 t_lst	*lastone(t_lst *head)
 {
@@ -98,34 +92,33 @@ void	init_type(t_lst *prev, t_lst *node)
 	if (prev && node)
 	{
 		if (prev->type == REDIRECTION)
-			{
-				node->read = L_TO_R;
-				node->type = OUTFILE;
-			}
+		{
+			node->read = L_TO_R;
+			node->type = OUTFILE;
+		}
 		else if (prev->type == INPUT)
-			{
-				node->read = L_TO_R;
-				node->type = INFILE;
-			}
+		{
+			node->read = L_TO_R;
+			node->type = INFILE;
+		}
 		else if (prev->type == APPEND_REDIRECTION)
-			{
-				node->read = L_TO_R;
-				node->type = OUTFILE_APPAND;
-			}
+		{
+			node->read = L_TO_R;
+			node->type = OUTFILE_APPAND;
+		}
 		else if (prev->type == HERE_DOC)
-			{
-				node->read = L_TO_R;
-				node->type = LIMITER;
-			}
+		{
+			node->read = L_TO_R;
+			node->type = LIMITER;
+		}
 		else
-			 if (node->type == 0)
-			 {
-                node->type = OPERAND;
-                node->prio = 0;
-                node->read = R_TO_L; 
-			 }
+		{
+			if (node->type == 0)
+			{
+				node->type = OPERAND;
+				node->prio = 0;
+				node->read = R_TO_L;
+			}
+		}
 	}
 }
-
-
-

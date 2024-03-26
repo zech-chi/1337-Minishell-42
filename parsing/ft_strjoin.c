@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 02:41:11 by ymomen            #+#    #+#             */
-/*   Updated: 2024/03/15 17:10:15 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/26 01:54:30 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static size_t	totalen(const char *s1, const char *s2)
 	return (s1l + s2l);
 }
 
-void free_it(char *s1, char *s2)
+void	free_it(char *s1, char *s2)
 {
 	if (s1)
 		free(s1);

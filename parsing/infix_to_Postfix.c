@@ -6,16 +6,17 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:34:06 by ymomen            #+#    #+#             */
-/*   Updated: 2024/03/25 16:06:39 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/03/26 02:31:44 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell_parsing.h"
 
-t_lst *from_infix_to_Postfix(t_lst *head) {
+t_lst   *from_infix_to_Postfix(t_lst *head)
+{
     t_lst *postfix = NULL; 
     t_lst *stack = NULL; 
-	t_lst *pop = NULL;         
+    t_lst *pop = NULL;         
 
     while (head) {
           

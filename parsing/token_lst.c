@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 23:32:33 by ymomen            #+#    #+#             */
-/*   Updated: 2024/03/26 00:45:05 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/03/26 02:02:47 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,9 @@ void	is_quot_parc_open(t_parse *par_line, char command, int check)
 t_lst	*check_parss_erres(t_parse parc_line, t_lst **node, int *err)
 {
 	t_lst	*tmp;
+
 	tmp = *node;
-	if (tmp && (tmp->type == AND || tmp->type == OR || tmp->type == PIPE ))
+	if (tmp && (tmp->type == AND || tmp->type == OR || tmp->type == PIPE))
 	{
 		*err = 258;
 		write(2, "🍪: syntax error near unexpected token `", 43);
@@ -47,8 +48,8 @@ t_lst	*check_parss_erres(t_parse parc_line, t_lst **node, int *err)
 	}
 	while (tmp)
 	{
-		if((tmp ->prio > 0 && !tmp->next && tmp->type != CLOSE_PARENTH) || (tmp->next && ( tmp->prio > 2 && tmp->prio < 6 && tmp->next->prio > 0 && tmp->next->prio < 6))
-			|| (tmp->next && tmp->type > 0  && tmp->next->type > 0 && tmp->type != CLOSE_PARENTH && tmp->next->type != OPEN_PARENTH  && !is_redarection(tmp->type) && !is_redarection(tmp->next->type))
+		if ((tmp->prio > 0 && !tmp->next && tmp->type != CLOSE_PARENTH) || (tmp->next && (tmp->prio > 2 && tmp->prio < 6 && tmp->next->prio > 0 && tmp->next->prio < 6))
+			|| (tmp->next && tmp->type > 0 && tmp->next->type > 0 && tmp->type != CLOSE_PARENTH && tmp->next->type != OPEN_PARENTH  && !is_redarection(tmp->type) && !is_redarection(tmp->next->type))
 			|| (is_redarection(tmp->type) && !(tmp->next->type < 0)) || ((tmp->type <= 0 && tmp->next && tmp->next->type == OPEN_PARENTH) || (tmp->type == CLOSE_PARENTH && tmp->next && tmp->next->type == 0)))
 		{
 			*err = 258;
@@ -70,13 +71,13 @@ t_lst	*check_parss_erres(t_parse parc_line, t_lst **node, int *err)
 		lst_clear(*node);
 		return (NULL);
 	}
-		trime(*node);
-		redarection_join_arg(node);
-		redarection_perfix_lst(node);
+	trime(*node);
+	redarection_join_arg(node);
+	redarection_perfix_lst(node);
 	return (*node);
 }
 
-void	its_delimter(char *cmd, int *i, t_lst **node,  t_parse *par_line)
+void	its_delimter(char *cmd, int *i, t_lst **node, t_parse *par_line)
 {
 	par_line->err = 0;
 	if (((is_delimter(cmd[*i + 1]) < 5) && (is_delimter(cmd[*i]) < 5))
@@ -85,7 +86,8 @@ void	its_delimter(char *cmd, int *i, t_lst **node,  t_parse *par_line)
 		lst_add_back(node, lst_new(ft_monstrdup(&cmd[*i], 2)));
 		*i += 1;
 	}
-	else if (is_delimter(cmd[*i]) == SINGL_AND && is_delimter(cmd[*i + 1]) != SINGL_AND)
+	else if (is_delimter(cmd[*i]) == SINGL_AND
+		&& is_delimter(cmd[*i + 1]) != SINGL_AND)
 		par_line->err = 1;
 	else
 		lst_add_back(node, lst_new(ft_monstrdup(&cmd[*i], 1)));
@@ -129,7 +131,7 @@ t_lst	*tokens_lst(char *cmd, int *err)
 	par_line.prac = 0;
 	par_line.quot = 0;
 	node = NULL;
-	while ( cmd && cmd[i])
+	while (cmd && cmd[i])
 	{
 		while (cmd[i] && (cmd[i] == ' ' || cmd[i] == '\t'))
 			i++;
