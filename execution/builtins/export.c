@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:39:39 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/24 21:55:31 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/26 21:41:35 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,11 +92,11 @@ char	*ft_get_slice(char *str, int *right, char stop)
 	left = *right;
 	while (str[*right] && str[*right] != stop)
 		(*right)++;
-	slice = (char *)malloc(sizeof(char) * (*right - left + 1));
+	slice = (char *)malloc(sizeof(char) * (*right - left) + 1);
 	i = 0;
 	while (left < *right)
 		slice[i++] = str[left++];
-	slice[left] = '\0';
+	slice[i] = '\0';
 	return (slice);
 }
 
@@ -153,5 +153,7 @@ void	ft_export(t_env **env, char **cmd_2d, int *exit_status)
 	}
 	i = 0;
 	while (cmd_2d[++i])
+	{
 		ft_export_help(cmd_2d[i], env, exit_status);
+	}
 }
