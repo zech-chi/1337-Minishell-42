@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 22:01:06 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/27 01:43:03 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/27 02:17:19 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,73 +31,31 @@ char	*ft_get_prompt(int exit_status)
 	ft_free_2d_char(cmd_2d);
 	free(line);
 */
+//original main
 int	main(int ac, char **av, char **ev)
 {
 	t_env	*env;
 	char	*line;
-	//t_tree	*tree;
+	t_tree	*tree;
 	int		exit_status;
-	//char	**cmd_2d;
 
-	exit_status = 0;
-	env = ft_env_create(ev);
-	//while (1)
-	//{
-		line = ft_get_prompt(exit_status);
-		//cmd_2d = ft_expand(line, env, exit_status);
-		//ft_execute_builtins(cmd_2d, &env, &exit_status);
-		ft_execute_cmd(line, &env, &exit_status);
-		//ft_free_2d_char(cmd_2d);
-		free(line);
-	//}
-	ft_env_clear(&env);
 	(void)(ac);
 	(void)(av);
-	(void)(ev);
-	//ft_env_delete(&env, "OLDPWD");
-	//ft_env_add(&env, "OLDPWD", ft_strdup2(""), 0);
-	//exit_status = 0;
-	//while (1)
-	//{
-	//	line = ft_get_prompt(exit_status);
-	//	tree = parsing(line, &exit_status);
-	//	//atexit(f);
-	//	//printf("--------------- tree --------------------\n");
-	//	//print_tree_2d(tree);
-	//	//printf("-----------------------------------------\n");
-	//	//if (tree)
-	//	//	printf("%d\n", tree->type);
-	//	ft_execute(tree, &env, &exit_status);
-	//	free(line);
-	//}
-	//return (SUCCESS);
+	env = ft_env_create(ev);
+	ft_env_delete(&env, "OLDPWD");
+	ft_env_add(&env, "OLDPWD", ft_strdup2(""), 0);
+	exit_status = 0;
+	while (1)
+	{
+		line = ft_get_prompt(exit_status);
+		tree = parsing(line, &exit_status);
+		//printf("--------------- tree --------------------\n");
+		//print_tree_2d(tree);
+		//printf("-----------------------------------------\n");
+		//if (tree)
+		//	printf("%d\n", tree->type);
+		ft_execute(tree, &env, &exit_status);
+		free(line);
+	}
+	return (SUCCESS);
 }
-
-//original main
-//int	main(int ac, char **av, char **ev)
-//{
-//	t_env	*env;
-//	char	*line;
-//	t_tree	*tree;
-//	int		exit_status;
-
-//	(void)(ac);
-//	(void)(av);
-//	env = ft_env_create(ev);
-//	ft_env_delete(&env, "OLDPWD");
-//	ft_env_add(&env, "OLDPWD", ft_strdup2(""), 0);
-//	exit_status = 0;
-//	while (1)
-//	{
-//		line = ft_get_prompt(exit_status);
-//		tree = parsing(line, &exit_status);
-//		//printf("--------------- tree --------------------\n");
-//		//print_tree_2d(tree);
-//		//printf("-----------------------------------------\n");
-//		//if (tree)
-//		//	printf("%d\n", tree->type);
-//		ft_execute(tree, &env, &exit_status);
-//		free(line);
-//	}
-//	return (SUCCESS);
-//}

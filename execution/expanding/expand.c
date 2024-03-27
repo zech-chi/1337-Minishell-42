@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 09:36:52 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/27 00:48:41 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/27 02:17:55 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,8 +168,5 @@ char	**ft_expand(char *cmd, t_env *env, int exit_status)
 	}
 	if (exp.buff_exp)
 		ft_expand_help1(&exp);
-	//(void)(exit_status);
-	//(void)(env);
-	ft_print_lst(exp.head);
 	return (ft_lst_to_2d_char(&(exp.head)));
 }

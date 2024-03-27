@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:28:34 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/27 02:14:05 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/27 02:20:28 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,11 @@ void	ft_execute_cmd(char *cmd, t_env **env, int *exit_status)
 		ft_put_error(" command not found\n");
 		ft_free_2d_char(cmd_2d);
 		ft_free_2d_char(env_2d);
-		exit(FAILED);
+		exit(127);
 	}
 	else
 		waitpid(pid, exit_status, 0);
+	*exit_status = WEXITSTATUS(*exit_status);
 	ft_free_2d_char(cmd_2d);
 }
 
