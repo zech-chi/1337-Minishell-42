@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 16:49:44 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/26 22:04:24 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/26 22:26:27 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,9 @@ void	ft_env_delete(t_env **env, char *key)
 	if (!ft_strcmp2(key, prev->key))
 	{
 		(*env) = prev->next;
+		free(prev->key);
+		free(prev->value);
+		free(prev);
 		return ;
 	}
 	cur = prev->next;
@@ -79,6 +82,9 @@ void	ft_env_delete(t_env **env, char *key)
 		if (!ft_strcmp2(key, cur->key))
 		{
 			prev->next = cur->next;
+			free(cur->key);
+			free(cur->value);
+			free(cur);
 			return ;
 		}
 		cur = cur->next;

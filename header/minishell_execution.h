@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:07:18 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/26 19:40:41 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/27 00:38:00 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	ft_pwd_print(void);
 void	ft_unset(t_env **env, char **cmd_2d, int *exit_status);
 
 // exit
-void	ft_exit(char **cmd_2d, int *exit_status);
+void	ft_exit(char **cmd_2d, int *exit_status, t_env **env);
 
 // env
 void	ft_env(t_env *env, char **cmd_2d, int *exit_status);
