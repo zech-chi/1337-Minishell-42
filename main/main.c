@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 22:01:06 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/27 02:17:19 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/27 21:40:38 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ int	main(int ac, char **av, char **ev)
 	(void)(ac);
 	(void)(av);
 	env = ft_env_create(ev);
-	ft_env_delete(&env, "OLDPWD");
-	ft_env_add(&env, "OLDPWD", ft_strdup2(""), 0);
 	exit_status = 0;
 	while (1)
 	{

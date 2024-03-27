@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:07:18 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/27 01:53:00 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/27 21:19:02 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ typedef struct s_env
 
 t_env	*ft_env_create(char **ev);
 t_env	*ft_env_duplicate(t_env *env);
+int		ft_env_add_at_create(t_env **env, char *key, char *value, int visible);
 int		ft_env_add(t_env **env, char *key, char *value, int visible);
 int		ft_env_update(t_env **env, char *key, char *newval, int append_mod);
 void	ft_env_delete(t_env **env, char *key);

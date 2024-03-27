@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 16:49:44 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/26 22:26:27 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/27 21:18:02 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	ft_env_update(t_env **env, char *key, char *newval, int append_mod)
 
 // add new key and value in env 
 // return 0 if all good, -1 otherwise
-int	ft_env_add(t_env **env, char *key, char *value, int visible)
+int	ft_env_add_at_create(t_env **env, char *key, char *value, int visible)
 {
 	t_env	*new;
 	t_env	*last;
@@ -55,6 +55,36 @@ int	ft_env_add(t_env **env, char *key, char *value, int visible)
 		return (*env = new, 0);
 	while (last->next)
 		last = last->next;
+	last->next = new;
+	return (0);
+}
+
+int	ft_env_add(t_env **env, char *key, char *value, int visible)
+{
+	t_env	*new;
+	t_env	*last;
+
+	new = (t_env *)malloc(sizeof(t_env));
+	if (new == NULL)
+	{
+		ft_put_error("🍪: malloc failed\n");
+		return (-1);
+	}
+	new->key = key;
+	new->value = value;
+	new->next = NULL;
+	new->visible = visible;
+	last = *env;
+	if (!last)
+		return (*env = new, 0);
+	if (ft_strcmp2(new->key, last->key) < 0)
+		return (new->next = *env, *env = new, 0);
+	while (last && last->next)
+	{
+		if (ft_strcmp2(new->key, last->next->key) < 0)
+			return (new->next = last->next, last->next = new, 0);
+		last = last->next;
+	}
 	last->next = new;
 	return (0);
 }
