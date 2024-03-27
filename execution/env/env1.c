@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 16:50:15 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/27 01:39:59 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/27 21:40:45 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,12 @@ t_env	*ft_env_create(char **ev)
 			else
 				value = ft_strjoin2(value, ft_strjoin2(ft_strdup2("="), ft_strdup2(splited_row[c])));
 		}
-		ft_env_add(&env, ft_strdup2(splited_row[0]), ft_strdup2(value), 1);
+		ft_env_add_at_create(&env, ft_strdup2(splited_row[0]), ft_strdup2(value), 1);
 		free(value);
 		ft_free_2d_char(splited_row);
 	}
+	ft_env_delete(&env, "OLDPWD");
+	ft_env_add(&env, ft_strdup2("OLDPWD"), ft_strdup2(""), 0);
 	return (env);
 }
 

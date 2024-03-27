@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:29:33 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/27 00:05:42 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/27 21:45:54 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ static void	ft_pwd_oldpwd_update(t_env **env)
 {
 	char	cur_wd[MAXPATHLEN];
 	char	*prev_wd;
-
 	prev_wd = ft_env_search(*env, "PWD");
 	getcwd(cur_wd, MAXPATHLEN);
 	ft_env_delete(env, "OLDPWD");
@@ -42,6 +41,8 @@ int	ft_cd(char **splited_prompt, t_env **env)
 		old_pwd = ft_env_search(*env, "OLDPWD");
 		if (chdir(old_pwd) == SUCCESS)
 			ft_pwd_oldpwd_update(env);
+		else
+			ft_put_error("🍪: cd: OLDPWD not set\n");
 		free(old_pwd);
 	}
 	else

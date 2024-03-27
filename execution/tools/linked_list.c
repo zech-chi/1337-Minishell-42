@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 18:34:39 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/25 20:09:08 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/27 21:06:33 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_list	*ft_lstnew(void *content)
 
 	new_node = malloc(sizeof(t_list));
 	if (new_node == NULL)
-		return (NULL);
+		return (ft_put_error("🍪: malloc failed\n"), NULL);
 	new_node->content = content;
 	new_node->next = NULL;
 	return (new_node);
