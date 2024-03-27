@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:07:18 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/27 00:38:00 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/27 01:53:00 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,6 @@ void	ft_exp_init(t_expand *exp);
 char	**ft_expand(char *prompt, t_env *env, int exit_status);
 
 // execute.c
-void	ft_execute_search_in_path(char **cmd_2d, t_env *env);
 void	ft_execute_cmd(char *cmd, t_env **env, int *exit_status);
 void	ft_execute(t_tree *root, t_env **env, int *exit_status);
 

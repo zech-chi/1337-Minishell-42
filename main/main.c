@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 22:01:06 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/26 23:10:46 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/27 01:43:03 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,20 @@ int	main(int ac, char **av, char **ev)
 	char	*line;
 	//t_tree	*tree;
 	int		exit_status;
-	char	**cmd_2d;
+	//char	**cmd_2d;
 
 	exit_status = 0;
-	line = ft_get_prompt(exit_status);
 	env = ft_env_create(ev);
-	cmd_2d = ft_expand(line, env, exit_status);
-	ft_execute_builtins(cmd_2d, &env, &exit_status);
-	ft_free_2d_char(cmd_2d);
+	//while (1)
+	//{
+		line = ft_get_prompt(exit_status);
+		//cmd_2d = ft_expand(line, env, exit_status);
+		//ft_execute_builtins(cmd_2d, &env, &exit_status);
+		ft_execute_cmd(line, &env, &exit_status);
+		//ft_free_2d_char(cmd_2d);
+		free(line);
+	//}
 	ft_env_clear(&env);
-	free(line);
 	(void)(ac);
 	(void)(av);
 	(void)(ev);

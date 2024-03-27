@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 16:50:15 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/25 20:01:57 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/27 01:39:59 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	**ft_env_create_2d(t_env *env)
 	while (env)
 	{
 		env_2d[r++] = ft_strjoin2(ft_strdup2(env->key),
-				ft_strjoin2("=", ft_strdup2(env->value)));
+				ft_strjoin2(ft_strdup2("="), ft_strdup2(env->value)));
 		env = env->next;
 	}
 	env_2d[r] = NULL;
