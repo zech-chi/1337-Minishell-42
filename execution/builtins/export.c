@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:39:39 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/24 21:55:31 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/26 21:55:02 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,33 +52,31 @@ static void	ft_swap(t_env	*node1, t_env	*node2)
 	node2->value = tmp_value;
 }
 
-static void	ft_print_sorted_env(t_env **env)
+static void	ft_print_sorted_env(t_env **env_dup)
 {
 	t_env	*left;
 	t_env	*right;
 	t_env	*cur;
 
-	left = *env;
+	left = *env_dup;
 	while (left && left->next)
 	{
 		right = left->next;
 		while (right)
 		{
 			if (ft_strcmp2(left->key, right->key) > 0)
-			{
 				ft_swap(left, right);
-			}
 			right = right->next;
 		}
 		left = left->next;
 	}
-	cur = *env;
+	cur = *env_dup;
 	while (cur)
 	{
 		printf("declare -x %s=\"%s\"\n", cur->key, cur->value);
 		cur = cur->next;
 	}
-	// must free env;
+	ft_env_clear(env_dup);
 }
 
 char	*ft_get_slice(char *str, int *right, char stop)
@@ -92,11 +90,11 @@ char	*ft_get_slice(char *str, int *right, char stop)
 	left = *right;
 	while (str[*right] && str[*right] != stop)
 		(*right)++;
-	slice = (char *)malloc(sizeof(char) * (*right - left + 1));
+	slice = (char *)malloc(sizeof(char) * (*right - left) + 1);
 	i = 0;
 	while (left < *right)
 		slice[i++] = str[left++];
-	slice[left] = '\0';
+	slice[i] = '\0';
 	return (slice);
 }
 
@@ -104,6 +102,7 @@ void	ft_export_help(char *str, t_env **env, int *exit_status)
 {
 	char	*slice1;
 	char	*slice2;
+	char	*old_slice1;
 	int		right;
 	int		found_equal;
 	int		append_mod;
@@ -116,8 +115,8 @@ void	ft_export_help(char *str, t_env **env, int *exit_status)
 		found_equal = 1;
 		right++;
 	}
-	slice2 = ft_get_slice(str, &right, '\0');
 	append_mod = ft_is_valid_identifier(slice1);
+	slice2 = ft_get_slice(str, &right, '\0');
 	if (append_mod == -1)
 	{
 		ft_put_error("🍪: export: `");
@@ -126,11 +125,17 @@ void	ft_export_help(char *str, t_env **env, int *exit_status)
 			ft_put_error("=");
 		ft_put_error(slice2);
 		ft_put_error("': not a valid identifier\n");
+		free(slice1);
+		free(slice2);
 		*exit_status = 1;
 		return ;
 	}
 	if (append_mod)
+	{
+		old_slice1 = slice1;
 		slice1 = ft_substr(slice1, 0, ft_strlen2(slice1) - 1);
+		free(old_slice1);
+	}
 	if (ft_env_update(env, slice1, slice2, append_mod))
 	{
 		if (slice2 && slice2[0])
@@ -153,5 +158,7 @@ void	ft_export(t_env **env, char **cmd_2d, int *exit_status)
 	}
 	i = 0;
 	while (cmd_2d[++i])
+	{
 		ft_export_help(cmd_2d[i], env, exit_status);
+	}
 }

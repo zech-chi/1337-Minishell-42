@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 16:49:44 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/24 20:57:35 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/26 22:26:27 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,11 @@ int	ft_env_update(t_env **env, char *key, char *newval, int append_mod)
 			if (append_mod)
 				node->value = ft_strjoin2(node->value, newval);
 			else
+			{
+				free(node->value);
 				node->value = newval;
+			}
+			free(key);
 			return (0);
 		}
 		node = node->next;
@@ -67,6 +71,9 @@ void	ft_env_delete(t_env **env, char *key)
 	if (!ft_strcmp2(key, prev->key))
 	{
 		(*env) = prev->next;
+		free(prev->key);
+		free(prev->value);
+		free(prev);
 		return ;
 	}
 	cur = prev->next;
@@ -75,6 +82,9 @@ void	ft_env_delete(t_env **env, char *key)
 		if (!ft_strcmp2(key, cur->key))
 		{
 			prev->next = cur->next;
+			free(cur->key);
+			free(cur->value);
+			free(cur);
 			return ;
 		}
 		cur = cur->next;
@@ -90,7 +100,7 @@ char	*ft_env_search(t_env *env, char *key)
 	while (env)
 	{
 		if (!ft_strcmp2(env->key, key))
-			return (env->value);
+			return (ft_strdup2(env->value));
 		env = env->next;
 	}
 	return (NULL);

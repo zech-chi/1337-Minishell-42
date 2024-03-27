@@ -3,22 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
+/*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:23:31 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/26 00:52:20 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/03/27 02:22:53 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell_execution.h"
 #include "../header/minishell_parsing.h"
 
-void	f(void)
-{
-	system("leaks ./minishell > lk.txt");
-}
-
-static char	*ft_get_prompt(int exit_status)
+char	*ft_get_prompt(int exit_status)
 {
 	char	*prompt;
 
@@ -31,7 +26,12 @@ static char	*ft_get_prompt(int exit_status)
 	return (prompt);
 }
 
-//print_tree_2d(tree);
+/*
+	ft_env_clear(&env);
+	ft_free_2d_char(cmd_2d);
+	free(line);
+*/
+//original main
 int	main(int ac, char **av, char **ev)
 {
 	t_env	*env;
@@ -49,7 +49,6 @@ int	main(int ac, char **av, char **ev)
 	{
 		line = ft_get_prompt(exit_status);
 		tree = parsing(line, &exit_status);
-		//atexit(f);
 		//printf("--------------- tree --------------------\n");
 		//print_tree_2d(tree);
 		//printf("-----------------------------------------\n");

@@ -4,7 +4,7 @@ RM = rm -f
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 
 READLINEFLAG = -lreadline
 
@@ -56,7 +56,8 @@ SRCS =	parsing/ft_stdup.c \
 		execution/tools/print_error.c \
 		execution/tools/isspace.c \
 		execution/tools/substr.c \
-		execution/tools/putstr_fd.c 
+		execution/tools/putstr_fd.c \
+		execution/free/free_2d_char.c
 
 OBJS = $(SRCS:.c=.o)
 

@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 09:36:52 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/23 21:23:52 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/27 02:17:55 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ static void	ft_expand_help1(t_expand *exp)
 		if (exp->found_star && !exp->found_another_char)
 			ft_list_cwd(&(exp->head));
 		else
-			ft_lstadd_back(&(exp->head), ft_lstnew(exp->buff_exp));
+			ft_lstadd_back(&(exp->head), ft_lstnew(ft_strdup2(exp->buff_exp)));
+		free(exp->buff_exp);
 		exp->buff_exp = NULL;
 		exp->found_star = 0;
 		exp->found_another_char = 0;
@@ -81,6 +82,7 @@ void	ft_expand_help3(t_expand *exp, t_env *env, char *cmd, int exit_status)
 	{
 		if (ft_is_numeric(cmd[exp->i]) && cmd[exp->i - 1] == '$')
 		{
+			free(exp->buff_env);
 			exp->buff_env = NULL; // free
 			break;
 		}
@@ -92,11 +94,11 @@ void	ft_expand_help3(t_expand *exp, t_env *env, char *cmd, int exit_status)
 	if (!env_var && exp->quote)
 		exp->buff_exp = ft_strjoin2(exp->buff_exp, ft_strdup2(""));
 	else
-		exp->buff_exp = ft_strjoin2(exp->buff_exp, env_var);
+		exp->buff_exp = ft_strjoin2(exp->buff_exp, ft_strdup2(env_var));
 		
 	if (exp->buff_exp)
 		exp->found_another_char = 1;
-		
+
 	if (cmd[exp->i] == '*' && cmd[exp->i - 1] == '$')
 		(exp->i)++;
 	// I add this
@@ -123,9 +125,11 @@ void	ft_expand_help3(t_expand *exp, t_env *env, char *cmd, int exit_status)
 			exp->found_another_char = 1;
 		}
 	}
-		
 	(exp->i)--;
 	(void)exit_status;
+	free(exp->buff_env);
+	free(env_var);
+	exp->buff_env = NULL;
 }
 
 static void	ft_expand_help4(t_expand *exp, char c)
@@ -146,6 +150,8 @@ char	**ft_expand(char *cmd, t_env *env, int exit_status)
 {
 	t_expand	exp;
 
+	if (!cmd)
+		return (NULL);
 	ft_exp_init(&exp);
 	while (cmd[++(exp.i)])
 	{
@@ -162,7 +168,5 @@ char	**ft_expand(char *cmd, t_env *env, int exit_status)
 	}
 	if (exp.buff_exp)
 		ft_expand_help1(&exp);
-	(void)(exit_status);
-	(void)(env);
-	return (ft_lst_to_2d_char(exp.head));
+	return (ft_lst_to_2d_char(&(exp.head)));
 }

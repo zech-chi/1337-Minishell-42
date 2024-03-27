@@ -1,32 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   strdup.c                                           :+:      :+:    :+:   */
+/*   free_2d_char.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/14 18:05:09 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/25 20:39:15 by zech-chi         ###   ########.fr       */
+/*   Created: 2024/03/25 19:44:48 by zech-chi          #+#    #+#             */
+/*   Updated: 2024/03/25 19:44:50 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell_execution.h"
 
-char	*ft_strdup2(const char *s1)
+void	ft_free_2d_char(char **char_2d)
 {
-	size_t	len;
-	size_t	i;
-	char	*ptr;
+	int	r;
 
-	if (!s1)
-		return (NULL);
-	len = ft_strlen2(s1);
-	ptr = malloc(sizeof(char) * (len + 1));
-	if (ptr == NULL)
-		return (NULL);
-	i = -1;
-	while (++i < len)
-		ptr[i] = s1[i];
-	ptr[i] = '\0';
-	return (ptr);
+	if (!char_2d)
+		return ;
+	r = 0;
+	while (char_2d[r])
+	{
+		free(char_2d[r]);
+		r++;
+	}
+	free(char_2d);
 }

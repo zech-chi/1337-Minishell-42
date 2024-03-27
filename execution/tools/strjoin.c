@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 11:47:18 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/15 17:52:17 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/25 20:02:39 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*ft_strjoin2(char *s1, char *s2)
 		return (s1);
 	ptr = malloc(ft_strlen2(s1) + ft_strlen2(s2) + 1);
 	if (ptr == NULL)
-		return (NULL);
+		return (free(s1), free(s2), NULL);
 	i = 0;
 	j = 0;
 	while (s1[j])
@@ -35,5 +35,5 @@ char	*ft_strjoin2(char *s1, char *s2)
 	while (s2[j])
 		ptr[i++] = s2[j++];
 	ptr[i] = 0;
-	return (ptr);
+	return (free(s1), free(s2), ptr);
 }

@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:07:18 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/24 21:44:46 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/27 01:53:00 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ t_list	*ft_lstnew(void *content);
 void	ft_lstadd_back(t_list **lst, t_list *new);
 t_list	*ft_lstlast(t_list *lst);
 int		ft_lstsize(t_list *lst);
+void	ft_lstclear(t_list **lst);
 
 // functions:
 
@@ -91,7 +92,7 @@ void	ft_pwd_print(void);
 void	ft_unset(t_env **env, char **cmd_2d, int *exit_status);
 
 // exit
-void	ft_exit(char **cmd_2d, int *exit_status);
+void	ft_exit(char **cmd_2d, int *exit_status, t_env **env);
 
 // env
 void	ft_env(t_env *env, char **cmd_2d, int *exit_status);
@@ -118,13 +119,12 @@ typedef struct s_expand
 char	*ft_char_to_str(char c);
 int		ft_is_delimiter(char c);
 void	ft_print_lst(t_list *node); // to remove
-char	**ft_lst_to_2d_char(t_list *head);
+char	**ft_lst_to_2d_char(t_list **head);
 void	ft_list_cwd(t_list **head);
 void	ft_exp_init(t_expand *exp);
 char	**ft_expand(char *prompt, t_env *env, int exit_status);
 
 // execute.c
-void	ft_execute_search_in_path(char **cmd_2d, t_env *env);
 void	ft_execute_cmd(char *cmd, t_env **env, int *exit_status);
 void	ft_execute(t_tree *root, t_env **env, int *exit_status);
 
@@ -136,5 +136,8 @@ int		ft_execute_builtins(char **cmd_2d, t_env **env, int *exit_status);
 
 // execute_redirection_out.c
 void	ft_execute_redirection_out(t_tree *root, t_env **env, int *exit_status);
+
+/*free*/
+void	ft_free_2d_char(char **char_2d);
 
 #endif

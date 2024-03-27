@@ -6,13 +6,13 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:49:47 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/24 23:44:56 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/26 22:23:47 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell_execution.h"
 
-static int	ft_is_valid_identifier(char *str)
+static int	ft_is_valid_identifier1(char *str)
 {
 	int	i;
 
@@ -46,7 +46,7 @@ void	ft_unset(t_env **env, char **cmd_2d, int *exit_status)
 	something_wrong = 0;
 	while (cmd_2d[i])
 	{
-		if (!(ft_is_valid_identifier(cmd_2d[i])))
+		if (!(ft_is_valid_identifier1(cmd_2d[i])))
 		{
 			ft_put_error("🍪: unset Error: ");
 			ft_put_error(cmd_2d[i]);
