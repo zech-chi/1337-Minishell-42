@@ -64,7 +64,7 @@ OBJS = $(SRCS:.c=.o)
 all: print_header $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(READLINEFLAG) $^ -o $@
+	$(CC) $(CFLAGS)  $^ -o $@ $(READLINEFLAG)
 
 %.o: %.c minishell_v1.h 
 	$(CC) $(CFLAGS) -c $< -o $@

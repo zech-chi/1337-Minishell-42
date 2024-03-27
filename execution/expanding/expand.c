@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 09:36:52 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/27 02:17:55 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/27 22:26:43 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ int	ft_is_numeric(char c)
 
 static void	ft_expand_help1(t_expand *exp)
 {
-	if (exp->buff_star)
-		exp->buff_star = NULL; // free
 	if (exp->buff_exp)
 	{
 		if (exp->found_star && !exp->found_another_char)
@@ -61,11 +59,6 @@ static void	ft_expand_help2(t_expand *exp, char *cmd)
 	}
 	else
 	{
-		if (exp->buff_star)
-		{
-			exp->buff_exp = ft_strjoin2(exp->buff_exp, exp->buff_star);
-			exp->buff_star = NULL; // free
-		}
 		exp->buff_exp = ft_strjoin2(exp->buff_exp, ft_char_to_str(cmd[exp->i]));
 		exp->found_another_char = 1;
 	}
@@ -74,6 +67,7 @@ static void	ft_expand_help2(t_expand *exp, char *cmd)
 void	ft_expand_help3(t_expand *exp, t_env *env, char *cmd, int exit_status)
 {
 	char	*env_var;
+	int		i;
 
 	if (exp->buff_exp)
 		exp->noting_before_env_var = 0;
@@ -94,8 +88,17 @@ void	ft_expand_help3(t_expand *exp, t_env *env, char *cmd, int exit_status)
 	if (!env_var && exp->quote)
 		exp->buff_exp = ft_strjoin2(exp->buff_exp, ft_strdup2(""));
 	else
-		exp->buff_exp = ft_strjoin2(exp->buff_exp, ft_strdup2(env_var));
-		
+	{
+		i = 0;
+		while (env_var[i])
+		{
+			if (ft_isspace(env_var[i]))
+				ft_expand_help1(exp);
+			else
+				exp->buff_exp = ft_strjoin2(exp->buff_exp, ft_char_to_str(env_var[i]));
+			i++;
+		}
+	}
 	if (exp->buff_exp)
 		exp->found_another_char = 1;
 
@@ -104,14 +107,6 @@ void	ft_expand_help3(t_expand *exp, t_env *env, char *cmd, int exit_status)
 	// I add this
 	else if (cmd[exp->i] == '*')
 		exp->found_star = 1;
-	/// remove this part is about matching
-	//else if (cmd[exp->i] == '*' && env_var && exp->noting_before_env_var && !(exp->quote))
-	//{
-	//	while (cmd[exp->i] == '*')
-	//		exp->buff_star = ft_strjoin2(exp->buff_star, ft_char_to_str(cmd[(exp->i)++]));
-	//	exp->found_star = 1;
-	//	exp->found_another_char = 1;
-	//}
 	else if (ft_strlen2(exp->buff_env) == 1)
 	{
 		if (cmd[exp->i] == '?')
@@ -131,14 +126,61 @@ void	ft_expand_help3(t_expand *exp, t_env *env, char *cmd, int exit_status)
 	free(env_var);
 	exp->buff_env = NULL;
 }
+//void	ft_expand_help3(t_expand *exp, t_env *env, char *cmd, int exit_status)
+//{
+//	char	*env_var;
+
+//	if (exp->buff_exp)
+//		exp->noting_before_env_var = 0;
+//	exp->buff_env = ft_char_to_str(cmd[(exp->i)++]);
+//	while (cmd[exp->i] && ft_is_valid_char(cmd[exp->i]))
+//	{
+//		if (ft_is_numeric(cmd[exp->i]) && cmd[exp->i - 1] == '$')
+//		{
+//			free(exp->buff_env);
+//			exp->buff_env = NULL; // free
+//			break;
+//		}
+//		exp->buff_env = ft_strjoin2(exp->buff_env, ft_char_to_str(cmd[(exp->i)++]));
+//	}
+//	if (!exp->buff_env)
+//		return ;
+//	env_var = ft_env_search(env, exp->buff_env + 1);
+//	if (!env_var && exp->quote)
+//		exp->buff_exp = ft_strjoin2(exp->buff_exp, ft_strdup2(""));
+//	else
+//		exp->buff_exp = ft_strjoin2(exp->buff_exp, ft_strdup2(env_var));
+		
+//	if (exp->buff_exp)
+//		exp->found_another_char = 1;
+
+//	if (cmd[exp->i] == '*' && cmd[exp->i - 1] == '$')
+//		(exp->i)++;
+//	// I add this
+//	else if (cmd[exp->i] == '*')
+//		exp->found_star = 1;
+//	else if (ft_strlen2(exp->buff_env) == 1)
+//	{
+//		if (cmd[exp->i] == '?')
+//		{
+//			exp->buff_exp = ft_strjoin2(exp->buff_exp, ft_itoa2(exit_status));
+//			(exp->i)++;
+//		}
+//		else if ((cmd[exp->i] != '\'' && cmd[exp->i] != '"' && exp->quote == 0) || exp->quote != 0)
+//		{
+//			exp->buff_exp = ft_strjoin2(exp->buff_exp, ft_char_to_str('$'));
+//			exp->found_another_char = 1;
+//		}
+//	}
+//	(exp->i)--;
+//	(void)exit_status;
+//	free(exp->buff_env);
+//	free(env_var);
+//	exp->buff_env = NULL;
+//}
 
 static void	ft_expand_help4(t_expand *exp, char c)
 {
-	if (exp->buff_star)
-	{
-		exp->buff_exp = ft_strjoin2(exp->buff_exp, exp->buff_star);
-		exp->buff_star = NULL; // free
-	}
 	exp->buff_exp = ft_strjoin2(exp->buff_exp, ft_char_to_str(c));
 	if (c != '*' || exp->quote != 0)
 		exp->found_another_char = 1;

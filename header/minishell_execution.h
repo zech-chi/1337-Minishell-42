@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:07:18 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/27 21:19:02 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/27 22:25:15 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,6 @@ typedef struct s_expand
 	int		noting_before_env_var;
 	char	*buff_exp;
 	char	*buff_env;
-	char	*buff_star;
 	char	**cmd_2d;
 	int		i;
 	int		found_star;

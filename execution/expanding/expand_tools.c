@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 01:48:23 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/25 20:27:01 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/27 22:12:27 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ void	ft_exp_init(t_expand *exp)
 {
 	exp->buff_exp = NULL;
 	exp->buff_env = NULL;
-	exp->buff_star = NULL;
 	exp->cmd_2d = NULL;
 	exp->head = NULL;
 	exp->i = -1;
