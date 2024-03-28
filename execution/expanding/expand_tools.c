@@ -6,25 +6,11 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 01:48:23 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/27 22:12:27 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/28 22:09:44 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell_execution.h"
-
-int	ft_is_delimiter(char c)
-{
-	int	i;
-
-	i = 0;
-	while (DELIMITERS[i])
-	{
-		if (DELIMITERS[i] == c)
-			return (1);
-		i++;
-	}
-	return (0);
-}
 
 char	*ft_char_to_str(char c)
 {
@@ -88,7 +74,22 @@ void	ft_exp_init(t_expand *exp)
 	exp->i = -1;
 	exp->quote = 0;
 	exp->noting_before_quote = 0;
-	exp->noting_before_env_var = 1;
 	exp->found_star = 0;
 	exp->found_another_char = 0;
+}
+
+void	ft_expand_cut(t_expand *exp)
+{
+	if (exp->buff_exp)
+	{
+		if (exp->found_star && !exp->found_another_char)
+			ft_list_cwd(&(exp->head));
+		else
+			ft_lstadd_back(&(exp->head), ft_lstnew(ft_strdup2(exp->buff_exp)));
+		free(exp->buff_exp);
+		exp->buff_exp = NULL;
+		exp->found_star = 0;
+		exp->found_another_char = 0;
+		exp->noting_before_quote = 0;
+	}
 }
