@@ -1,22 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_lst.c                                        :+:      :+:    :+:   */
+/*   env_search.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/16 17:21:12 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/16 17:22:11 by zech-chi         ###   ########.fr       */
+/*   Created: 2024/03/28 20:06:37 by zech-chi          #+#    #+#             */
+/*   Updated: 2024/03/28 20:06:44 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell_execution.h"
 
-void	ft_print_lst(t_list *node)
+char	*ft_env_search(t_env *env, char *key)
 {
-	while (node)
+	while (env)
 	{
-		printf("{%s}\n", node->content);
-		node = node->next;
+		if (!ft_strcmp2(env->key, key))
+			return (ft_strdup2(env->value));
+		env = env->next;
 	}
+	return (NULL);
 }

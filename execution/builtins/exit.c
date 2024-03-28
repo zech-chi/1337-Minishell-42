@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 00:50:36 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/27 00:37:17 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/28 21:16:20 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,7 @@ void	ft_exit(char **cmd_2d, int *exit_status, t_env **env)
 	int	ex;
 
 	if (!cmd_2d[1])
-	{
-		printf("exit\n");
-		exit(0);
-	}
+		return (printf("exit\n"), exit(0));
 	else if (ft_non_numeric(cmd_2d[1]))
 	{
 		ft_free_2d_char(cmd_2d);

@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:49:47 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/26 22:23:47 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/28 21:17:07 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ static int	ft_is_valid_identifier1(char *str)
 			return (0);
 		if (
 			!(
-			('0' <= str[i] && str[i] <= '9')
-			|| ('a' <= str[i] && str[i] <= 'z')
-			|| ('A' <= str[i] && str[i] <= 'Z')
-			|| str[i] == '_'
+				('0' <= str[i] && str[i] <= '9')
+				|| ('a' <= str[i] && str[i] <= 'z')
+				|| ('A' <= str[i] && str[i] <= 'Z')
+				|| str[i] == '_'
 			)
 		)
 			return (0);
