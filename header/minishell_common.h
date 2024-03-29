@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 22:02:08 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/26 19:45:12 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/29 02:05:51 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdlib.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <signal.h>
 # include <errno.h>
 # include <fcntl.h>
 # include <dirent.h>

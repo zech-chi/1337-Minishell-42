@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 22:01:06 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/27 21:40:38 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/29 01:49:31 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,12 @@ char	*ft_get_prompt(int exit_status)
 	free(line);
 */
 //original main
+
+void	ft_sighandle(int sig)
+{
+	printf("%d\n", sig);
+}
+
 int	main(int ac, char **av, char **ev)
 {
 	t_env	*env;
@@ -39,6 +45,7 @@ int	main(int ac, char **av, char **ev)
 	t_tree	*tree;
 	int		exit_status;
 
+	//signal()
 	(void)(ac);
 	(void)(av);
 	env = ft_env_create(ev);
