@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 20:03:15 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/29 03:57:23 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/30 03:22:35 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ static int	ft_add_item(t_env **env, char *key, char *value, int visible)
 //	free(shell_lvl_key);
 //}
 
+//ft_update_shell_lvl(&env);
 t_env	*ft_env_create(char **ev)
 {
 	t_env	*env;
@@ -99,6 +100,5 @@ t_env	*ft_env_create(char **ev)
 	}
 	ft_env_delete(&env, "OLDPWD");
 	ft_env_add(&env, ft_strdup2("OLDPWD"), ft_strdup2(""), 0);
-	//ft_update_shell_lvl(&env);
 	return (env);
 }
