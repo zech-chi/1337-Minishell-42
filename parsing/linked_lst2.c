@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 22:27:36 by ymomen            #+#    #+#             */
-/*   Updated: 2024/03/26 02:00:02 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/03/30 09:38:37 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,104 +21,50 @@ t_lst	*lastone(t_lst *head)
 	return (head);
 }
 
-void	is_operateur(t_lst **node)
+void init_node(t_lst **node, int prio, int type, int read)
 {
-	if (!*node)
-		return ;
-	if (!ft_strcmp((*node)->value, "("))
-	{
-		(*node)->prio = open_par;
-		(*node)->type = OPEN_PARENTH;
-		(*node)->read = (L_TO_R);
-	}
-	else if (!ft_strcmp((*node)->value, ")"))
-	{
-		(*node)->prio = close_par;
-		(*node)->type = CLOSE_PARENTH;
-		(*node)->read = (R_TO_L);
-	}
-	else if (!ft_strcmp((*node)->value, "&&"))
-	{
-		(*node)->prio = (and);
-		(*node)->type = AND;
-		(*node)->read = (R_TO_L);
-	}
-	else if (!ft_strcmp((*node)->value, "||"))
-	{
-		(*node)->prio = (or);
-		(*node)->type = OR;
-		(*node)->read = (R_TO_L);
-	}
-	else if (!ft_strcmp((*node)->value, "|"))
-	{
-		(*node)->prio = (pip);
-		(*node)->type = PIPE;
-		(*node)->read = (L_TO_R);
-	}
-	else if (!ft_strcmp((*node)->value, ">"))
-	{
-		(*node)->prio = (redir);
-		(*node)->type = REDIRECTION;
-		(*node)->read = (L_TO_R);
-	}
-	else if (!ft_strcmp((*node)->value, ">>"))
-	{
-		(*node)->prio = (appand);
-		(*node)->type = APPEND_REDIRECTION;
-		(*node)->read = (L_TO_R);
-	}
-	else if (!ft_strcmp((*node)->value, "<<"))
-	{
-		(*node)->prio = (here_doc);
-		(*node)->type = HERE_DOC;
-		(*node)->read = (L_TO_R);
-	}
-	else if (!ft_strcmp((*node)->value, "<"))
-	{
-		(*node)->prio = (input);
-		(*node)->type = INPUT;
-		(*node)->read = (L_TO_R);
-	}
-	else
-	{
-		(*node)->prio = -1;
-		(*node)->type = 0;
-		(*node)->read = -1;
-	}
+	(*node)->prio = prio;
+	(*node)->type = type;
+	(*node)->read = read;
 }
 
-void	init_type(t_lst *prev, t_lst *node)
+void	init_type_2(t_lst *node, t_lst *prev)
 {
 	if (prev && node)
 	{
 		if (prev->type == REDIRECTION)
-		{
-			node->read = L_TO_R;
-			node->type = OUTFILE;
-		}
+			init_node(&node, 0, OUTFILE, L_TO_R);
 		else if (prev->type == INPUT)
-		{
-			node->read = L_TO_R;
-			node->type = INFILE;
-		}
+			init_node(&node, 0, INFILE, L_TO_R);
 		else if (prev->type == APPEND_REDIRECTION)
-		{
-			node->read = L_TO_R;
-			node->type = OUTFILE_APPAND;
-		}
+			init_node(&node, 0, OUTFILE_APPAND, L_TO_R);
 		else if (prev->type == HERE_DOC)
-		{
-			node->read = L_TO_R;
-			node->type = LIMITER;
-		}
+			init_node(&node, 0, LIMITER, L_TO_R);
 		else
-		{
-			if (node->type == 0)
-			{
-				node->type = OPERAND;
-				node->prio = 0;
-				node->read = R_TO_L;
-			}
-		}
+			init_node(&node, 0, OPERAND, R_TO_L);
 	}
 }
+void	init_type(t_lst **node)
+{
+		if (!ft_strcmp((*node)->value, "("))
+			init_node(node, open_par, OPEN_PARENTH, L_TO_R);
+		else if (!ft_strcmp((*node)->value, ")"))
+			init_node(node, close_par, CLOSE_PARENTH, R_TO_L);
+		else if (!ft_strcmp((*node)->value, "&&"))
+			init_node(node, and, AND, R_TO_L);
+		else if (!ft_strcmp((*node)->value, "||"))
+			init_node(node, or, OR, R_TO_L);
+		else if (!ft_strcmp((*node)->value, "|"))
+			init_node(node, pip, PIPE, L_TO_R);
+		else if (!ft_strcmp((*node)->value, ">"))
+			init_node(node, redir, REDIRECTION, L_TO_R);
+		else if (!ft_strcmp((*node)->value, ">>"))
+			init_node(node, appand, APPEND_REDIRECTION, L_TO_R);
+		else if (!ft_strcmp((*node)->value, "<<"))
+			init_node(node, here_doc, HERE_DOC, L_TO_R);
+		else if (!ft_strcmp((*node)->value, "<"))
+			init_node(node, input, INPUT, L_TO_R);
+		else
+				init_node(node, -1, 0, -1);
+}
+

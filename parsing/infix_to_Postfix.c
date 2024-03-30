@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:34:06 by ymomen            #+#    #+#             */
-/*   Updated: 2024/03/26 02:31:44 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/03/30 11:50:43 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,17 @@ t_lst   *from_infix_to_Postfix(t_lst *head)
     t_lst *stack = NULL; 
     t_lst *pop = NULL;         
 
+    
     while (head) {
           
             if (head->type <= 0)
-                lst_add_back(&postfix, lst_new(head->value));
+                lst_add_back(&postfix, post_new(head->value, head->type, head->prio, head->read));
             else if (head->type == OPEN_PARENTH)
-                lst_add_back(&stack, lst_new(head->value));
+                lst_add_back(&stack, post_new(head->value, head->type, head->prio, head->read));
              else if (head->type == CLOSE_PARENTH)
 			 {
                 while (stack && lastone(stack)->type != OPEN_PARENTH) {
-                    pop = lst_new((void *)pop_last(&stack));
+                    pop = pop_last_1(&stack);
                     lst_add_back(&postfix, pop);
                 }
                 pop_last(&stack);
@@ -36,15 +37,15 @@ t_lst   *from_infix_to_Postfix(t_lst *head)
 			{
                 while (stack && lastone(stack)->type != OPEN_PARENTH && (lastone(stack)->prio < head->prio ||
                         (lastone(stack)->prio == head->prio && lastone(stack)->read == R_TO_L))) {
-                    pop = lst_new((void *)pop_last(&stack));
+                    pop = pop_last_1(&stack);
                     lst_add_back(&postfix, pop);
                 }
-                lst_add_back(&stack, lst_new(head->value));
+                lst_add_back(&stack, post_new(head->value, head->type, head->prio, head->read));
 			}
         head = head->next;
     }
     while (stack) {
-        pop = lst_new((void *)pop_last(&stack));
+        pop = pop_last_1(&stack);
         lst_add_back(&postfix, pop);
     }
     return postfix;
@@ -57,14 +58,14 @@ t_tree *postfix_tree(t_lst *postfix)
 
     while(postfix)
     {
-        if (postfix->type == 0)
+        if (postfix->type <= 0)
         {
-            tree = new_node(postfix->value);
+            tree = new_node(postfix->value, postfix->type, postfix->prio, postfix->read);
             lst_add_back(&stack, lst_new(tree));
         }
         else
         {
-            tree = new_node(postfix->value);
+            tree = new_node(postfix->value, postfix->type, postfix->prio, postfix->read);
             tree->right = (t_tree *)(pop_last(&stack));
             tree->left = (t_tree *)(pop_last(&stack));
             lst_add_back(&stack, lst_new(tree));

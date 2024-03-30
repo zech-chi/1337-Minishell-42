@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 23:32:33 by ymomen            #+#    #+#             */
-/*   Updated: 2024/03/26 02:02:47 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/03/30 11:05:44 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void	tokens_contu(t_lst **node, char *command, int *i, t_parse *par_line)
 	{
 		lst_add_back(node, lst_new(ft_monstrdup(&command[*i], end - *i)));
 		*i = end -1;
-		init_type(prev, lastone(*node));
+		init_type_2((lastone(*node)), prev);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:57:50 by ymomen            #+#    #+#             */
-/*   Updated: 2024/03/17 21:56:42 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/03/30 11:28:45 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,14 @@ void	is_operateur_tree(t_tree **node)
 	}
 	else
 	{
-		(*node)->prio = -1;
+		(*node)->prio = 0;
 		(*node)->type = 0;
-		(*node)->read = -1;
+		(*node)->read = L_TO_R;
 	}
+	
 }
 
-t_tree	*new_node(char *value)
+t_tree	*new_node(char *value, int prio, int type, int read)
 {
 	t_tree	*node;
 	node = malloc(sizeof(t_tree));
@@ -86,20 +87,8 @@ t_tree	*new_node(char *value)
 		node->value = value;
 		node->right = NULL;
 		node->left = NULL;
-        is_operateur_tree(&node);
+		node->prio = prio;
+		node->type = type;
+		node->read = read;
 	return (node);
-}
-
-t_tree* insertIntoBST(t_tree* root, char *value) 
-{
-   if (!root)
-        return (new_node(value));
-    else
-    {
-        if (root->value < value)
-            root -> right = insertIntoBST(root->right, value);
-        else if (root->value > value)
-           root->left = insertIntoBST(root->left, value);
-    }
-    return (root);
 }
