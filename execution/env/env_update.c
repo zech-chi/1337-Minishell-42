@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 20:04:50 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/28 20:04:54 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/29 03:54:18 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	ft_env_update(t_env **env, char *key, char *newval, int append_mod)
 			}
 			node->visible = 1;
 			free(key);
+			key = NULL;
 			return (0);
 		}
 		node = node->next;

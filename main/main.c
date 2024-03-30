@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:23:31 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/27 23:35:28 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/30 03:26:02 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ char	*ft_get_prompt(int exit_status)
 	ft_free_2d_char(cmd_2d);
 	free(line);
 */
-//original main
+// original main
+
 int	main(int ac, char **av, char **ev)
 {
 	t_env	*env;
@@ -39,6 +40,7 @@ int	main(int ac, char **av, char **ev)
 	t_tree	*tree;
 	int		exit_status;
 
+	//signal()
 	(void)(ac);
 	(void)(av);
 	env = ft_env_create(ev);
@@ -47,9 +49,9 @@ int	main(int ac, char **av, char **ev)
 	{
 		line = ft_get_prompt(exit_status);
 		tree = parsing(line, &exit_status);
-		//printf("--------------- tree --------------------\n");
-		//print_tree_2d(tree);
-		//printf("-----------------------------------------\n");
+		printf("--------------- tree --------------------\n");
+		print_tree_2d(tree);
+		printf("-----------------------------------------\n");
 		//if (tree)
 		//	printf("%d\n", tree->type);
 		ft_execute(tree, &env, &exit_status);

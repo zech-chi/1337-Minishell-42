@@ -4,7 +4,7 @@ RM = rm -f
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror  -fsanitize=address -g
 
 READLINEFLAG = -lreadline
 
@@ -67,7 +67,9 @@ SRCS =	parsing/ft_stdup.c \
 		execution/tools/isspace.c \
 		execution/tools/substr.c \
 		execution/tools/putstr_fd.c \
-		execution/tools/free_2d_char.c
+		execution/tools/free_2d_char.c \
+		execution/tools/atoi.c \
+		#herdoc/herdoc.c
 
 OBJS = $(SRCS:.c=.o)
 
