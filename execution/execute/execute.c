@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:28:34 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/28 20:40:10 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/30 03:47:21 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void	ft_execute(t_tree *root, t_env **env, int *exit_status)
 		ft_execute_pipe(root, env, exit_status);
 	else if (root->type == REDIRECTION || root->type == APPEND_REDIRECTION)
 		ft_execute_redirection_out(root, env, exit_status);
+	else if (root->type == INPUT)
+		ft_execute_redirection_in(root, env, exit_status);
 	else if (root->type == AND)
 		ft_execute_and(root, env, exit_status);
 	else if (root->type == OR)
@@ -41,3 +43,4 @@ void	ft_execute(t_tree *root, t_env **env, int *exit_status)
 	else
 		ft_execute_cmd(root->value, env, exit_status);
 }
+ 

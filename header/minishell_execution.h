@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:07:18 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/30 03:23:09 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/30 03:44:25 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ int		ft_execute_builtins(char **cmd_2d, t_env **env, int *exit_status);
 void	ft_execute_cmd(char *cmd, t_env **env, int *exit_status);
 void	ft_execute_pipe(t_tree *root, t_env **env, int *exit_status);
 void	ft_execute_redirection_out(t_tree *root, t_env **env, int *exit_status);
+void	ft_execute_redirection_in(t_tree *root, t_env **env, int *exit_status);
 void	ft_execute(t_tree *root, t_env **env, int *exit_status);
 
 //void	ft_open_herdoc(char *eof, t_env *env, int exit_status);
