@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:39:39 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/28 21:32:11 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/31 02:22:23 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,12 @@ static void	ft_print_sorted_env(t_env **env_dup)
 	while (cur)
 	{
 		printf("declare -x %s", cur->key);
-		if (cur->value)
+		// modified
+		if (cur->value && (cur->visible))
+		{
 			printf("=\"%s\"", cur->value);
+		}
+		//////
 		printf("\n");
 		cur = cur->next;
 	}

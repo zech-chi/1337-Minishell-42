@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 20:39:26 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/28 20:40:38 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/31 01:18:35 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ static void	ft_execute_search_in_path(char **cmd_2d, t_env *env, char **env_2d)
 	path_2d = ft_split2(path_1d, ':');
 	if (!path_2d)
 	{
-		ft_put_error("🍪: malloc failed\n");
 		free(path_1d);
 		return ;
 	}

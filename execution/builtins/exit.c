@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 00:50:36 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/28 21:16:20 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/30 20:50:34 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	ft_exit(char **cmd_2d, int *exit_status, t_env **env)
 	else if (cmd_2d[2])
 	{
 		ft_print_error("🍪: exit: invalid argument\n", 0);
-		*exit_status = 255;
+		*exit_status = 1;
 	}
 	else
 	{
