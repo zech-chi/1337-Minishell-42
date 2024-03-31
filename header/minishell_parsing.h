@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:25:53 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/30 11:28:54 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/03/31 02:01:53 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_parse
 }	t_parse;
 
 /* FUNCTIONS */
+void update_tree(t_tree **root);
 t_lst	*pop_last_1(t_lst **stack);
 t_lst	*post_new(void *str,int type, int prio, int read);
 void	init_type_2(t_lst *node, t_lst *prev);

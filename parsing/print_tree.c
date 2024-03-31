@@ -6,13 +6,31 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 01:23:32 by ymomen            #+#    #+#             */
-/*   Updated: 2024/03/30 10:21:47 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/03/31 02:02:03 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell_parsing.h"
 
+void swap(t_tree **a, t_tree **b)
+{
+    t_tree *tmp;
 
+    tmp = *a;
+    *a = *b;
+    *b = tmp;
+}
+void fix_tree(t_tree **root)
+{
+    if (!*root)
+        return;
+    fix_tree(&(*root)->left);
+    fix_tree(&(*root)->right);
+    if (is_redarection((*root)->type) && (*root)->left && (*root)->left->type < 0)
+    {
+        swap(&(*root)->left, &(*root)->right);
+    }
+}
 t_tree *parsing (char * line, int *err)
 {
     t_lst *post;
@@ -27,6 +45,8 @@ t_tree *parsing (char * line, int *err)
     //     post = post->next;
     // }
 	tree = postfix_tree(post);
+    update_tree(&tree);
+    // fix_tree(&tree);
 	free(post);
 	free(node);
 	post = NULL;

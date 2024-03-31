@@ -1,3 +1,6 @@
 {
-    "functionHeaderExtension.headerFilePath": "/Users/ymomen/Desktop/1337-Minishell-42/header/minishell_parsing.h"
+    "functionHeaderExtension.headerFilePath": "/Users/ymomen/Desktop/1337-Minishell-42/header/minishell_parsing.h",
+    "files.associations": {
+        "ios": "c"
+    }
 }

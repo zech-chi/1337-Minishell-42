@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_common.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:27:47 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/27 02:22:43 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/31 01:59:33 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,5 @@ typedef struct s_tree
 	struct s_tree	*left;
 }	t_tree;
 
+char	**ft_split2(char const *s, char c);
 #endif
