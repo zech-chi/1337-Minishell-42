@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:25:53 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/31 02:01:53 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/03/31 16:45:25 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	*ft_strdup(const char *s1);
 	/*tree*/
 t_tree	*parsing(char *line, int *err);
 t_tree	*postfix_tree(t_lst *postfix);
-t_tree	*new_node(char *value, int prio, int read, int type);
+t_tree	*new_node(char *value, int prio, int type, int read);
 t_tree	*insertIntoBST(t_tree *root, char *value);
 t_lst	*from_infix_to_Postfix(t_lst *head);
 
