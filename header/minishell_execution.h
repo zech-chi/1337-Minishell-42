@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_execution.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
+/*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:07:18 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/31 01:59:41 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/01 02:12:15 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@
 # define GREEN_COLOR "\x1b[32m"
 # define RESET_COLOR "\x1b[0m"
 
+// split with
+# define SPACE ' '
+# define EQUAL '='
+
 typedef struct s_list
 {
 	void			*content;
@@ -36,6 +40,7 @@ int		ft_lstsize(t_list *lst);
 void	ft_lstclear(t_list **lst);
 
 /************************* tools *************************/
+char	**ft_split2(char const *s, char c);
 int		ft_strcmp2(char *s1, char *s2);
 char	*ft_strdup2(const char *s1);
 char	*ft_strjoin2(char *s1, char *s2);
@@ -51,16 +56,6 @@ void	ft_free_2d_char(char **char_2d);
 int		ft_atoi(const char *str);
 
 /************************* env *************************/
-typedef struct s_env
-{
-	char			*key;
-	char			*value;
-	struct s_env	*next;
-	int				visible;
-}	t_env;
-
-# define SPACE ' '
-# define EQUAL '='
 
 int		ft_env_add(t_env **env, char *key, char *value, int visible);
 void	ft_env_clear(t_env **env);
@@ -98,7 +93,6 @@ typedef struct s_expand
 	int		noting_before_quote;
 	char	*buff_exp;
 	char	*buff_env;
-	char	**cmd_2d;
 	int		i;
 	int		found_star;
 	int		found_another_char;
@@ -121,5 +115,4 @@ void	ft_execute_redirection_out(t_tree *root, t_env **env, int *exit_status);
 void	ft_execute_redirection_in(t_tree *root, t_env **env, int *exit_status);
 void	ft_execute(t_tree *root, t_env **env, int *exit_status);
 
-//void	ft_open_herdoc(char *eof, t_env *env, int exit_status);
 #endif

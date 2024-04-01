@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:29:33 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/29 03:34:42 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/04/01 00:21:48 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,11 @@ static void	ft_update_pwd_and_oldpwd(t_env **env)
 	char	*prev_wd;
 
 	prev_wd = ft_env_search(*env, "PWD");
-	getcwd(cur_wd, MAXPATHLEN);
+	if (getcwd(cur_wd, MAXPATHLEN) == NULL)
+	{
+		perror("cd: error retrieving current directory: getcwd: cannot access parent directories");
+		return ;
+	}
 	ft_env_delete(env, "OLDPWD");
 	ft_env_add(env, ft_strdup2("OLDPWD"), prev_wd, 1);
 	ft_env_update(env, ft_strdup2("PWD"), ft_strdup2(cur_wd), 0);

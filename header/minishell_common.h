@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_common.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
+/*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:27:47 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/31 18:46:18 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/01 02:11:33 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,25 @@ typedef struct s_tree
 	struct s_tree	*left;
 }	t_tree;
 
+/************************* env struct *************************/
+typedef struct s_env
+{
+	char			*key;
+	char			*value;
+	struct s_env	*next;
+	int				visible;
+}	t_env;
+
+/************************* her_doc struct *************************/
+typedef struct s_expand_herdoc
+{
+	char	*buff_exp;
+	char	*buff_env;
+	int		exit_status;
+	t_env	*env;
+	int		i;
+}	t_expand_herdoc;
+
+char	*ft_herdoc_expand(char *str, t_env *env, int exit_status);
 char	**ft_split2(char const *s, char c);
 #endif

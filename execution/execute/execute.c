@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:28:34 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/30 03:47:21 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/31 22:09:52 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,3 @@ void	ft_execute(t_tree *root, t_env **env, int *exit_status)
 	else
 		ft_execute_cmd(root->value, env, exit_status);
 }
- 

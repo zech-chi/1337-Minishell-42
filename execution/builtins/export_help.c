@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 21:30:24 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/28 21:37:35 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/31 22:11:01 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,14 @@ static char	*ft_remove_plus_from_slice1(char *old_slice1)
 	return (new_slice1);
 }
 
-static void	ft_export_error(char *slice1, char *slice2, int found_equal)
+static void	ft_export_error(char *slice1, char *slice2, int found_equal, int append_mod)
 {
 	ft_put_error("🍪: export: `");
 	ft_put_error(slice1);
 	if (found_equal)
 		ft_put_error("=");
+	else if (append_mod)
+		ft_put_error("+");
 	ft_put_error(slice2);
 	ft_put_error("': not a valid identifier\n");
 	free(slice1);
@@ -94,12 +96,18 @@ void	ft_export_help(char *str, t_env **env, int *exit_status)
 	append_mod = ft_is_valid_identifier(slice1);
 	slice2 = ft_get_slice(str, &right, '\0');
 	if (append_mod == -1)
-		return (*exit_status = 1, ft_export_error(slice1, slice2, found_equal));
+		return (*exit_status = 1, ft_export_error(slice1, slice2, found_equal, append_mod));
 	if (append_mod)
 		slice1 = ft_remove_plus_from_slice1(slice1);
+	if (append_mod && !found_equal)
+		return (*exit_status = 1, ft_export_error(slice1, slice2, found_equal, append_mod));
+	if (slice1 && !ft_strcmp2(slice1, "_"))
+		return (free(slice1), free(slice2));
+	if (!found_equal && ft_env_search(*env, slice1))
+		return ;
 	if (ft_env_update(env, slice1, slice2, append_mod))
 	{
-		if (slice2 && slice2[0])
+		if (slice2 && found_equal)
 			ft_env_add(env, slice1, slice2, 1);
 		else
 			ft_env_add(env, slice1, slice2, 0);
