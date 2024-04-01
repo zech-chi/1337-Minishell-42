@@ -10,8 +10,8 @@ CFLAGS = -Wall -Wextra -Werror  -fsanitize=address -g
 READLINEFLAG = -lreadline
 
 
-#READLINE_L = $(shell brew --prefix readline)/lib
-#READLINE_I = $(shell brew --prefix readline)/include
+READLINE_L = $(shell brew --prefix readline)/lib
+READLINE_I = $(shell brew --prefix readline)/include
 
 SRCS =	parsing/ft_stdup.c \
 		parsing/ft_putstr_fd.c \
@@ -57,6 +57,7 @@ SRCS =	parsing/ft_stdup.c \
 		execution/expanding/expand.c \
 		execution/expanding/expand_dollar.c \
 		execution/expanding/expand_tools.c \
+		execution/expanding/wildcard.c \
 		execution/tools/itoa.c \
 		execution/tools/linked_list.c \
 		execution/tools/split.c \
@@ -78,11 +79,11 @@ OBJS = $(SRCS:.c=.o)
 
 all: print_header $(NAME)
 
-$(NAME): $(OBJS)
-	$(CC) $(CFLAGS)  $^ -o $@ $(READLINEFLAG)
+%.o: %.c header/minishell_common.h
+	$(CC) $(CFLAGS) -I $(READLINE_I) -c $< -o $@
 
-%.o: %.c minishell_v1.h 
-	$(CC) $(CFLAGS) -c $< -o $@
+$(NAME): $(OBJS)
+	$(CC) $(CFLAGS)  $^ -o $@ -L $(READLINE_L) $(READLINEFLAG)
 
 clean:
 	$(RM) $(OBJS)
