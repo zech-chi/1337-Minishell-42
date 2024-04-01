@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:25:53 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/01 17:11:22 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/01 21:52:40 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_PARSING_H
 
 # include "./minishell_common.h"
+# define FILENAME "ABCDEFGHIJKLMNOPQRSTVWXYZabcdefghijklmnopqrstuvwxyz0123456789_"
 
 typedef struct s_lst
 {
@@ -24,12 +25,6 @@ typedef struct s_lst
 	struct s_lst	*next;
 }	t_lst;
 
-typedef struct s_parse
-{
-	int	prac;
-	int	quot;
-	int	err;
-}	t_parse;
 typedef struct s_garbage
 {
 	void *ptr;
@@ -41,6 +36,7 @@ typedef struct s_tool
 	int	prac;
 	int	quot;
 	int	err;
+	int anderr;
 	t_env *env;
 	t_garbage *grbg;
 } t_tool;

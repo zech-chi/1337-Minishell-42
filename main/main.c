@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:23:31 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/01 20:15:31 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/01 20:28:22 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	main(int ac, char **av, char **ev)
 	tool.err = 0;
 	while (1)
 	{
-		dd();
+		// dd();
 		line = ft_get_prompt(tool.err);
 		tree = parsing(line, &tool);
 		printf("--------------- tree --------------------\n");
