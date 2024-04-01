@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:29:33 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/28 21:14:47 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/29 03:34:42 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,49 +24,67 @@ static void	ft_update_pwd_and_oldpwd(t_env **env)
 	ft_env_update(env, ft_strdup2("PWD"), ft_strdup2(cur_wd), 0);
 }
 
-static	void	ft_go_to_old_path(t_env **env)
+static	void	ft_go_to_old_path(t_env **env, int *exit_status)
 {
 	char	*old_pwd;
 
 	old_pwd = ft_env_search(*env, "OLDPWD");
 	if (chdir(old_pwd) == SUCCESS)
+	{
 		ft_update_pwd_and_oldpwd(env);
+		*exit_status = 0;
+	}
 	else
+	{
 		ft_put_error("🍪: cd: OLDPWD not set\n");
+		*exit_status = 1;
+	}
 	free(old_pwd);
 }
 
-static	void	ft_go_to_home(t_env **env)
+static	void	ft_go_to_home(t_env **env, int *exit_status)
 {
 	char	*home;
 
 	home = ft_env_search(*env, "HOME");
+	if (!home)
+	{
+		ft_put_error("🍪: cd: HOME not set\n");
+		*exit_status = 1;
+	}
 	if (chdir(home) == SUCCESS)
+	{
 		ft_update_pwd_and_oldpwd(env);
+		*exit_status = 0;
+	}
 	free(home);
 }
 
-static	void	ft_go_to_new_path(t_env **env, char **cmd_2d)
+static	void	ft_go_to_new_path(t_env **env, char **cmd_2d, int *exit_status)
 {
 	char	*msg;
 
 	if (chdir(cmd_2d[1]) == SUCCESS)
+	{
 		ft_update_pwd_and_oldpwd(env);
+		*exit_status = 0;
+	}
 	else
 	{
 		msg = ft_strjoin2(ft_strdup2("🍪: cd: "), ft_strdup2(cmd_2d[1]));
 		perror(msg);
 		free(msg);
+		*exit_status = 1;
 	}
 }
 
-int	ft_cd(char **cmd_2d, t_env **env)
+int	ft_cd(char **cmd_2d, t_env **env, int *exit_status)
 {
 	if (!cmd_2d[1] || !ft_strcmp2("~", cmd_2d[1]))
-		ft_go_to_home(env);
+		ft_go_to_home(env, exit_status);
 	else if (!ft_strcmp2("-", cmd_2d[1]))
-		ft_go_to_old_path(env);
+		ft_go_to_old_path(env, exit_status);
 	else
-		ft_go_to_new_path(env, cmd_2d);
+		ft_go_to_new_path(env, cmd_2d, exit_status);
 	return (0);
 }

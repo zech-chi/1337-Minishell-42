@@ -31,7 +31,8 @@ char	*ft_get_prompt(int exit_status)
 	ft_free_2d_char(cmd_2d);
 	free(line);
 */
-//original main
+// original main
+
 int	main(int ac, char **av, char **ev)
 {
 	t_env	*env;
@@ -39,6 +40,7 @@ int	main(int ac, char **av, char **ev)
 	t_tree	*tree;
 	int		exit_status;
 
+	//signal()
 	(void)(ac);
 	(void)(av);
 	env = ft_env_create(ev);

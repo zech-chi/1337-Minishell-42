@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 20:03:15 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/28 20:13:35 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/30 03:22:35 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,32 @@ static int	ft_add_item(t_env **env, char *key, char *value, int visible)
 	return (0);
 }
 
+//static void	ft_update_shell_lvl(t_env **env)
+//{
+//	char	*shell_lvl_value;
+//	int		shell_lvl_int;
+//	char	*shell_lvl_key;
+
+//	ft_env_delete(env, "OLDPWD");
+//	ft_env_add(env, ft_strdup2("OLDPWD"), ft_strdup2(""), 0);
+//	shell_lvl_value = ft_env_search(*env, "SHLVL");
+//	shell_lvl_key = ft_strdup2("SHLVL");
+//	if (!shell_lvl_value)
+//		ft_env_update(env, shell_lvl_key, ft_itoa2(0), 0);
+//	else
+//	{
+//		shell_lvl_int = ft_atoi(shell_lvl_value);
+//		if (shell_lvl_int == 999)
+//			ft_env_update(env, shell_lvl_key, ft_strdup2(""), 0);
+//		else if (shell_lvl_int > 999)
+//			ft_env_update(env, shell_lvl_key, ft_strdup2("1"), 0);
+//		else
+//			ft_env_update(env, shell_lvl_key, ft_itoa2(shell_lvl_int + 1), 0);
+//	}
+//	free(shell_lvl_key);
+//}
+
+//ft_update_shell_lvl(&env);
 t_env	*ft_env_create(char **ev)
 {
 	t_env	*env;

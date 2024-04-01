@@ -48,6 +48,7 @@ void	ft_put_error(char *s);
 int		ft_isspace(char c);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 void	ft_free_2d_char(char **char_2d);
+int		ft_atoi(const char *str);
 
 /************************* env *************************/
 typedef struct s_env
@@ -76,7 +77,7 @@ int		ft_env_update(t_env **env, char *key, char *newval, int append_mod);
 // echo
 void	ft_echo(char **cmd_2d);
 // cd
-int		ft_cd(char **splited_prompt, t_env **env);
+int		ft_cd(char **splited_prompt, t_env **env, int *exit_status);
 // export
 void	ft_export(t_env **env, char **cmd_2d, int *exit_status);
 void	ft_export_help(char *str, t_env **env, int *exit_status);
@@ -117,6 +118,8 @@ int		ft_execute_builtins(char **cmd_2d, t_env **env, int *exit_status);
 void	ft_execute_cmd(char *cmd, t_env **env, int *exit_status);
 void	ft_execute_pipe(t_tree *root, t_env **env, int *exit_status);
 void	ft_execute_redirection_out(t_tree *root, t_env **env, int *exit_status);
+void	ft_execute_redirection_in(t_tree *root, t_env **env, int *exit_status);
 void	ft_execute(t_tree *root, t_env **env, int *exit_status);
 
+//void	ft_open_herdoc(char *eof, t_env *env, int exit_status);
 #endif
