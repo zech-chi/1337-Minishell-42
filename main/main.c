@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:23:31 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/01 18:07:16 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/01 20:15:31 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int	main(int ac, char **av, char **ev)
 	//signal()
 	(void)(ac);
 	(void)(av);
-	(void)ev;
 	tool.grbg = NULL;
 	tool.env = ft_env_create(ev);
 	tool.err = 0;
