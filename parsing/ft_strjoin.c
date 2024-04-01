@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 02:41:11 by ymomen            #+#    #+#             */
-/*   Updated: 2024/03/26 01:54:30 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/01 17:39:48 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,7 @@ static size_t	totalen(const char *s1, const char *s2)
 	return (s1l + s2l);
 }
 
-void	free_it(char *s1, char *s2)
-{
-	if (s1)
-		free(s1);
-	if (s2)
-		free(s2);
-}
-
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char const *s1, char const *s2, t_tool *tool)
 {
 	size_t	lentot;
 	size_t	i;
@@ -45,6 +37,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	newstr = (char *) malloc(lentot + 1);
 	if (!newstr)
 		return (NULL);
+	add_to_grbg(&tool->grbg, newstr);
 	while (s1[count] && lentot > count)
 	{
 		newstr[count] = s1[count];
@@ -56,5 +49,5 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		i++;
 	}
 	newstr[count + i] = '\0';
-	return (free_it((char *)s1, (char *)s2), newstr);
+	return (newstr);
 }
