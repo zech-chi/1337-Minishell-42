@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 00:21:31 by ymomen            #+#    #+#             */
-/*   Updated: 2024/03/31 02:12:54 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/01 02:08:10 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	is_delimter(char c)
 	return (0);
 }
 
-char	*ft_monstrdup(const char *s1, size_t size)
+char	*ft_monstrdup(const char *s1, size_t size, t_garbage **grbg)
 {
 	char		*dup;
 	size_t		i;
@@ -41,6 +41,7 @@ char	*ft_monstrdup(const char *s1, size_t size)
 	dup = (char *) malloc(size + 1 * sizeof(char));
 	if (!dup)
 		return (NULL);
+	add_to_grbg(grbg, dup);
 	while (i < size)
 	{
 		dup[i] = s1[i];

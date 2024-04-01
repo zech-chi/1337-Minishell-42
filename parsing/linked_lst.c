@@ -6,13 +6,13 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 17:39:11 by ymomen            #+#    #+#             */
-/*   Updated: 2024/03/30 11:25:21 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/01 14:45:07 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell_parsing.h"
 
-t_lst	*lst_new(void *str)
+t_lst	*lst_new(void *str, t_tool *tool)
 {
 	t_lst			*node;
 	static t_lst	*prev;
@@ -21,10 +21,8 @@ t_lst	*lst_new(void *str)
 		return (NULL);
 	node = (t_lst *) malloc(sizeof(t_lst));
 	if (!node)
-	{
-		free(str);
 		return (NULL);
-	}
+	add_to_grbg(&tool->grbg, node);
 	node->value = str;
 	init_type(&node);
 	prev = node;
@@ -104,7 +102,6 @@ void	*pop_last(t_lst **stack)
 	if (!(*stack)->next)
 	{
 		ptr = (*stack)->value;
-		free(*stack);
 		*stack = NULL;
 		return (ptr);
 	}
@@ -114,7 +111,6 @@ void	*pop_last(t_lst **stack)
 		*stack = (*stack)->next;
 	}
 	ptr = (*stack)->value;
-	free(*stack);
 	*stack = NULL;
 	prv->next = NULL;
 	*stack = tmp;
@@ -146,7 +142,7 @@ t_lst	*pop_last_1(t_lst **stack)
 	*stack = tmp;
 	return (ptr);
 }
-t_lst	*post_new(void *str,int type, int prio, int read)
+t_lst	*post_new(void *str,int type, int prio, t_tool *tool)
 {
 	t_lst			*node;
 	static t_lst	*prev;
@@ -155,14 +151,11 @@ t_lst	*post_new(void *str,int type, int prio, int read)
 		return (NULL);
 	node = (t_lst *) malloc(sizeof(t_lst));
 	if (!node)
-	{
-		free(str);
 		return (NULL);
-	}
+	add_to_grbg(&tool->grbg, node);
 	node->value = str;
 	node->prio = prio;
 	node->type = type;
-	node->read = read;
 	prev = node;
 	node->next = NULL;
 	return (node);
