@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_execution.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:07:18 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/30 03:44:25 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/31 01:59:41 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int		ft_lstsize(t_list *lst);
 void	ft_lstclear(t_list **lst);
 
 /************************* tools *************************/
-char	**ft_split2(char const *s, char c);
 int		ft_strcmp2(char *s1, char *s2);
 char	*ft_strdup2(const char *s1);
 char	*ft_strjoin2(char *s1, char *s2);
