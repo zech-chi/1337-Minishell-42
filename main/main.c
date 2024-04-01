@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
+/*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:23:31 by zech-chi          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/04/01 21:50:16 by zech-chi         ###   ########.fr       */
-=======
-/*   Updated: 2024/04/01 20:28:22 by ymomen           ###   ########.fr       */
->>>>>>> 7928b9b09521ef624a5870245578c10723abcfbd
+/*   Updated: 2024/04/01 22:28:03 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +48,6 @@ int	main(int ac, char **av, char **ev)
 	tool.err = 0;
 	while (1)
 	{
-<<<<<<< HEAD
-		line = ft_get_prompt(exit_status);
-		tree = parsing(line, &exit_status);
-		//printf("--------------- tree --------------------\n");
-		//print_tree_2d(tree);
-		//printf("-----------------------------------------\n");
-		//if (tree)
-		//	printf("%d\n", tree->type);
-		ft_execute(tree, &env, &exit_status);
-=======
 		// dd();
 		line = ft_get_prompt(tool.err);
 		tree = parsing(line, &tool);
@@ -71,7 +57,6 @@ int	main(int ac, char **av, char **ev)
 		ft_execute(tree, &tool.env, &tool.err);
 		clear_garbage(tool.grbg);
 		tool.grbg = NULL;
->>>>>>> 7928b9b09521ef624a5870245578c10723abcfbd
 		free(line);
 	}
 	rl_clear_history();

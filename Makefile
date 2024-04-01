@@ -81,7 +81,7 @@ OBJS = $(SRCS:.c=.o)
 
 all: print_header $(NAME)
 
-%.o: %.c header/minishell_common.h
+%.o: %.c header/minishell_common.h header/minishell_execution.h header/minishell_parsing.h
 	$(CC) $(CFLAGS) -I $(READLINE_I) -c $< -o $@
 
 $(NAME): $(OBJS)
