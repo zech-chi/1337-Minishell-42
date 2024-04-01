@@ -3,27 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:14:28 by ymomen            #+#    #+#             */
-/*   Updated: 2024/03/15 17:10:30 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/04/01 15:11:26 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell_parsing.h"
 
-char	*check(void)
+char	*check(t_tool *tool)
 {
 	char	*newstr;
 
 	newstr = (char *)malloc(1 * sizeof(char));
 	if (!newstr)
 		return (NULL);
+	add_to_grbg(&tool->grbg, newstr);
 	newstr[0] = '\0';
 	return (newstr);
 }
 
-char	*ft_strtrim(const char *s1, const char *set)
+char	*ft_strtrim(const char *s1, const char *set, t_tool *tool)
 {
 	size_t	start;
 	size_t	end;
@@ -33,11 +34,9 @@ char	*ft_strtrim(const char *s1, const char *set)
 	if (!s1)
 		return (NULL);
 	if (ft_strlen(s1) == 0)
-	{
-		return (check());
-	}
+		return (check(tool));
 	if (ft_strlen(set) == 0 || !set)
-		return (ft_strdup(s1));
+		return (ft_strdup(s1, tool));
 	end = ft_strlen(s1) - 1;
 	start = 0;
 	while (s1[start] && ft_strchr(set, s1[start]))
@@ -48,6 +47,7 @@ char	*ft_strtrim(const char *s1, const char *set)
 	newstr = (char *)malloc((lenstr + 1) * sizeof(char));
 	if (!newstr)
 		return (NULL);
+	add_to_grbg(&tool->grbg, newstr);
 	ft_strlcpy(newstr, &s1[start], lenstr + 1);
 	return (newstr);
 }

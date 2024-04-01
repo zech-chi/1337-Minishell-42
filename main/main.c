@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:23:31 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/01 02:06:39 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/04/01 15:27:49 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,26 +35,27 @@ char	*ft_get_prompt(int exit_status)
 
 int	main(int ac, char **av, char **ev)
 {
-	t_env	*env;
 	char	*line;
 	t_tree	*tree;
 	int		exit_status;
+	t_tool	tool;
 
 	//signal()
 	(void)(ac);
 	(void)(av);
-	env = ft_env_create(ev);
+	tool.env = ft_env_create(ev);
 	exit_status = 0;
 	while (1)
 	{
 		line = ft_get_prompt(exit_status);
-		tree = parsing(line, &exit_status);
+		tree = parsing(line, &tool);
 		printf("--------------- tree --------------------\n");
 		print_tree_2d(tree);
 		printf("-----------------------------------------\n");
 		//if (tree)
 		//	printf("%d\n", tree->type);
-		ft_execute(tree, &env, &exit_status);
+		ft_execute(tree, &tool.env, &exit_status);
+		// lst_clear(grbg);
 		free(line);
 	}
 	return (SUCCESS);
