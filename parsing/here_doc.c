@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
+/*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:16:00 by ymomen            #+#    #+#             */
-/*   Updated: 2024/04/01 01:02:50 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/01 02:17:05 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void	wrt_on_pipe(int *fd, char *limiter, int *exit_status)
 			free(line);
 			return ;
 		}
+		// if limiter mafihch quotes blama dkhol hna
+		//line = ft_herdoc_expand(line, env, *exit_status);
 		if (write(*fd, line, ft_strlen(line)) == -1 || write(*fd, "\n", 1) == -1)
         {
 			perror(" 🍪: write");
