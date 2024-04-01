@@ -6,13 +6,13 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 06:15:50 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/30 03:02:57 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/04/01 01:54:31 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell_execution.h"
 
-int	ft_is_valid_char(char c)
+static int	ft_is_valid_char(char c)
 {
 	return (('a' <= c && c <= 'z')
 		|| ('A' <= c && c <= 'Z')
@@ -20,112 +20,113 @@ int	ft_is_valid_char(char c)
 		|| (c == '_'));
 }
 
-int	ft_is_numeric(char c)
+static int	ft_is_numeric(char c)
 {
 	return ('0' <= c && c <= '9');
 }
 
-void	ft_help_expand_dollar(char *str, int *i, char **buff_env, char **buff_exp, int exit_status)
+static void	ft_help_expand_dollar(char *str, t_expand_herdoc *exp_h)
 {
-	if (str[*i] == '*' && str[*i - 1] == '$')
-		(*i)++;
-	if (ft_strlen2(*buff_env) == 1)
+	if (str[exp_h->i] == '*' && str[exp_h->i - 1] == '$')
+		(exp_h->i)++;
+	if (ft_strlen2(exp_h->buff_env) == 1)
 	{
-		if (str[*i] == '?')
+		if (str[exp_h->i] == '?')
 		{
-			*buff_exp = ft_strjoin2(*buff_exp, ft_itoa2(exit_status));
-			(*i)++;
+			exp_h->buff_exp = ft_strjoin2(exp_h->buff_exp, \
+			ft_itoa2(exp_h->exit_status));
+			(exp_h->i)++;
+		}
+		else if (str[exp_h->i] == '$')
+		{
+			exp_h->buff_exp = ft_strjoin2(exp_h->buff_exp, ft_strdup2("$$"));
+			(exp_h->i)++;
 		}
 		else
 		{
-			*buff_exp = ft_strjoin2(*buff_exp, ft_char_to_str('$'));
+			exp_h->buff_exp = ft_strjoin2(exp_h->buff_exp, ft_strdup2("$"));
 		}
 	}
-	(*i)--;
+	(exp_h->i)--;
 }
 
-void	ft_herdoc_expand_dollar(char *str, char **buff_exp, int *i, t_env *env, int exit_status)
+static void	ft_herdoc_expand_dollar(char *str, t_expand_herdoc *exp_h)
 {
-	char	*buff_env;
 	char	*env_var;
 
-	buff_env = NULL;
 	env_var = NULL;
-	buff_env = ft_char_to_str(str[(*i)++]);
-	while (str[*i] && ft_is_valid_char(str[*i]))
+	exp_h->buff_env = ft_char_to_str(str[(exp_h->i)++]);
+	while (str[exp_h->i] && ft_is_valid_char(str[exp_h->i]))
 	{
-		if (ft_is_numeric(str[*i]) && str[*i - 1] == '$')
+		if (ft_is_numeric(str[exp_h->i]) && str[exp_h->i - 1] == '$')
 		{
-			free(buff_env);
-			buff_env = NULL;
-			break;
+			free(exp_h->buff_env);
+			exp_h->buff_env = NULL;
+			break ;
 		}
-		buff_env = ft_strjoin2(buff_env, ft_char_to_str(str[(*i)++]));
+		exp_h->buff_env = ft_strjoin2(exp_h->buff_env, \
+		ft_char_to_str(str[(exp_h->i)++]));
 	}
-	if (!buff_env)
+	if (!(exp_h->buff_env))
 		return ;
-	env_var = ft_env_search(env, buff_env + 1);
+	env_var = ft_env_search(exp_h->env, exp_h->buff_env + 1);
 	if (!env_var)
-		*buff_exp = ft_strjoin2(*buff_exp, ft_strdup2(""));
+		exp_h->buff_exp = ft_strjoin2(exp_h->buff_exp, ft_strdup2(""));
 	else
-		*buff_exp = ft_strjoin2(*buff_exp, env_var);
-	ft_help_expand_dollar(str, i, &buff_env, buff_exp, exit_status);
-	//free(buff_env);
-	//free(env_var);
+		exp_h->buff_exp = ft_strjoin2(exp_h->buff_exp, env_var);
+	ft_help_expand_dollar(str, exp_h);
+	free(exp_h->buff_env);
 }
 
 char	*ft_herdoc_expand(char *str, t_env *env, int exit_status)
 {
-	char	*buff_exp;
-	int		i;
+	t_expand_herdoc	exp_h;
 
-	buff_exp = NULL;
-	i = -1;
-	while (str[++i])
+	exp_h.buff_env = NULL;
+	exp_h.buff_exp = NULL;
+	exp_h.i = 0;
+	exp_h.exit_status = exit_status;
+	exp_h.env = env;
+	while (str[exp_h.i])
 	{
-		if (str[i] == '$')
-			ft_herdoc_expand_dollar(str, &buff_exp, &i, env, exit_status);
+		if (str[exp_h.i] == '$')
+			ft_herdoc_expand_dollar(str, &exp_h);
 		else
-			buff_exp = ft_strjoin2(buff_exp, ft_char_to_str(str[i]));
+			exp_h.buff_exp = ft_strjoin2(exp_h.buff_exp, \
+			ft_char_to_str(str[exp_h.i]));
+		(exp_h.i)++;
 	}
-	return (buff_exp);
+	return (exp_h.buff_exp);
 }
 
-void	ft_open_herdoc(char *eof, t_env *env, int exit_status)
-{
-	//int	fd_herdoc;
-	char	*line;
+//void	ft_open_herdoc(char *eof, t_env *env, int exit_status)
+//{
+//	char	*line;
 
-	//fd_herdoc = open("./.herdoc", O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	//if (fd_herdoc == -1)
-	//{
-	//	ft_put_error("🍪: error in herdoc file");
-	//	return ;
-	//}
-	while (1)
-	{
-		line = readline("> ");
-		if (!ft_strcmp2(line, eof))
-		{
-			printf("done\n");
-			break;
-		}
-		else 
-			printf("%s\n", ft_herdoc_expand(line, env, exit_status));
-		free(line);
-	}
-}
+//	while (1)
+//	{
+//		line = readline("> ");
+//		if (!line)
+//			printf("%s\n", line);
+//		else if (!ft_strcmp2(line, eof))
+//		{
+//			printf("done\n");
+//			break ;
+//		}
+//		else
+//			printf("%s\n", ft_herdoc_expand(line, env, exit_status));
+//		free(line);
+//	}
+//}
+//int	main(int ac, char **av, char **ev)
+//{
+//	t_env	*env;
+//	int		exit_status;
 
-
-int	main(int ac, char **av, char **ev)
-{
-	t_env	*env;
-	int		exit_status;
-
-	(void)(ac);
-	(void)(av);
-	env = ft_env_create(ev);
-	exit_status = 0;
-	ft_open_herdoc("stop", env, exit_status);
-	ft_env_clear(&env);
-}
+//	(void)(ac);
+//	(void)(av);
+//	env = ft_env_create(ev);
+//	exit_status = 0;
+//	ft_open_herdoc("stop", env, exit_status);
+//	ft_env_clear(&env);
+//}
