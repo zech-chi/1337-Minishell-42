@@ -6,6 +6,7 @@ CC = cc
 
 CFLAGS = -Wall -Wextra -Werror  -fsanitize=address -g
 
+
 READLINEFLAG = -lreadline
 
 
@@ -27,6 +28,7 @@ SRCS =	parsing/ft_stdup.c \
 		parsing/token_lst.c \
 		parsing/tree.c \
 		parsing/fix_lst_perfix.c\
+		parsing/here_doc.c\
 		main/main.c \
 		execution/execute/execute.c \
 		execution/execute/execute_builtins.c \

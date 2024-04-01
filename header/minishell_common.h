@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:27:47 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/01 01:58:40 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/04/01 02:11:33 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,5 @@ typedef struct s_expand_herdoc
 }	t_expand_herdoc;
 
 char	*ft_herdoc_expand(char *str, t_env *env, int exit_status);
+char	**ft_split2(char const *s, char c);
 #endif

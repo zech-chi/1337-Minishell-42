@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:25:53 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/26 02:13:41 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/01 01:07:48 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,12 @@ typedef struct s_parse
 }	t_parse;
 
 /* FUNCTIONS */
+int 	heredoc(int *exit_status, char **limiter);
+void 	update_tree(t_tree **root);
+t_lst	*pop_last_1(t_lst **stack);
+t_lst	*post_new(void *str,int type, int prio, int read);
+void	init_type_2(t_lst *node, t_lst *prev);
+void	init_type(t_lst **node);
 int		is_redarection(int type);
 void	redarection_prac_fix(t_lst **head);
 void	redarection_perfix_lst(t_lst **head);
@@ -43,10 +49,8 @@ void	update_lst(t_lst **node);
 void	is_operateur_tree(t_tree **node);
 void	is_quot_parc_open(t_parse *par_line, char command, int qorp);
 void	trime(t_lst *head);
-void	init_type(t_lst *prev, t_lst *node);
 char	*ft_monstrdup(const char *s1, size_t size);
 void	is_operateur(t_lst **node);
-int		check_arr(char *arr);
 int		is_delimter(char c);
 
 /* LIBFT */
@@ -61,7 +65,7 @@ char	*ft_strdup(const char *s1);
 	/*tree*/
 t_tree	*parsing(char *line, int *err);
 t_tree	*postfix_tree(t_lst *postfix);
-t_tree	*new_node(char *value);
+t_tree	*new_node(char *value, int prio, int type, int read);
 t_tree	*insertIntoBST(t_tree *root, char *value);
 t_lst	*from_infix_to_Postfix(t_lst *head);
 

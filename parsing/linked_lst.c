@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   linked_lst.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 17:39:11 by ymomen            #+#    #+#             */
-/*   Updated: 2024/03/27 23:35:18 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/03/30 11:25:21 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 t_lst	*lst_new(void *str)
 {
-	t_lst	*node;
+	t_lst			*node;
+	static t_lst	*prev;
 
 	if (!str)
 		return (NULL);
@@ -25,7 +26,8 @@ t_lst	*lst_new(void *str)
 		return (NULL);
 	}
 	node->value = str;
-	is_operateur(&node);
+	init_type(&node);
+	prev = node;
 	node->next = NULL;
 	return (node);
 }
@@ -117,4 +119,51 @@ void	*pop_last(t_lst **stack)
 	prv->next = NULL;
 	*stack = tmp;
 	return (ptr);
+}
+t_lst	*pop_last_1(t_lst **stack)
+{
+	t_lst	*ptr;
+	t_lst	*tmp;
+	t_lst	*prv;
+
+	if (!stack || !*stack)
+		return (NULL);
+	tmp = *stack;
+	if (!(*stack)->next)
+	{
+		ptr = (*stack);
+		*stack = NULL;
+		return (ptr);
+	}
+	while ((*stack)->next)
+	{
+		prv = *stack;
+		*stack = (*stack)->next;
+	}
+	ptr = (*stack);
+	*stack = NULL;
+	prv->next = NULL;
+	*stack = tmp;
+	return (ptr);
+}
+t_lst	*post_new(void *str,int type, int prio, int read)
+{
+	t_lst			*node;
+	static t_lst	*prev;
+
+	if (!str)
+		return (NULL);
+	node = (t_lst *) malloc(sizeof(t_lst));
+	if (!node)
+	{
+		free(str);
+		return (NULL);
+	}
+	node->value = str;
+	node->prio = prio;
+	node->type = type;
+	node->read = read;
+	prev = node;
+	node->next = NULL;
+	return (node);
 }
