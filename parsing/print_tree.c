@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 01:23:32 by ymomen            #+#    #+#             */
-/*   Updated: 2024/03/31 19:45:27 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/03/31 23:03:29 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,10 @@ t_tree *parsing (char * line, int *err)
     //     post = post->next;
     // }
 	tree = postfix_tree(post);
+    if (*err)
+    {
+        
+    }
 	free(post);
 	free(node);
 	post = NULL;

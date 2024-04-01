@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 23:32:33 by ymomen            #+#    #+#             */
-/*   Updated: 2024/03/31 18:02:34 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/03/31 23:51:10 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,11 @@ t_lst	*check_parss_erres(t_parse parc_line, t_lst **node, int *err)
 			write(2, "🍪: syntax error near unexpected token `", 43);
 			ft_putstr_fd(tmp->value, 2);
 			write(2, "'\n", 2);
+			return (NULL);
+		}
+		if (tmp->type == 10 && tmp->next && heredoc(err, &(tmp->next->value)))
+		{
+			
 			return (NULL);
 		}
 		tmp = tmp->next;
