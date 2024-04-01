@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 02:41:11 by ymomen            #+#    #+#             */
-/*   Updated: 2024/04/01 14:49:29 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/01 17:39:48 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,6 @@ static size_t	totalen(const char *s1, const char *s2)
 	s1l = ft_strlen(s1);
 	s2l = ft_strlen(s2);
 	return (s1l + s2l);
-}
-
-void	free_it(char *s1, char *s2)
-{
-	if (s1)
-		free(s1);
-	if (s2)
-		free(s2);
 }
 
 char	*ft_strjoin(char const *s1, char const *s2, t_tool *tool)

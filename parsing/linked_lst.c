@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 17:39:11 by ymomen            #+#    #+#             */
-/*   Updated: 2024/04/01 14:45:07 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/01 17:51:04 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,21 +74,21 @@ int	size_lst(t_lst **head)
 	return (i);
 }
 
-void	lst_clear(t_lst *head)
-{
-	t_lst	*node;
+// void	lst_clear(t_lst *head)
+// {
+// 	t_lst	*node;
 
-	if (!head)
-		return ;
-	node = head;
-	while (head)
-	{
-		head = head ->next;
-		free(node->value);
-		free(node);
-		node = head;
-	}
-}
+// 	if (!head)
+// 		return ;
+// 	node = head;
+// 	while (head)
+// 	{
+// 		head = head ->next;
+// 		free(node->value);
+// 		free(node);
+// 		node = head;
+// 	}
+// }
 
 void	*pop_last(t_lst **stack)
 {

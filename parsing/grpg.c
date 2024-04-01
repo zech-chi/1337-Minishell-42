@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 02:00:26 by ymomen            #+#    #+#             */
-/*   Updated: 2024/04/01 13:53:56 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/01 17:45:08 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,21 @@ void add_to_grbg(t_garbage **head, void *value)
 		tmp->next = node;
 		node->next = NULL;
 		return ;
+	}
+}
+
+void	clear_garbage(t_garbage *head)
+{
+	t_garbage	*node;
+
+	if (!head)
+		return ;
+	node = head;
+	while (head)
+	{
+		head = head ->next;
+		free(node->ptr);
+		free(node);
+		node = head;
 	}
 }

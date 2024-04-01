@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 00:42:19 by ymomen            #+#    #+#             */
-/*   Updated: 2024/04/01 01:11:32 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/01 17:50:20 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@
 // 	node = *head;
 // }
 
-void	redarection_join_arg(t_lst **node)
+void	redarection_join_arg(t_lst **node, t_tool *tool)
 {
 	t_lst	*cur;
 	t_lst	*hlf;
@@ -115,16 +115,15 @@ void	redarection_join_arg(t_lst **node)
 			&& cur->next->type == 0)
 		{
 			hlf = cur->next;
-			cmd ->value = ft_strjoin(cmd->value, ft_strdup(" "));
-			cmd->value = ft_strjoin(cmd->value, hlf->value);
+			cmd ->value = ft_strjoin(cmd->value, ft_strdup(" ", tool), tool);
+			cmd->value = ft_strjoin(cmd->value, hlf->value, tool);
 			cur->next = hlf->next;
-			free(hlf);
 		}
 		cur = cur->next;
 	}
 }
 
-void update_tree(t_tree **root)
+void update_tree(t_tree **root, t_tool *tool)
 {
 	char **sp;
 	
@@ -132,16 +131,20 @@ void update_tree(t_tree **root)
 		return ;
 	if(is_redarection((*root)->type) && !(*root)->left)
 	{
-		sp = ft_split2((*root)->value, ' ');
-		free((*root)->value);
+		sp = ft_split((*root)->value, ' ', tool);
+		if (!sp)
+		{
+			root = NULL;
+			return ;
+		}
 		(*root)->value = sp[0];
-		(*root)->left = new_node(sp[1], -1, -2, L_TO_R);
-		update_tree(&(*root)->right);
+		(*root)->left = new_node(sp[1], -1, -2, tool);
+		update_tree(&(*root)->right, tool);
 	}
 	else
 	{
-		update_tree(&(*root)->left);
-		update_tree(&(*root)->right);
+		update_tree(&(*root)->left, tool);
+		update_tree(&(*root)->right, tool);
 	}
 	return;
 }
