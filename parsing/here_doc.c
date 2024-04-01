@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:16:00 by ymomen            #+#    #+#             */
-/*   Updated: 2024/04/01 15:42:06 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/01 17:49:31 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,14 @@ void	wrt_on_pipe(int *fd, char *limiter, t_tool *tool)
 	while (line)
 	{
 		line = readline("here_doc> ");
+        add_to_grbg(&tool->grbg, line);
 		if (!line)
         {
             tool->err = 1;
 			write(2 ,"🍪: can get the line from stdin.", 29);
         }
 		if (ft_strcmp(line, limiter) == 0)
-		{
-			free(line);
 			return ;
-		}
 		// if limiter mafihch quotes blama dkhol hna
 		//line = ft_herdoc_expand(line, env, *exit_status);
 		if (write(*fd, line, ft_strlen(line)) == -1 || write(*fd, "\n", 1) == -1)
@@ -38,7 +36,6 @@ void	wrt_on_pipe(int *fd, char *limiter, t_tool *tool)
 			perror(" 🍪: write");
             tool->err = 1;
         }
-		free(line);
 	}
 }
 
@@ -64,7 +61,6 @@ int heredoc(t_tool *tool, char **limiter)
         perror("open");
         tool->err = 1;
         }
-    free (*limiter);
     *limiter = ft_strdup("/tmp/here_doc", tool);
     return (tool->err);
 }

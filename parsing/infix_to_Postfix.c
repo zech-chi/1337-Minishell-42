@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:34:06 by ymomen            #+#    #+#             */
-/*   Updated: 2024/04/01 14:43:02 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/01 17:01:40 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,6 @@ t_tree *postfix_tree(t_lst *postfix, t_tool *tool)
     tree = pop_last(&stack);
     if(stack)
         return(printf("Error: Invalid expression\n"), NULL);
-    update_tree(&tree);
+    update_tree(&tree, tool);
     return (tree);
 }

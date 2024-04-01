@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 23:32:33 by ymomen            #+#    #+#             */
-/*   Updated: 2024/04/01 14:32:00 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/01 17:51:37 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,17 +73,16 @@ t_lst	*check_parss_erres( t_lst **node, t_tool *tool)
 			write(2, "🍪: syntax error near unexpected token `&'\n", 46);
 		else
 			write(2, "🍪: syntax error quot\n", 20);
-		lst_clear(*node);
 		return (NULL);
 	}
-	update_lst(node);
-	trime(*node);
-	redarection_join_arg(node);
+	update_lst(node, tool);
+	trime(*node, tool);
+	redarection_join_arg(node, tool);
 	// redarection_perfix_lst(node);
 	return (*node);
 }
 
-int	its_delimter(char *cmd, int *i, t_lst **node, t_garbage **grbg)
+int	its_delimter(char *cmd, int *i, t_lst **node, t_tool *tool)
 {
 	int	err;
 
@@ -91,14 +90,14 @@ int	its_delimter(char *cmd, int *i, t_lst **node, t_garbage **grbg)
 	if (((is_delimter(cmd[*i + 1]) < 5) && (is_delimter(cmd[*i]) < 5))
 		&& cmd[*i] == cmd[*i + 1])
 	{
-		lst_add_back(node, lst_new(ft_monstrdup(&cmd[*i], 2, grbg), grbg));
+		lst_add_back(node, lst_new(ft_monstrdup(&cmd[*i], 2, tool), tool));
 		*i += 1;
 	}
 	else if (is_delimter(cmd[*i]) == SINGL_AND
 		&& is_delimter(cmd[*i + 1]) != SINGL_AND)
 		err = 1;
 	else
-		lst_add_back(node, lst_new(ft_monstrdup(&cmd[*i], 1, grbg), grbg));
+		lst_add_back(node, lst_new(ft_monstrdup(&cmd[*i], 1, tool), tool));
 	return (err);
 }
 
@@ -124,7 +123,7 @@ void	tokens_contu(t_lst **node, char *command, int *i, t_tool *tool)
 	}
 	if (end != *i)
 	{
-		lst_add_back(node, lst_new(ft_monstrdup(&command[*i], end - *i, &tool->grbg), &tool->grbg));
+		lst_add_back(node, lst_new(ft_monstrdup(&command[*i], end - *i, tool), tool));
 		*i = end -1;
 		init_type_2((lastone(*node)), prev);
 	}
@@ -145,7 +144,7 @@ t_lst	*tokens_lst(char *cmd, t_tool *tool)
 			i++;
 		is_quot_parc_open(tool, cmd[i], 2);
 		if (cmd[i] && (is_delimter(cmd[i]) > 0) && tool->quot == 0)
-			tool->err = its_delimter(cmd, &i, &node, &tool->grbg);
+			tool->err = its_delimter(cmd, &i, &node, tool);
 		else
 			tokens_contu(&node, cmd, &i, tool);
 		i++;

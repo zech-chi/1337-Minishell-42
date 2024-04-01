@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:23:31 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/01 15:27:49 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/01 18:07:16 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,30 +32,32 @@ char	*ft_get_prompt(int exit_status)
 	free(line);
 */
 // original main
-
+void dd()
+{system("leaks minishell");}
 int	main(int ac, char **av, char **ev)
 {
 	char	*line;
 	t_tree	*tree;
-	int		exit_status;
 	t_tool	tool;
 
 	//signal()
 	(void)(ac);
 	(void)(av);
+	(void)ev;
+	tool.grbg = NULL;
 	tool.env = ft_env_create(ev);
-	exit_status = 0;
+	tool.err = 0;
 	while (1)
 	{
-		line = ft_get_prompt(exit_status);
+		dd();
+		line = ft_get_prompt(tool.err);
 		tree = parsing(line, &tool);
 		printf("--------------- tree --------------------\n");
 		print_tree_2d(tree);
 		printf("-----------------------------------------\n");
-		//if (tree)
-		//	printf("%d\n", tree->type);
-		ft_execute(tree, &tool.env, &exit_status);
-		// lst_clear(grbg);
+		ft_execute(tree, &tool.env, &tool.err);
+		clear_garbage(tool.grbg);
+		tool.grbg = NULL;
 		free(line);
 	}
 	return (SUCCESS);

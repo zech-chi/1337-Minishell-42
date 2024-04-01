@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 00:21:31 by ymomen            #+#    #+#             */
-/*   Updated: 2024/04/01 02:08:10 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/01 17:49:53 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	is_delimter(char c)
 	return (0);
 }
 
-char	*ft_monstrdup(const char *s1, size_t size, t_garbage **grbg)
+char	*ft_monstrdup(const char *s1, size_t size, t_tool *tool)
 {
 	char		*dup;
 	size_t		i;
@@ -41,7 +41,7 @@ char	*ft_monstrdup(const char *s1, size_t size, t_garbage **grbg)
 	dup = (char *) malloc(size + 1 * sizeof(char));
 	if (!dup)
 		return (NULL);
-	add_to_grbg(grbg, dup);
+	add_to_grbg(&tool->grbg, dup);
 	while (i < size)
 	{
 		dup[i] = s1[i];
@@ -65,7 +65,7 @@ int	ft_strcmp(char *s1, char *s2)
 	return (0);
 }
 
-void	trime(t_lst *head)
+void	trime(t_lst *head, t_tool *tool)
 {
 	char	*arr;
 
@@ -74,8 +74,7 @@ void	trime(t_lst *head)
 	while (head)
 	{
 		arr = head->value;
-		head->value = ft_strtrim(arr, " ");
-		free(arr);
+		head->value = ft_strtrim(arr, " ", tool);
 		head = head->next;
 	}
 }
@@ -86,7 +85,7 @@ int is_redarection(int type)
 		return (1);
 	return (0);
 }
-void update_lst(t_lst **head)
+void update_lst(t_lst **head, t_tool *tool)
 {
     t_lst *node;
     char *str;
@@ -97,14 +96,12 @@ void update_lst(t_lst **head)
     {
         if (is_redarection(node->type) && node->next->type < -1)
         {
-            str = ft_strjoin(node->value, ft_strdup(" "));
-			str = ft_strjoin(str, node->next->value);
-			// free(node->value);
+            str = ft_strjoin(node->value, ft_strdup(" ", tool),tool);
+			str = ft_strjoin(str, node->next->value, tool);
             node->value = str;
             temp = node->next;
 			node->prio = node->next->prio;
             node->next = node->next->next;
-            // free(temp);
         }
     	node = node->next;
     }
