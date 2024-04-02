@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 01:48:23 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/01 01:29:19 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/04/02 00:22:14 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,28 +43,6 @@ char	**ft_lst_to_2d_char(t_list **head)
 	return (char_2d);
 }
 
-void	ft_list_cwd(t_list **head)
-{
-	DIR				*dir;
-	struct dirent	*entry;
-
-	dir = opendir(".");
-	if (dir == NULL)
-	{
-		perror("Error");
-		return ;
-	}
-	entry = readdir(dir);
-	while (entry != NULL)
-	{
-		if (entry->d_name[0] != '.')
-			ft_lstadd_back(head, ft_lstnew(ft_strdup2(entry->d_name)));
-		entry = readdir(dir);
-	}
-	if (closedir(dir) != 0)
-		perror("Error");
-}
-
 void	ft_exp_init(t_expand *exp)
 {
 	exp->buff_exp = NULL;
@@ -84,7 +62,10 @@ void	ft_expand_cut(t_expand *exp)
 		if (exp->found_star && !exp->found_another_char)
 			ft_list_cwd(&(exp->head));
 		else
-			ft_lstadd_back(&(exp->head), ft_lstnew(ft_strdup2(exp->buff_exp)));
+		{
+			if (!ft_get_matching(&(exp->head), exp->buff_exp))
+				ft_lstadd_back(&(exp->head), ft_lstnew(ft_strdup2(exp->buff_exp)));
+		}
 		free(exp->buff_exp);
 		exp->buff_exp = NULL;
 		exp->found_star = 0;

@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:07:18 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/01 21:54:16 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/04/02 00:14:34 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ char	**ft_lst_to_2d_char(t_list **head);
 void	ft_list_cwd(t_list **head);
 void	ft_exp_init(t_expand *exp);
 int		ft_is_match(char* s, char* p);
+int		ft_get_matching(t_list **head, char *pattern);
 
 /************************* execute *************************/
 int		ft_execute_builtins(char **cmd_2d, t_env **env, int *exit_status);
