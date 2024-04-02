@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 21:30:24 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/31 22:11:01 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/04/02 03:17:45 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static void	ft_export_error(char *slice1, char *slice2, int found_equal, int app
 	ft_put_error(slice1);
 	if (found_equal)
 		ft_put_error("=");
-	else if (append_mod)
+	else if (append_mod == 1)
 		ft_put_error("+");
 	ft_put_error(slice2);
 	ft_put_error("': not a valid identifier\n");

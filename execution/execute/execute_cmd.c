@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 20:39:26 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/31 01:18:35 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/04/02 00:53:13 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	ft_execute_cmd(char *cmd, t_env **env, int *exit_status)
 	if (!cmd_2d)
 		return (ft_put_error("🍪: malloc failed\n"));
 	if (ft_execute_builtins(cmd_2d, env, exit_status) == SUCCESS)
-		return ;
+		return (ft_free_2d_char(cmd_2d));
 	pid = fork();
 	if (pid < 0)
 	{

@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 19:44:48 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/25 19:44:50 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/04/02 00:53:39 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,5 @@ void	ft_free_2d_char(char **char_2d)
 		r++;
 	}
 	free(char_2d);
+	char_2d = NULL;
 }
