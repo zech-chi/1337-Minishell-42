@@ -81,13 +81,14 @@ int heredoc(t_tool *tool, char **limiter)
     int		fd2;
     char    *name;
     
+    name = NULL;
     if(!limiter || !*limiter)
     {
         tool->err = 1;
         return (tool->err) ;
     }
-    
-    name = genratname(tool);
+    while(!name || !access(name, F_OK ))
+        name = genratname(tool);
     fd2 = open(name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd2 == -1)
     {
