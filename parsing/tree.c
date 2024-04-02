@@ -32,12 +32,15 @@ void unlink_heredoc(t_tree **root)
 	
 	if (!*root)
 		return ;
-	if((*root)->type == HERE_DOC && !access((*root)->left, F_OK))
-			unlink((*root)->left);
+	if((*root)->type == HERE_DOC && !access((*root)->left->value, F_OK))
+	{
+		unlink((*root)->left->value);
+		unlink_heredoc(&(*root)->right);
+	}
 	else
 	{
-		update_tree(&(*root)->left);
-		update_tree(&(*root)->right);
+		unlink_heredoc(&(*root)->left);
+		unlink_heredoc(&(*root)->right);
 	}
 	return;
 }
