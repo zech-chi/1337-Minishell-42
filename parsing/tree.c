@@ -26,3 +26,18 @@ t_tree	*new_node(char *value, int prio, int type, t_tool *tool)
 	node->type = type;
 	return (node);
 }
+void unlink_heredoc(t_tree **root)
+{
+	char **sp;
+	
+	if (!*root)
+		return ;
+	if((*root)->type == HERE_DOC && !access((*root)->left, F_OK))
+			unlink((*root)->left);
+	else
+	{
+		update_tree(&(*root)->left);
+		update_tree(&(*root)->right);
+	}
+	return;
+}

@@ -43,6 +43,7 @@ typedef struct s_tool
 
 
 /* FUNCTIONS */
+void	unlink_heredoc(t_tree **root)
 void	clear_garbage(t_garbage *head);
 char	**ft_split(char const *s, char c, t_tool *tool);
 void	add_to_grbg(t_garbage **head, void *node);

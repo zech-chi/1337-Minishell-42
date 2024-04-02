@@ -55,6 +55,7 @@ int	main(int ac, char **av, char **ev)
 		print_tree_2d(tree);
 		printf("-----------------------------------------\n");
 		ft_execute(tree, &tool.env, &tool.err);
+		unlink_heredoc(tree);
 		clear_garbage(tool.grbg);
 		tool.grbg = NULL;
 		free(line);
