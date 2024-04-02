@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 20:23:05 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/01 21:21:27 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/04/02 00:22:30 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,59 @@ static void	*ft_memset(void *b, int c, size_t len)
 	while (i < len)
 		str[i++] = (unsigned char)c;
 	return (b);
+}
+
+void	ft_list_cwd(t_list **head)
+{
+	DIR				*dir;
+	struct dirent	*entry;
+
+	dir = opendir(".");
+	if (dir == NULL)
+	{
+		perror("Error");
+		return ;
+	}
+	entry = readdir(dir);
+	while (entry != NULL)
+	{
+		if (entry->d_name[0] != '.')
+			ft_lstadd_back(head, ft_lstnew(ft_strdup2(entry->d_name)));
+		entry = readdir(dir);
+	}
+	if (closedir(dir) != 0)
+		perror("Error");
+}
+
+int	ft_get_matching(t_list **head, char *pattern)
+{
+	DIR				*dir;
+	struct dirent	*entry;
+	int				found_match;
+
+	found_match = 0;
+	dir = opendir(".");
+	if (dir == NULL)
+	{
+		perror("Error");
+		return (0);
+	}
+	entry = readdir(dir);
+	while (entry != NULL)
+	{
+		if (entry->d_name[0] != '.')
+		{
+			if (ft_is_match(entry->d_name, pattern))
+			{
+				ft_lstadd_back(head, ft_lstnew(ft_strdup2(entry->d_name)));
+				found_match = 1;
+			}
+		}
+		entry = readdir(dir);
+	}
+	if (closedir(dir) != 0)
+		perror("Error");
+	return (found_match);
 }
 
 int	ft_is_match(char* s, char* p)
