@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:25:53 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/01 21:52:40 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/03 08:03:48 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	add_to_grbg(t_garbage **head, void *node);
 int 	heredoc(t_tool *tool, char **limiter);
 void 	update_tree(t_tree **root, t_tool *tool);
 t_lst	*pop_last_1(t_lst **stack);
-t_lst	*post_new(void *str,int type, int prio, t_tool *tool);
+t_lst	*post_new(t_lst *head, t_tool *tool);
 void	init_type_2(t_lst *node, t_lst *prev);
 void	init_type(t_lst **node);
 int		is_redarection(int type);
