@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 00:21:31 by ymomen            #+#    #+#             */
-/*   Updated: 2024/04/01 17:49:53 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/03 05:29:23 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ void update_lst(t_lst **head, t_tool *tool)
 {
     t_lst *node;
     char *str;
-	t_lst *temp;
 
     node = *head;
     while (node && node->next)
@@ -99,8 +98,6 @@ void update_lst(t_lst **head, t_tool *tool)
             str = ft_strjoin(node->value, ft_strdup(" ", tool),tool);
 			str = ft_strjoin(str, node->next->value, tool);
             node->value = str;
-            temp = node->next;
-			node->prio = node->next->prio;
             node->next = node->next->next;
         }
     	node = node->next;

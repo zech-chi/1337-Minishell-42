@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:57:50 by ymomen            #+#    #+#             */
-/*   Updated: 2024/04/01 14:43:58 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/03 00:06:54 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ t_tree	*new_node(char *value, int prio, int type, t_tool *tool)
 }
 void unlink_heredoc(t_tree **root)
 {
-	char **sp;
 	
 	if (!*root)
 		return ;

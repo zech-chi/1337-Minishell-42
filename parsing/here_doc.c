@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:16:00 by ymomen            #+#    #+#             */
-/*   Updated: 2024/04/01 21:40:16 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/03 06:02:32 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,9 @@ void	wrt_on_pipe(int *fd, char *limiter, t_tool *tool)
 	while (line)
 	{
 		line = readline("here_doc> ");
+		if (!line || !*line)
+           continue;
         add_to_grbg(&tool->grbg, line);
-		if (!line)
-        {
-            tool->err = 1;
-			write(2 ,"🍪: can get the line from stdin.", 29);
-        }
 		if (ft_strcmp(line, limiter) == 0)
 			return ;
 		// if limiter mafihch quotes blama dkhol hna
@@ -45,6 +42,7 @@ void	wrt_on_pipe(int *fd, char *limiter, t_tool *tool)
         {
 			perror(" 🍪: write");
             tool->err = 1;
+            return ;
         }
 	}
 }
@@ -82,26 +80,17 @@ int heredoc(t_tool *tool, char **limiter)
     char    *name;
     
     name = NULL;
+
     if(!limiter || !*limiter)
-    {
-        tool->err = 1;
-        return (tool->err) ;
-    }
+        return (tool->err = 1, 1) ;
     while(!name || !access(name, F_OK ))
         name = genratname(tool);
     fd2 = open(name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd2 == -1)
-    {
-        perror("open");
-        tool->err = 1;
-    }
+        return (perror("open"),tool->err = 1, 1);
 	wrt_on_pipe(&fd2, *limiter, tool);
 	if (close(fd2) == -1)
-		{
-        perror("open");
-        tool->err = 1;
-        }
+        return ( perror("open"), tool->err = 1,1);
     *limiter = ft_strdup(name, tool);
-    close(fd2);
-    return (tool->err);
+    return (0);
 }

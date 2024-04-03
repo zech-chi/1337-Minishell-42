@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 23:32:33 by ymomen            #+#    #+#             */
-/*   Updated: 2024/04/01 21:55:47 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/03 07:36:30 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,22 +46,6 @@ t_lst	*check_parss_erres( t_lst **node, t_tool *tool)
 		write(2, "'\n", 2);
 		return (NULL);
 	}
-	while (tmp)
-	{
-		if ((tmp->prio > 0 && !tmp->next && tmp->type != CLOSE_PARENTH) || (tmp->next && (tmp->prio > 2 && tmp->prio < 6 && tmp->next->prio > 0 && tmp->next->prio < 6))
-			|| (tmp->next && tmp->type > 0 && tmp->next->type > 0 && tmp->type != CLOSE_PARENTH && tmp->next->type != OPEN_PARENTH  && !is_redarection(tmp->type) && !is_redarection(tmp->next->type))
-			|| (is_redarection(tmp->type) && !(tmp->next->type < 0)) || ((tmp->type <= 0 && tmp->next && tmp->next->type == OPEN_PARENTH) || (tmp->type == CLOSE_PARENTH && tmp->next && tmp->next->type == 0)))
-		{
-			tool->err = 258;
-			write(2, "🍪: syntax error near unexpected token `", 43);
-			ft_putstr_fd(tmp->value, 2);
-			write(2, "'\n", 2);
-			return (NULL);
-		}
-		if (tmp->type == 10 && tmp->next && heredoc(tool, &(tmp->next->value)))
-			return (NULL);
-		tmp = tmp->next;
-	}
 	if (tool->prac || tool->quot || tool->anderr == 1)
 	{
 		if (tool->prac)
@@ -72,6 +56,22 @@ t_lst	*check_parss_erres( t_lst **node, t_tool *tool)
 			write(2, "🍪: syntax error quot\n", 20);
 		tool->err = 258;
 		return (NULL);
+	}
+	while (tmp)
+	{
+		if ((tmp->prio > 0 && !tmp->next && tmp->type != CLOSE_PARENTH) || (tmp->next && (tmp->prio > 2 && tmp->prio < 6 && tmp->next->prio > 2 && tmp->next->prio < 6))
+			|| (tmp->next && tmp->type > 0 && tmp->next->type > 0 && tmp->type != CLOSE_PARENTH && tmp->next->type != OPEN_PARENTH  && !is_redarection(tmp->type) && !is_redarection(tmp->next->type))
+			|| (is_redarection(tmp->type) && !(tmp->next->type < 0)) || ((tmp->type <= 0 && tmp->next && tmp->next->type == OPEN_PARENTH) || (tmp->type == CLOSE_PARENTH && tmp->next && tmp->next->type == 0)) || (tmp->next && tmp->type == tmp->next->type && tmp->next->type <= 0))
+		{
+			tool->err = 258;
+			write(2, "🍪: syntax error near unexpected token `", 43);
+			ft_putstr_fd(tmp->value, 2);
+			write(2, "'\n", 2);
+			return (NULL);
+		}
+		if (tmp->type == 10 && tmp->next && heredoc(tool, &(tmp->next->value)))
+			return (write(2, "error in here_doc \n",20), NULL);
+		tmp = tmp->next;
 	}
 	update_lst(node, tool);
 	trime(*node, tool);

@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 00:42:19 by ymomen            #+#    #+#             */
-/*   Updated: 2024/04/01 17:50:20 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/03 07:36:20 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,9 @@ void	redarection_join_arg(t_lst **node, t_tool *tool)
 	{
 		if (cur->type == 0 && cur->next && is_redarection(cur->next->type))
 			cmd = cur;
-		else if (is_redarection(cur->type) && cmd && cmd->next && cur->next
+		else
+			cmd = NULL;	
+		if (is_redarection(cur->type) && cmd && cmd->next && cur->next
 			&& cur->next->type == 0)
 		{
 			hlf = cur->next;

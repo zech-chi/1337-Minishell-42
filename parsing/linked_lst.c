@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 17:39:11 by ymomen            #+#    #+#             */
-/*   Updated: 2024/04/01 17:51:04 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/03 05:14:21 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 t_lst	*lst_new(void *str, t_tool *tool)
 {
 	t_lst			*node;
-	static t_lst	*prev;
 
 	if (!str)
 		return (NULL);
@@ -25,7 +24,6 @@ t_lst	*lst_new(void *str, t_tool *tool)
 	add_to_grbg(&tool->grbg, node);
 	node->value = str;
 	init_type(&node);
-	prev = node;
 	node->next = NULL;
 	return (node);
 }
@@ -142,21 +140,20 @@ t_lst	*pop_last_1(t_lst **stack)
 	*stack = tmp;
 	return (ptr);
 }
-t_lst	*post_new(void *str,int type, int prio, t_tool *tool)
+t_lst	*post_new(t_lst *head, t_tool *tool)
 {
 	t_lst			*node;
-	static t_lst	*prev;
 
-	if (!str)
+	if (!head || !head->value)
 		return (NULL);
 	node = (t_lst *) malloc(sizeof(t_lst));
 	if (!node)
 		return (NULL);
 	add_to_grbg(&tool->grbg, node);
-	node->value = str;
-	node->prio = prio;
-	node->type = type;
-	prev = node;
+	node->value = head->value;
+	node->prio = head->prio;
+	node->type = head->type;
+	node->read = head->read;
 	node->next = NULL;
 	return (node);
 }
