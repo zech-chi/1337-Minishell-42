@@ -6,36 +6,42 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:34:06 by ymomen            #+#    #+#             */
-/*   Updated: 2024/04/03 13:50:04 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/03 15:38:05 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell_parsing.h"
 
-t_lst   *from_infix_to_Postfix(t_lst *head, t_tool *tool)
+t_lst	*from_infix_to_Postfix(t_lst *head, t_tool *tool)
 {
-    t_lst *postfix = NULL; 
-    t_lst *stack = NULL; 
-    t_lst *pop = NULL;  
+	t_lst	*postfix;
+	t_lst	*stack;
+	t_lst	*pop;
 
-    while (head) {
-          
-            if (head->type <= 0)
-                lst_add_back(&postfix, post_new(head, tool));
-            else if (head->type == OPEN_PARENTH)
-                lst_add_back(&stack, post_new(head, tool));
-             else if (head->type == CLOSE_PARENTH)
-			 {
-                while (stack && lastone(stack)->type != OPEN_PARENTH) {
-                    pop = pop_last_1(&stack);
-                    lst_add_back(&postfix, pop);
-                }
-                pop_last_1(&stack);
-			 }
-            else if (head->type > 0)
+	postfix = NULL;
+	stack = NULL;
+	while (head)
+	{
+		if (head->type <= 0)
+			lst_add_back(&postfix, post_new(head, tool));
+		else if (head->type == OPEN_PARENTH)
+			lst_add_back(&stack, post_new(head, tool));
+		else if (head->type == CLOSE_PARENTH)
+		{
+			while (stack && lastone(stack)->type != OPEN_PARENTH)
 			{
-                while (stack && lastone(stack)->type != OPEN_PARENTH && (lastone(stack)->prio < head->prio ||
-                        (lastone(stack)->prio == head->prio && lastone(stack)->read == R_TO_L ))) {
+				pop = pop_last_1(&stack);
+				lst_add_back(&postfix, pop);
+			}
+			pop_last_1(&stack);
+		}
+		else if (head->type > 0)
+		{
+			while (stack && lastone(stack)->type != OPEN_PARENTH
+				&& (lastone(stack)->prio < head->prio
+					|| (lastone(stack)->prio == head->prio
+						&& lastone(stack)->read == R_TO_L )))
+				{
                     pop = pop_last_1(&stack);
                     lst_add_back(&postfix, pop);
                 }
@@ -51,7 +57,7 @@ t_lst   *from_infix_to_Postfix(t_lst *head, t_tool *tool)
        
 }
 
-t_tree *postfix_tree(t_lst *postfix, t_tool *tool)
+t_tree    *postfix_tree(t_lst *postfix, t_tool *tool)
 {
     t_lst *stack;
     t_tree *tree;

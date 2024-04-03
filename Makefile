@@ -26,6 +26,7 @@ SRCS =	parsing/ft_stdup.c \
 		parsing/oltils.c \
 		parsing/print_tree.c \
 		parsing/token_lst.c \
+		parsing/token_lst_2.c\
 		parsing/tree.c \
 		parsing/fix_lst_perfix.c\
 		parsing/here_doc.c\

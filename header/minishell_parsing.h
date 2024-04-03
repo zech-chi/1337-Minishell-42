@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:25:53 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/03 08:03:48 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/03 14:57:37 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 # define MINISHELL_PARSING_H
 
 # include "./minishell_common.h"
-# define FILENAME "ABCDEFGHIJKLMNOPQRSTVWXYZabcdefghijklmnopqrstuvwxyz0123456789_"
+# define FILENAME "ABCDEFGHIJKLMNOPQRSTVWXYZabcdefghijklmnopqrstuvwxyz\
+				0123456789_"
 
 typedef struct s_lst
 {
@@ -27,35 +28,34 @@ typedef struct s_lst
 
 typedef struct s_garbage
 {
-	void *ptr;
-	struct s_garbage *next;
+	void				*ptr;
+	struct s_garbage	*next;
 }	t_garbage;
 
 typedef struct s_tool
 {
-	int	prac;
-	int	quot;
-	int	err;
-	int anderr;
-	t_env *env;
-	t_garbage *grbg;
-} t_tool;
-
+	int			prac;
+	int			quot;
+	int			err;
+	int			anderr;
+	t_env		*env;
+	t_garbage	*grbg;
+}	t_tool;
 
 /* FUNCTIONS */
+t_tree	*parsing_phase(char *line, t_tool *tool);
+int		parssing_error(t_lst **node, t_tool *tool);
 void	unlink_heredoc(t_tree **root);
 void	clear_garbage(t_garbage *head);
 char	**ft_split(char const *s, char c, t_tool *tool);
 void	add_to_grbg(t_garbage **head, void *node);
-int 	heredoc(t_tool *tool, char **limiter);
-void 	update_tree(t_tree **root, t_tool *tool);
+int		heredoc(t_tool *tool, char **limiter);
+void	update_tree(t_tree **root, t_tool *tool);
 t_lst	*pop_last_1(t_lst **stack);
 t_lst	*post_new(t_lst *head, t_tool *tool);
 void	init_type_2(t_lst *node, t_lst *prev);
 void	init_type(t_lst **node);
 int		is_redarection(int type);
-void	redarection_prac_fix(t_lst **head);
-void	redarection_perfix_lst(t_lst **head);
 void	redarection_join_arg(t_lst **node, t_tool *tool);
 void	ft_putstr_fd(char *s, int fd);
 void	print_tree_2d(t_tree *root);

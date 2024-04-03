@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:23:31 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/01 22:28:03 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/04/03 15:40:44 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,10 @@ int	main(int ac, char **av, char **ev)
 	{
 		// dd();
 		line = ft_get_prompt(tool.err);
-		tree = parsing(line, &tool);
-		printf("--------------- tree --------------------\n");
-		print_tree_2d(tree);
-		printf("-----------------------------------------\n");
+		tree = parsing_phase(line, &tool);
+		// printf("--------------- tree --------------------\n");
+		// print_tree_2d(tree);
+		// printf("-----------------------------------------\n");
 		ft_execute(tree, &tool.env, &tool.err);
 		unlink_heredoc(&tree);
 		clear_garbage(tool.grbg);
