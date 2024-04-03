@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:34:06 by ymomen            #+#    #+#             */
-/*   Updated: 2024/04/03 11:03:59 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/03 13:50:04 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,70 +82,3 @@ t_tree *postfix_tree(t_lst *postfix, t_tool *tool)
     update_tree(&tree, tool);
     return (tree);
 }
-
-// int lst_get_size(t_lst *head) {
-//   int size = 0;
-//   while (head) {
-//     head = head->next;
-//     size++;
-//   }
-//   return size;
-// }
-// t_tree *lst_peek(t_lst *head) {
-//   if (!head) {
-//     return NULL;  // List is empty
-//   }
-//   return ((t_tree *)head->value);  // Return the first element (head)
-// }
-// t_tree *postfix_tree(t_lst *postfix, t_tool *tool) {
-//     t_lst *stack;  // Existing stack for postfix elements
-//     t_lst *subtree_stack;  // New stack for subtrees rooted at &&
-//     t_tree *tree;
-
-//     stack = NULL;
-//     subtree_stack = NULL;
-//     while (postfix) {
-//         // ... existing code for operands and redirection nodes ...
-//         if (postfix->prio <= 1)
-//         {
-//             tree = new_node(postfix->value, postfix->prio, postfix->type, tool);
-//             lst_add_back(&stack, lst_new(tree, tool));
-//         }
-//         else {  // Handling operators
-//             tree = new_node(postfix->value, postfix->prio, postfix->type, tool);
-//             if (tree->type == AND || tree->type == OR) {  // Special handling for &&
-//                 if (!subtree_stack) {  // No previous subtree, start a new one
-//                     lst_add_back(&subtree_stack, lst_new(tree, tool));
-//                 } else {
-//                     t_tree *right_subtree = pop_last(&subtree_stack);  // Get right subtree
-//                     tree->right = right_subtree;  // Set right child of current &&
-//                     lst_add_back(&subtree_stack, lst_new(tree, tool));  // Push current && with right child
-//                 }
-//             } else {
-//                 t_tree *top_subtree = lst_peek(subtree_stack);  // Get top subtree (if any)
-//                 if (top_subtree) {
-//                     if (!is_redarection(tree->type)) {  // Only attach left for non-redirection operators
-//                         top_subtree->left = tree;
-//                 } 
-//                 }
-//             }
-//             lst_add_back(&stack, lst_new(tree, tool));  // Can still add to main stack for some cases
-//         }
-//         postfix = postfix->next;
-//     }
-
-//     // Process subtree stack at the end
-//     if (subtree_stack) {
-//         if (lst_get_size(subtree_stack) == 1) {
-//             tree = pop_last(&subtree_stack);
-//         } else {
-//            printf("Error: Invalid expression\n");
-//         }
-//     } else {
-//         tree = pop_last(&stack);  // No && nodes, use the top element from the main stack
-//     }
-
-//     // ... rest of the code ...
-//     update_tree(&tree, tool);
-//     return (tree);
-// }
