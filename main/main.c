@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:23:31 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/04 00:23:16 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/04/04 01:20:24 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	main(int ac, char **av, char **ev)
 		//print_tree_2d(tree);
 		//printf("-----------------------------------------\n");
 		ft_execute(tree, &tool.env, &tool.err);
-		//printf("-----------------------------------------\n");
+		printf("-----------------------------------------\n");
 		clear_garbage(tool.grbg);
 		tool.grbg = NULL;
 		free(line);
@@ -86,3 +86,11 @@ int	main(int ac, char **av, char **ev)
 	return (SUCCESS);
 }
 
+//int main()
+//{
+//	char **s;
+
+//	s = ft_expand("ls", NULL, 0);
+//	ft_free_2d_char(s);
+//	return (0);
+//}

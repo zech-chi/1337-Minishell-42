@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 20:23:05 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/02 23:55:32 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/04/04 01:13:44 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static char	**ft_create_dp(int row, int col)
 	int		r;
 	int		c;
 
-	dp = (char **)malloc(sizeof(char *) * row);
+	dp = (char **)malloc(sizeof(char *) * (row + 1));
 	if (!dp)
 		return (NULL);
 	r = -1;
@@ -31,8 +31,18 @@ static char	**ft_create_dp(int row, int col)
 		while (++c < col)
 			dp[r][c] = 0;
 	}
+	dp[r] = NULL;
 	dp[0][0] = '1';
 	return (dp);
+}
+
+static	int	ft_free_dp_and_return(char **dp, int s_len, int p_len)
+{
+	int	res;
+
+	res = dp[s_len][p_len] == '1';
+	ft_free_2d_char(dp);
+	return (res);
 }
 
 void	ft_list_cwd(t_list **head)
@@ -111,5 +121,5 @@ int	ft_is_match(char *s, char *p)
 				dp[i][j] = dp[i - 1][j - 1];
 		}
 	}
-	return (dp[s_len][p_len] == '1');
+	return (ft_free_dp_and_return(dp, s_len, p_len));
 }

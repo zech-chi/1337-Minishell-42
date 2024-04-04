@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 20:39:26 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/03 04:03:23 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/04/04 00:43:54 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,6 @@ void	ft_execute_cmd(char *cmd, t_env **env, int *exit_status)
 		ft_child_job(env, cmd_2d);
 	else
 		waitpid(pid, exit_status, 0);
-	//*exit_status = WEXITSTATUS(*exit_status);
 	*exit_status = update_status(*exit_status);
 	ft_free_2d_char(cmd_2d);
 }
