@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 22:04:46 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/31 22:13:10 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/04/03 00:23:11 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,15 @@ static int	ft_is_numeric(char c)
 	return ('0' <= c && c <= '9');
 }
 
+/*
+		else if ((cmd[exp->i] != '\'' && cmd[exp->i] != '"' && exp->quote == 0)
+			|| exp->quote != 0)
+		{
+			exp->buff_exp = ft_strjoin2(exp->buff_exp, ft_char_to_str('$'));
+			exp->found_another_char = 1;
+			//(exp->i)++;
+		}
+*/
 static void	ft_help(t_expand *exp, char *cmd, int exit_status, char *env_var)
 {
 	if (cmd[exp->i] == '*' && cmd[exp->i - 1] == '$')
@@ -43,7 +52,6 @@ static void	ft_help(t_expand *exp, char *cmd, int exit_status, char *env_var)
 		{
 			exp->buff_exp = ft_strjoin2(exp->buff_exp, ft_char_to_str('$'));
 			exp->found_another_char = 1;
-			//(exp->i)++;
 		}
 	}
 	(exp->i)--;

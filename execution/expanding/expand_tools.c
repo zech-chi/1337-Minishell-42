@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 01:48:23 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/02 00:22:14 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/04/04 00:56:59 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,15 @@ void	ft_exp_init(t_expand *exp)
 	exp->found_another_char = 0;
 }
 
+static int	ft_only_star(char *cmd)
+{
+	if (!cmd)
+		return (0);
+	while (*cmd && *cmd == '*')
+		cmd++;
+	return (*cmd == 0);
+}
+
 void	ft_expand_cut(t_expand *exp)
 {
 	if (exp->buff_exp)
@@ -63,8 +72,10 @@ void	ft_expand_cut(t_expand *exp)
 			ft_list_cwd(&(exp->head));
 		else
 		{
-			if (!ft_get_matching(&(exp->head), exp->buff_exp))
-				ft_lstadd_back(&(exp->head), ft_lstnew(ft_strdup2(exp->buff_exp)));
+			if (ft_only_star(exp->buff_exp) || \
+			!ft_get_matching(&(exp->head), exp->buff_exp))
+				ft_lstadd_back(&(exp->head), \
+				ft_lstnew(ft_strdup2(exp->buff_exp)));
 		}
 		free(exp->buff_exp);
 		exp->buff_exp = NULL;

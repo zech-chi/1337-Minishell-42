@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:07:18 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/02 00:14:34 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/04/03 04:04:03 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,18 @@ void	ft_echo(char **cmd_2d);
 // cd
 int		ft_cd(char **splited_prompt, t_env **env, int *exit_status);
 // export
+typedef struct s_export
+{
+	char	*slice1;
+	char	*slice2;
+	char	*value;
+	int		right;
+	int		equal;
+	int		append;
+}	t_export;
+
 void	ft_export(t_env **env, char **cmd_2d, int *exit_status);
+void	ft_export_error(char *slice1, char *slice2, int equal, int append);
 void	ft_export_help(char *str, t_env **env, int *exit_status);
 // pwd
 void	ft_pwd_print(void);
@@ -106,7 +117,7 @@ char	*ft_char_to_str(char c);
 char	**ft_lst_to_2d_char(t_list **head);
 void	ft_list_cwd(t_list **head);
 void	ft_exp_init(t_expand *exp);
-int		ft_is_match(char* s, char* p);
+int		ft_is_match(char *s, char *p);
 int		ft_get_matching(t_list **head, char *pattern);
 
 /************************* execute *************************/
@@ -117,4 +128,7 @@ void	ft_execute_redirection_out(t_tree *root, t_env **env, int *exit_status);
 void	ft_execute_redirection_in(t_tree *root, t_env **env, int *exit_status);
 void	ft_execute(t_tree *root, t_env **env, int *exit_status);
 
+
+///
+int	update_status(int status);
 #endif
