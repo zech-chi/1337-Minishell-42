@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:23:31 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/04 01:27:59 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/04/04 11:43:37 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,21 +67,20 @@ int	main(int ac, char **av, char **ev)
 	tool.err = 0;
 	signal(SIGINT, ft_handle_signals);
 	signal(SIGQUIT, ft_handle_signals);
-	//while (1)
-	//{
+	while (1)
+	{
 		//dd();
 		line = ft_get_prompt(tool.err);
-		tree = parsing(line, &tool);
-		//printf("--------------- tree --------------------\n");
-		//print_tree_2d(tree);
-		//printf("-----------------------------------------\n");
+		tree = parsing_phase(line, &tool);
+		// printf("--------------- tree --------------------\n");
+		// print_tree_2d(tree);
+		// printf("-----------------------------------------\n");
 		ft_execute(tree, &tool.env, &tool.err);
 		unlink_heredoc(&tree);
-		printf("-----------------------------------------\n");
 		clear_garbage(tool.grbg);
 		tool.grbg = NULL;
 		free(line);
-	//}
+	}
 	ft_env_clear(&tool.env);
 	rl_clear_history();
 	return (SUCCESS);

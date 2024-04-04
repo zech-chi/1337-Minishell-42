@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 15:20:33 by ymomen            #+#    #+#             */
-/*   Updated: 2024/04/01 17:20:50 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/03 18:06:37 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,6 @@ char	**ft_split(char const *s, char c, t_tool *tool)
 	ptr = (char **) malloc(sizeof(char *) * (count_words + 1));
 	if (!ptr)
 		return (NULL);
-    add_to_grbg(&tool->grbg, ptr);
+	add_to_grbg(&tool->grbg, ptr);
 	return (fullandfree(ptr, s, c, count_words, tool));
 }

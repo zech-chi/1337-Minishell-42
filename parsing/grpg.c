@@ -6,26 +6,25 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 02:00:26 by ymomen            #+#    #+#             */
-/*   Updated: 2024/04/01 17:45:08 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/03 18:08:13 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell_parsing.h"
 
- t_garbage *new_garbage(void *value)
- {
-	 t_garbage *node;
+t_garbage	*new_garbage(void *value)
+{
+	t_garbage	*node;
 
-	 node = (t_garbage *)malloc(sizeof(t_garbage));
-	 if (!node)
-		 return (NULL);
-	 node->ptr = value;
-	 node->next = NULL;
-	 return (node);
- 
- }
+	node = (t_garbage *)malloc(sizeof(t_garbage));
+	if (!node)
+		return (NULL);
+	node->ptr = value;
+	node->next = NULL;
+	return (node);
+}
 
-void add_to_grbg(t_garbage **head, void *value)
+void	add_to_grbg(t_garbage **head, void *value)
 {
 	t_garbage	*tmp;
 	t_garbage	*node;
@@ -35,7 +34,7 @@ void add_to_grbg(t_garbage **head, void *value)
 	{
 		if (!node)
 			write(2, "🍪: malloc error\n", 17);
-		return ;    
+		return ;
 	}
 	if (!*head)
 	{
