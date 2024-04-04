@@ -6,58 +6,41 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 01:23:32 by ymomen            #+#    #+#             */
-/*   Updated: 2024/04/03 11:04:17 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/03 18:30:52 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell_parsing.h"
 
-void swap(t_tree **a, t_tree **b)
+t_tree	*parsing_phase(char *line, t_tool *tool)
 {
-    t_tree *tmp;
+	t_lst	*post;
+	t_tree	*tree;
+	t_lst	*node;
 
-    tmp = *a;
-    *a = *b;
-    *b = tmp;
-}
-void fix_tree(t_tree **root)
-{
-    if (!*root)
-        return;
-    fix_tree(&(*root)->left);
-    fix_tree(&(*root)->right);
-    if (is_redarection((*root)->type) && (*root)->left && (*root)->left->type < 0)
-    {
-        swap(&(*root)->left, &(*root)->right);
-    }
-}
-t_tree *parsing (char * line, t_tool *tool)
-{
-    t_lst *post;
-	t_tree *tree;
-    t_lst *node;
-    
-    node = tokens_lst(line, tool);
-    post = from_infix_to_Postfix(node, tool);
+	node = tokens_lst(line, tool);
+	post = from_infix_to_Postfix(node, tool);
 	tree = postfix_tree(post, tool);
 	post = NULL;
 	node = NULL;
-    return (tree);
+	return (tree);
 }
 
-int get_height(t_tree *root) 
+int	get_height(t_tree *root)
 {
-    if (root == NULL) {
-        return 0;
-    }
-    int left_height = get_height(root->left);
-    int right_height = get_height(root->right);
-    return 1 + (left_height > right_height ? left_height : right_height);
+	int	left_height;
+	int	right_height;
+
+	if (root == NULL)
+		return (0);
+	left_height = get_height(root->left);
+	right_height = get_height(root->right);
+	return (1 + (left_height > right_height ? left_height : right_height));
 }
 
-void print_spaces(int n)
+void	print_spaces(int n)
 {
-    for (int i = 0; i < n; i++) {
+	for (int i = 0; i < n; i++) {
         printf(" ");
 		fflush(stdout);
     }

@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 23:32:33 by ymomen            #+#    #+#             */
-/*   Updated: 2024/04/03 07:36:30 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/04 10:17:17 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,50 +33,13 @@ void	is_quot_parc_open(t_tool *tool, char command, int check)
 	}
 }
 
-t_lst	*check_parss_erres( t_lst **node, t_tool *tool)
+t_lst	*check_and_update( t_lst **node, t_tool *tool)
 {
-	t_lst	*tmp;
-
-	tmp = *node;
-	if (tmp && (tmp->type == AND || tmp->type == OR || tmp->type == PIPE))
-	{
-		tool->err = 258;
-		write(2, "🍪: syntax error near unexpected token `", 43);
-		ft_putstr_fd(tmp->value, 2);
-		write(2, "'\n", 2);
+	if (parssing_error(node, tool))
 		return (NULL);
-	}
-	if (tool->prac || tool->quot || tool->anderr == 1)
-	{
-		if (tool->prac)
-			write(2, "🍪: syntax error near unexpected token `)'\n", 46);
-		else if (tool->anderr == 1)
-			write(2, "🍪: syntax error near unexpected token `&'\n", 46);
-		else
-			write(2, "🍪: syntax error quot\n", 20);
-		tool->err = 258;
-		return (NULL);
-	}
-	while (tmp)
-	{
-		if ((tmp->prio > 0 && !tmp->next && tmp->type != CLOSE_PARENTH) || (tmp->next && (tmp->prio > 2 && tmp->prio < 6 && tmp->next->prio > 2 && tmp->next->prio < 6))
-			|| (tmp->next && tmp->type > 0 && tmp->next->type > 0 && tmp->type != CLOSE_PARENTH && tmp->next->type != OPEN_PARENTH  && !is_redarection(tmp->type) && !is_redarection(tmp->next->type))
-			|| (is_redarection(tmp->type) && !(tmp->next->type < 0)) || ((tmp->type <= 0 && tmp->next && tmp->next->type == OPEN_PARENTH) || (tmp->type == CLOSE_PARENTH && tmp->next && tmp->next->type == 0)) || (tmp->next && tmp->type == tmp->next->type && tmp->next->type <= 0))
-		{
-			tool->err = 258;
-			write(2, "🍪: syntax error near unexpected token `", 43);
-			ft_putstr_fd(tmp->value, 2);
-			write(2, "'\n", 2);
-			return (NULL);
-		}
-		if (tmp->type == 10 && tmp->next && heredoc(tool, &(tmp->next->value)))
-			return (write(2, "error in here_doc \n",20), NULL);
-		tmp = tmp->next;
-	}
 	update_lst(node, tool);
 	trime(*node, tool);
 	redarection_join_arg(node, tool);
-	// redarection_perfix_lst(node);
 	return (*node);
 }
 
@@ -103,14 +66,14 @@ void	tokens_contu(t_lst **node, char *command, int *i, t_tool *tool)
 {
 	int		end;
 	t_lst	*prev;
-	
+
 	prev = lastone(*node);
 	if (prev && command[*i] && (prev->type == 1 || prev->type == 2
 			|| prev->type == 9 || prev->type == 10))
 	{
 		end = *i;
 		while (command[end] && (tool->quot || (command[end] != ' '
-					&& !is_delimter(command[end]))))
+					&& command[end] != '\t' && !is_delimter(command[end]))))
 			is_quot_parc_open(tool, command[++end], 1);
 	}
 	else
@@ -121,7 +84,8 @@ void	tokens_contu(t_lst **node, char *command, int *i, t_tool *tool)
 	}
 	if (end != *i)
 	{
-		lst_add_back(node, lst_new(ft_monstrdup(&command[*i], end - *i, tool), tool));
+		lst_add_back(node, lst_new(
+				ft_monstrdup(&command[*i], end - *i, tool), tool));
 		*i = end -1;
 		init_type_2((lastone(*node)), prev);
 	}
@@ -141,6 +105,8 @@ t_lst	*tokens_lst(char *cmd, t_tool *tool)
 	{
 		while (cmd[i] && (cmd[i] == ' ' || cmd[i] == '\t'))
 			i++;
+		if (!cmd[i])
+			break ;
 		is_quot_parc_open(tool, cmd[i], 2);
 		if (cmd[i] && (is_delimter(cmd[i]) > 0) && tool->quot == 0)
 			tool->anderr = its_delimter(cmd, &i, &node, tool);
@@ -148,5 +114,5 @@ t_lst	*tokens_lst(char *cmd, t_tool *tool)
 			tokens_contu(&node, cmd, &i, tool);
 		i++;
 	}
-	return (check_parss_erres(&node, tool));
+	return (check_and_update(&node, tool));
 }

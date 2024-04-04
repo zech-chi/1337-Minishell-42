@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 22:27:36 by ymomen            #+#    #+#             */
-/*   Updated: 2024/04/03 05:15:37 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/03 15:59:03 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_lst	*lastone(t_lst *head)
 	return (head);
 }
 
-void init_node(t_lst **node, int prio, int type, int read)
+void	init_node(t_lst **node, int prio, int type, int read)
 {
 	(*node)->prio = prio;
 	(*node)->type = type;
@@ -44,27 +44,27 @@ void	init_type_2(t_lst *node, t_lst *prev)
 			init_node(&node, 0, OPERAND, L_TO_R);
 	}
 }
+
 void	init_type(t_lst **node)
 {
-		if (!ft_strcmp((*node)->value, "("))
-			init_node(node, open_par, OPEN_PARENTH, L_TO_R);
-		else if (!ft_strcmp((*node)->value, ")"))
-			init_node(node, close_par, CLOSE_PARENTH, R_TO_L);
-		else if (!ft_strcmp((*node)->value, "&&"))
-			init_node(node, and, AND, R_TO_L);
-		else if (!ft_strcmp((*node)->value, "||"))
-			init_node(node, or, OR, R_TO_L);
-		else if (!ft_strcmp((*node)->value, "|"))
-			init_node(node, pip, PIPE, L_TO_R);
-		else if (!ft_strcmp((*node)->value, ">"))
-			init_node(node, redir, REDIRECTION, L_TO_R);
-		else if (!ft_strcmp((*node)->value, ">>"))
-			init_node(node, appand, APPEND_REDIRECTION, L_TO_R);
-		else if (!ft_strcmp((*node)->value, "<<"))
-			init_node(node, here_doc, HERE_DOC, L_TO_R);
-		else if (!ft_strcmp((*node)->value, "<"))
-			init_node(node, input, INPUT, L_TO_R);
-		else
-				init_node(node, -1, 0, L_TO_R);
+	if (!ft_strcmp((*node)->value, "("))
+		init_node(node, open_par, OPEN_PARENTH, L_TO_R);
+	else if (!ft_strcmp((*node)->value, ")"))
+		init_node(node, close_par, CLOSE_PARENTH, R_TO_L);
+	else if (!ft_strcmp((*node)->value, "&&"))
+		init_node(node, and, AND, R_TO_L);
+	else if (!ft_strcmp((*node)->value, "||"))
+		init_node(node, or, OR, R_TO_L);
+	else if (!ft_strcmp((*node)->value, "|"))
+		init_node(node, pip, PIPE, L_TO_R);
+	else if (!ft_strcmp((*node)->value, ">"))
+		init_node(node, redir, REDIRECTION, L_TO_R);
+	else if (!ft_strcmp((*node)->value, ">>"))
+		init_node(node, appand, APPEND_REDIRECTION, L_TO_R);
+	else if (!ft_strcmp((*node)->value, "<<"))
+		init_node(node, here_doc, HERE_DOC, L_TO_R);
+	else if (!ft_strcmp((*node)->value, "<"))
+		init_node(node, input, INPUT, L_TO_R);
+	else
+		init_node(node, -1, 0, L_TO_R);
 }
-

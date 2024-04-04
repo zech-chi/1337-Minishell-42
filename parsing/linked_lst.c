@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 17:39:11 by ymomen            #+#    #+#             */
-/*   Updated: 2024/04/03 05:14:21 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/03 15:57:45 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,39 +55,6 @@ void	lst_add_back(t_lst **head, t_lst *node)
 	}
 }
 
-int	size_lst(t_lst **head)
-{
-	t_lst	*tmp;
-	int		i;
-
-	if (!head || !*head)
-		return (0);
-	i = 0;
-	tmp = *head;
-	while (tmp)
-	{
-		i++;
-		tmp = tmp->next;
-	}
-	return (i);
-}
-
-// void	lst_clear(t_lst *head)
-// {
-// 	t_lst	*node;
-
-// 	if (!head)
-// 		return ;
-// 	node = head;
-// 	while (head)
-// 	{
-// 		head = head ->next;
-// 		free(node->value);
-// 		free(node);
-// 		node = head;
-// 	}
-// }
-
 void	*pop_last(t_lst **stack)
 {
 	void	*ptr;
@@ -114,6 +81,7 @@ void	*pop_last(t_lst **stack)
 	*stack = tmp;
 	return (ptr);
 }
+
 t_lst	*pop_last_1(t_lst **stack)
 {
 	t_lst	*ptr;
@@ -140,6 +108,7 @@ t_lst	*pop_last_1(t_lst **stack)
 	*stack = tmp;
 	return (ptr);
 }
+
 t_lst	*post_new(t_lst *head, t_tool *tool)
 {
 	t_lst			*node;
