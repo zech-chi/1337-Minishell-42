@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 14:16:49 by ymomen            #+#    #+#             */
-/*   Updated: 2024/04/03 14:56:41 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/04 10:55:03 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	parssing_error(t_lst **node, t_tool *tool)
 		else if (tool->anderr == 1)
 			write(2, "🍪: syntax error near unexpected token `&'\n", 46);
 		else
-			write(2, "🍪: syntax error quot\n", 20);
+			write(2, "🍪: syntax error quot\n", 25);
 		tool->err = 258;
 		return (1);
 	}

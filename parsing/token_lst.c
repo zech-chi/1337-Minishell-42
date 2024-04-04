@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 23:32:33 by ymomen            #+#    #+#             */
-/*   Updated: 2024/04/03 14:57:30 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/04 10:17:17 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	tokens_contu(t_lst **node, char *command, int *i, t_tool *tool)
 	{
 		end = *i;
 		while (command[end] && (tool->quot || (command[end] != ' '
-					&& !is_delimter(command[end]))))
+					&& command[end] != '\t' && !is_delimter(command[end]))))
 			is_quot_parc_open(tool, command[++end], 1);
 	}
 	else
@@ -105,6 +105,8 @@ t_lst	*tokens_lst(char *cmd, t_tool *tool)
 	{
 		while (cmd[i] && (cmd[i] == ' ' || cmd[i] == '\t'))
 			i++;
+		if (!cmd[i])
+			break ;
 		is_quot_parc_open(tool, cmd[i], 2);
 		if (cmd[i] && (is_delimter(cmd[i]) > 0) && tool->quot == 0)
 			tool->anderr = its_delimter(cmd, &i, &node, tool);

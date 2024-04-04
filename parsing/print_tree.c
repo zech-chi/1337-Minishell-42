@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 01:23:32 by ymomen            #+#    #+#             */
-/*   Updated: 2024/04/03 15:20:31 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/03 18:30:52 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ int	get_height(t_tree *root)
 	return (1 + (left_height > right_height ? left_height : right_height));
 }
 
-void print_spaces(int n)
+void	print_spaces(int n)
 {
-    for (int i = 0; i < n; i++) {
+	for (int i = 0; i < n; i++) {
         printf(" ");
 		fflush(stdout);
     }

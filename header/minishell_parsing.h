@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:25:53 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/03 14:57:37 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/04 10:27:32 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 # define MINISHELL_PARSING_H
 
 # include "./minishell_common.h"
-# define FILENAME "ABCDEFGHIJKLMNOPQRSTVWXYZabcdefghijklmnopqrstuvwxyz\
-				0123456789_"
+# define FILENAME "ABCDEFGHIJKLMNOPQRSTVWXYZabcdefghijklmnopqrstuvwxyz_\
+0123456789"
 
 typedef struct s_lst
 {

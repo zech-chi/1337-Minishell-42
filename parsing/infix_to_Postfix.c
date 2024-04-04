@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:34:06 by ymomen            #+#    #+#             */
-/*   Updated: 2024/04/03 15:38:05 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/03 18:13:40 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,51 +40,49 @@ t_lst	*from_infix_to_Postfix(t_lst *head, t_tool *tool)
 			while (stack && lastone(stack)->type != OPEN_PARENTH
 				&& (lastone(stack)->prio < head->prio
 					|| (lastone(stack)->prio == head->prio
-						&& lastone(stack)->read == R_TO_L )))
-				{
-                    pop = pop_last_1(&stack);
-                    lst_add_back(&postfix, pop);
-                }
-                lst_add_back(&stack, post_new(head, tool));
+						&& lastone(stack)->read == R_TO_L)))
+			{
+				pop = pop_last_1(&stack);
+				lst_add_back(&postfix, pop);
 			}
-        head = head->next;
-    }
-    while (stack) {
-        pop = pop_last_1(&stack);
-        lst_add_back(&postfix, pop);
-    }
-    return (postfix);
-       
+			lst_add_back(&stack, post_new(head, tool));
+		}
+		head = head->next;
+	}
+	while (stack)
+	{
+		pop = pop_last_1(&stack);
+		lst_add_back(&postfix, pop);
+	}
+	return (postfix);
 }
 
-t_tree    *postfix_tree(t_lst *postfix, t_tool *tool)
+t_tree	*postfix_tree(t_lst *postfix, t_tool *tool)
 {
-    t_lst *stack;
-    t_tree *tree;
+	t_lst	*stack;
+	t_tree	*tree;
 
-    stack = NULL;
-    while(postfix)
-    {
-        if (postfix->type <= 0)
-        {
-            tree = new_node(postfix->value, postfix->prio, postfix->type, tool);
-            lst_add_back(&stack, lst_new(tree, tool));
-        }
-        else
-        {
-            tree = new_node(postfix->value, postfix->prio ,postfix->type, tool);
-            tree->right = (t_tree *)(pop_last(&stack));
-            if(!is_redarection(tree->type))
-                tree->left = (t_tree *)(pop_last(&stack));
-            lst_add_back(&stack, lst_new(tree, tool));
-        }
-        postfix = postfix->next;
-    }
-    tree = pop_last(&stack);
-    if(stack)
-    {
-        return(printf("Error: Invalid expression\n"), NULL);
-    }
-    update_tree(&tree, tool);
-    return (tree);
+	stack = NULL;
+	while (postfix)
+	{
+		if (postfix->type <= 0)
+		{
+			tree = new_node(postfix->value, postfix->prio, postfix->type, tool);
+			lst_add_back(&stack, lst_new(tree, tool));
+		}
+		else
+		{
+			tree = new_node(postfix->value, postfix->prio, postfix->type, tool);
+			tree->right = (t_tree *)(pop_last(&stack));
+			if (!is_redarection(tree->type))
+				tree->left = (t_tree *)(pop_last(&stack));
+			lst_add_back(&stack, lst_new(tree, tool));
+		}
+		postfix = postfix->next;
+	}
+	tree = pop_last(&stack);
+	if (stack)
+		return (printf("Error: Invalid expression\n"), NULL);
+	update_tree(&tree, tool);
+	return (tree);
 }
