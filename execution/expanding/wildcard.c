@@ -6,22 +6,33 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 20:23:05 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/02 00:22:30 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/04/02 23:55:32 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell_execution.h"
 
-static void	*ft_memset(void *b, int c, size_t len)
+static char	**ft_create_dp(int row, int col)
 {
-	unsigned char	*str;
-	size_t			i;
+	char	**dp;
+	int		r;
+	int		c;
 
-	str = (unsigned char *)b;
-	i = 0;
-	while (i < len)
-		str[i++] = (unsigned char)c;
-	return (b);
+	dp = (char **)malloc(sizeof(char *) * row);
+	if (!dp)
+		return (NULL);
+	r = -1;
+	while (++r < row)
+		dp[r] = (char *)malloc(sizeof(char) * col);
+	r = -1;
+	while (++r < row)
+	{
+		c = -1;
+		while (++c < col)
+			dp[r][c] = 0;
+	}
+	dp[0][0] = '1';
+	return (dp);
 }
 
 void	ft_list_cwd(t_list **head)
@@ -62,13 +73,10 @@ int	ft_get_matching(t_list **head, char *pattern)
 	entry = readdir(dir);
 	while (entry != NULL)
 	{
-		if (entry->d_name[0] != '.')
+		if (entry->d_name[0] != '.' && ft_is_match(entry->d_name, pattern))
 		{
-			if (ft_is_match(entry->d_name, pattern))
-			{
-				ft_lstadd_back(head, ft_lstnew(ft_strdup2(entry->d_name)));
-				found_match = 1;
-			}
+			ft_lstadd_back(head, ft_lstnew(ft_strdup2(entry->d_name)));
+			found_match = 1;
 		}
 		entry = readdir(dir);
 	}
@@ -77,16 +85,17 @@ int	ft_get_matching(t_list **head, char *pattern)
 	return (found_match);
 }
 
-int	ft_is_match(char* s, char* p)
+int	ft_is_match(char *s, char *p)
 {
-	int dp[ft_strlen2(s) + 1][ft_strlen2(p) + 1];
-	int s_len = ft_strlen2(s);
-	int p_len = ft_strlen2(p);
-	int i;
-	int j;
+	char	**dp;
+	int		s_len;
+	int		p_len;
+	int		i;
+	int		j;
 
-	ft_memset(dp, 0, sizeof(dp));
-	dp[0][0] = 1;
+	s_len = ft_strlen2(s);
+	p_len = ft_strlen2(p);
+	dp = ft_create_dp(s_len + 1, p_len + 1);
 	i = -1;
 	while (++i <= s_len)
 	{
@@ -94,10 +103,13 @@ int	ft_is_match(char* s, char* p)
 		while (++j <= p_len)
 		{
 			if (p[j - 1] == '*')
-				dp[i][j] = dp[i][j - 1] | (i > 0 && dp[i - 1][j]);
-			else if (i > 0 && (p[j - 1] == s[i - 1] || p[j - 1] == '?'))
+			{
+				if (dp[i][j - 1] == '1' || (i > 0 && dp[i - 1][j] == '1'))
+					dp[i][j] = '1';
+			}
+			else if (i > 0 && (p[j - 1] == s[i - 1]))
 				dp[i][j] = dp[i - 1][j - 1];
 		}
 	}
-	return (dp[s_len][p_len]);
+	return (dp[s_len][p_len] == '1');
 }
