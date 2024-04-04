@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 20:39:26 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/31 01:18:35 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/04/04 00:43:54 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,31 @@ static void	ft_child_job(t_env **env, char	**cmd_2d)
 	exit(127);
 }
 
+
+/////
+
+int	update_status(int status)
+{
+	if (WIFSIGNALED(status))   // check if process recived a signal
+	{
+		if (WTERMSIG(status) == SIGINT)
+		{
+			printf("\n");
+			return (130);
+		}
+		if (WTERMSIG(status) == SIGQUIT)
+		{
+			printf("Quit: 3\n");
+			return (131);
+		}
+	}
+	if (WIFEXITED(status)) // to check if the process terminted with exit 
+		return (WEXITSTATUS(status));
+	return (1);
+}
+
+///
+
 void	ft_execute_cmd(char *cmd, t_env **env, int *exit_status)
 {
 	char	**cmd_2d;
@@ -64,7 +89,7 @@ void	ft_execute_cmd(char *cmd, t_env **env, int *exit_status)
 	if (!cmd_2d)
 		return (ft_put_error("🍪: malloc failed\n"));
 	if (ft_execute_builtins(cmd_2d, env, exit_status) == SUCCESS)
-		return ;
+		return (ft_free_2d_char(cmd_2d));
 	pid = fork();
 	if (pid < 0)
 	{
@@ -76,6 +101,6 @@ void	ft_execute_cmd(char *cmd, t_env **env, int *exit_status)
 		ft_child_job(env, cmd_2d);
 	else
 		waitpid(pid, exit_status, 0);
-	*exit_status = WEXITSTATUS(*exit_status);
+	*exit_status = update_status(*exit_status);
 	ft_free_2d_char(cmd_2d);
 }

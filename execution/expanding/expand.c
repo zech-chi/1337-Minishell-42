@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 09:36:52 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/30 02:16:22 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/04/04 00:55:49 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,5 @@ char	**ft_expand(char *cmd, t_env *env, int exit_status)
 	if (exp.buff_exp)
 		ft_expand_cut(&exp);
 	return (ft_lst_to_2d_char(&(exp.head)));
+	return (NULL);
 }
