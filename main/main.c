@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:23:31 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/04 01:27:59 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/04/04 21:20:35 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ int	main(int ac, char **av, char **ev)
 	tool.err = 0;
 	signal(SIGINT, ft_handle_signals);
 	signal(SIGQUIT, ft_handle_signals);
-	//while (1)
-	//{
+	while (1)
+	{
 		//dd();
 		line = ft_get_prompt(tool.err);
 		tree = parsing(line, &tool);
@@ -81,7 +81,7 @@ int	main(int ac, char **av, char **ev)
 		clear_garbage(tool.grbg);
 		tool.grbg = NULL;
 		free(line);
-	//}
+	}
 	ft_env_clear(&tool.env);
 	rl_clear_history();
 	return (SUCCESS);

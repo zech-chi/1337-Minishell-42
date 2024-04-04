@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 21:30:24 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/03 03:20:50 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/04/04 21:19:48 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,8 @@ void	ft_export_help(char *str, t_env **env, int *exit_status)
 	if (expt.slice1 && !ft_strcmp2(expt.slice1, "_"))
 		return (free(expt.slice1), free(expt.slice2));
 	expt.value = ft_env_search(*env, expt.slice1);
-	if (!expt.equal && ft_env_search(*env, expt.slice1))
-		return (free(expt.value));
+	if (!expt.equal && expt.value)
+		return (free(expt.value), free(expt.slice1), free(expt.slice2));
 	free(expt.value);
 	if (ft_env_update(env, expt.slice1, expt.slice2, expt.append))
 	{
