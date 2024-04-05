@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 23:32:33 by ymomen            #+#    #+#             */
-/*   Updated: 2024/04/04 10:17:17 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/05 04:40:43 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ t_lst	*check_and_update( t_lst **node, t_tool *tool)
 	if (parssing_error(node, tool))
 		return (NULL);
 	update_lst(node, tool);
-	trime(*node, tool);
 	redarection_join_arg(node, tool);
+	trime(*node, tool);
 	return (*node);
 }
 

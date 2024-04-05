@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:16:00 by ymomen            #+#    #+#             */
-/*   Updated: 2024/04/04 11:18:49 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/05 08:38:54 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,14 @@
 
 static	int	check_line(char **limiter, t_tool *tool)
 {
-	if (*limiter && (*limiter[0] != '"' && *limiter[0] != '\'')
-		&& (*limiter[ft_strlen(*limiter) - 1] != '"'
-			&& *limiter[ft_strlen(*limiter) - 1] != '\''))
+	char	*lim;
+
+	if (!limiter || !*limiter)
+		return (0);
+	lim = *limiter;
+	if (lim && (lim[0] != '"' && lim[0] != '\'')
+		&& (lim[ft_strlen(lim) - 1] != '"'
+			&& lim[ft_strlen(lim) - 1] != '\''))
 		return (0);
 	if (*limiter && (*limiter[0] == '\''
 			&& *limiter[ft_strlen(*limiter) - 1] == '\''))
@@ -38,20 +43,17 @@ static void	wrt_on_file(int *fd, char *limiter, t_tool *tool)
 	while (line)
 	{
 		line = readline("here_doc> ");
-		if (!line || !*line)
-			continue ;
-		add_to_grbg(&tool->grbg, line);
-		if (i)
-			line = ft_herdoc_expand(line, tool->env, tool->err);
-		if (ft_strcmp(line, limiter) == 0)
+		if (!line)
 			return ;
-		if (write(*fd, line, ft_strlen(line)) == -1
-			|| write(*fd, "\n", 1) == -1)
+		add_to_grbg(&(tool->grbg), line);
+		if (i && limiter && limiter[0] != '$')
 		{
-			perror(" 🍪: write");
-			tool->err = 1;
-			return ;
+			line = ft_herdoc_expand(line, tool->env, tool->err);
+			add_to_grbg(&(tool->grbg), line);
 		}
+		if (check_here_doc(line, fd, limiter, tool) == 0)
+			return ;
+		line = " ";
 	}
 }
 
@@ -69,20 +71,24 @@ static int	genratnum(void)
 
 static char	*genratname(t_tool *tool)
 {
-	char	name[30];
+	char	*name;
 	int		cont;
 	int		num;
 
 	cont = 6;
-	ft_strlcpy(name, "/tmp/.", 7);
+	name = (char *) malloc(31);
+	if (!name)
+		return (perror("🍪 : malloc"), tool->err = 1, NULL);
+	add_to_grbg(&(tool->grbg), name);
+	ft_strlcpy(name, "/tmp/.", 30);
 	while (cont < 30)
 	{
 		num = genratnum();
-		name[cont] = FILENAME[num % 62];
+		name[cont] = FILENAME[num % 60];
 		cont++;
 	}
 	name[cont] = '\0';
-	return (ft_strdup(name, tool));
+	return (name);
 }
 
 int	heredoc(t_tool *tool, char **limiter)
