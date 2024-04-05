@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 14:16:49 by ymomen            #+#    #+#             */
-/*   Updated: 2024/04/04 10:55:03 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/04 23:44:25 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ int	parssing_error(t_lst **node, t_tool *tool)
 		write(2, "'\n", 2);
 		return (1);
 	}
+	if (parssing_error_2(tmp, tool))
+		return (1);
 	if (tool->prac || tool->quot || tool->anderr == 1)
 	{
 		if (tool->prac)
@@ -75,8 +77,6 @@ int	parssing_error(t_lst **node, t_tool *tool)
 		tool->err = 258;
 		return (1);
 	}
-	if (parssing_error_2(tmp, tool))
-		return (1);
 	return (0);
 }
 
