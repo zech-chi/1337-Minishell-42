@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   strtrim.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 17:13:48 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/03/15 17:52:30 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/04/07 18:25:47 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	get_size(char const *s1, char const *set, size_t *l, size_t *r)
 		*l += 1;
 	if (*l == s1_len)
 		return (0);
-	while (*r >= 0 && is_exist(set, s1[*r]))
+	while (*r > 0 && is_exist(set, s1[*r]))
 		*r -= 1;
 	return (*r - *l + 1);
 }
