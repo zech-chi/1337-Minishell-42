@@ -17,12 +17,10 @@ int	ft_atoi(const char *str)
 	int	res;
 	int	signe;
 	int	i;
-	int	count_digits;
 
 	res = 0;
 	signe = 1;
 	i = 0;
-	count_digits = 0;
 	while (str[i] && ft_isspace(str[i]))
 		i++;
 	if (str[i] == '+' || str[i] == '-')

@@ -14,9 +14,9 @@
 #include "../header/minishell_parsing.h"
 int check_line(char *limiter)
 {
-    int i;
+    //int i;
 
-    i = 0;
+    //i = 0;
     if(limiter && (limiter[0]!= '"'|| limiter[0] != '\'')&& (limiter[ft_strlen(limiter) - 1] != '"' || limiter[ft_strlen(limiter) - 1] != '\''))
         return (1);
     return (0);
