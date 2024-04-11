@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 01:23:32 by ymomen            #+#    #+#             */
-/*   Updated: 2024/04/07 18:39:24 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/11 15:28:33 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_tree	*parsing_phase(char *line, t_tool *tool)
 	node = tokens_lst(line, tool);
 	post = from_infix_to_postfix(node, tool);
 	tree = postfix_tree(post, tool);
+	update_tree(&tree, tool);
 	post = NULL;
 	node = NULL;
 	return (tree);
@@ -40,7 +41,8 @@ int	get_height(t_tree *root)
 
 void	print_spaces(int n)
 {
-	for (int i = 0; i < n; i++) {
+	for (int i = 0; i < n; i++)
+	{
         printf(" ");
 		fflush(stdout);
     }

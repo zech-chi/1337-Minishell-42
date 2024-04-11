@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 14:16:49 by ymomen            #+#    #+#             */
-/*   Updated: 2024/04/09 01:12:22 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/11 15:25:49 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,14 @@ static int	condtion(t_lst *n)
 
 static int	parssing_error_2(t_lst *node, t_tool *tool)
 {
-	int lstoken;
+	int	lst;
 
-	lstoken = 0;
+	lst = 0;
 	while (node)
 	{
 		if (node->type > 0 && !is_redarection(node->type))
-			lstoken = node->type;
-		if (condtion(node) || (lstoken && lstoken == CLOSE_PARENTH && node->type == 0))
+			lst = node->type;
+		if (condtion(node) || (lst && lst == CLOSE_PARENTH && node->type == 0))
 		{
 			tool->err = 258;
 			write(2, "🍪: syntax error near unexpected token `", 43);

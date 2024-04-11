@@ -6,17 +6,19 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 02:41:11 by ymomen            #+#    #+#             */
-/*   Updated: 2024/04/01 17:39:48 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/11 17:25:09 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell_parsing.h"
 
-static size_t	totalen(const char *s1, const char *s2)
+static size_t	totalen(const char *s1, const char *s2, size_t *i, size_t *ct)
 {
 	size_t	s1l;
 	size_t	s2l;
 
+	*i = 0;
+	*ct = 0;
 	s1l = ft_strlen(s1);
 	s2l = ft_strlen(s2);
 	return (s1l + s2l);
@@ -31,9 +33,7 @@ char	*ft_strjoin(char const *s1, char const *s2, t_tool *tool)
 
 	if (!s1 || !s2)
 		return (NULL);
-	lentot = totalen(s1, s2);
-	i = 0;
-	count = 0;
+	lentot = totalen(s1, s2, &i, &count);
 	newstr = (char *) malloc(lentot + 1);
 	if (!newstr)
 		return (NULL);
