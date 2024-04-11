@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:23:31 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/05 09:03:42 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/07 18:39:11 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,9 @@ int	main(int ac, char **av, char **ev)
 		//dd();
 		line = ft_get_prompt(tool.err);
 		tree = parsing_phase(line, &tool);
-		// printf("--------------- tree --------------------\n");
-		// print_tree_2d(tree);
-		// printf("-----------------------------------------\n");
+		printf("--------------- tree --------------------\n");
+		print_tree_2d(tree);
+		printf("-----------------------------------------\n");
 		ft_execute(tree, &tool.env, &tool.err);
 		unlink_heredoc(&tree);
 		clear_garbage(tool.grbg);
