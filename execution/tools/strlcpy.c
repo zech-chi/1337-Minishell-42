@@ -1,32 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   strlcpy.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/16 17:43:16 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/16 17:40:05 by zech-chi         ###   ########.fr       */
+/*   Created: 2024/04/16 17:08:44 by zech-chi          #+#    #+#             */
+/*   Updated: 2024/04/16 17:09:03 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell_execution.h"
 
-char	*ft_get_cwd(void)
+size_t	ft_strlcpy2(char *dst, const char *src, size_t dstsize)
 {
-	char		cwd[MAXPATHLEN];
-	static char	save_cwd[MAXPATHLEN];
+	size_t	i;
+	size_t	src_len;
 
-	if (getcwd(cwd, MAXPATHLEN) != NULL)
-		ft_strlcpy2(save_cwd, cwd, MAXPATHLEN);
-	return (ft_strdup2(save_cwd)); // must free
-}
-
-void	ft_pwd_print(void)
-{
-	char	*cwd;
-
-	cwd = ft_get_cwd();
-	printf("%s\n", cwd);
-	free(cwd);
+	src_len = ft_strlen2(src);
+	if (dstsize == 0)
+		return (src_len);
+	i = 0;
+	while (src[i] && i < dstsize - 1)
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = '\0';
+	return (src_len);
 }

@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:07:18 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/03 04:04:03 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/04/16 17:11:53 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int		ft_isspace(char c);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 void	ft_free_2d_char(char **char_2d);
 int		ft_atoi(const char *str);
+size_t	ft_strlcpy2(char *dst, const char *src, size_t dstsize);
 
 /************************* env *************************/
 
@@ -88,6 +89,7 @@ void	ft_export(t_env **env, char **cmd_2d, int *exit_status);
 void	ft_export_error(char *slice1, char *slice2, int equal, int append);
 void	ft_export_help(char *str, t_env **env, int *exit_status);
 // pwd
+char	*ft_get_cwd(void);
 void	ft_pwd_print(void);
 // unset
 void	ft_unset(t_env **env, char **cmd_2d, int *exit_status);
@@ -127,8 +129,6 @@ void	ft_execute_pipe(t_tree *root, t_env **env, int *exit_status);
 void	ft_execute_redirection_out(t_tree *root, t_env **env, int *exit_status);
 void	ft_execute_redirection_in(t_tree *root, t_env **env, int *exit_status);
 void	ft_execute(t_tree *root, t_env **env, int *exit_status);
+int		ft_update_status(int status);
 
-
-///
-int	update_status(int status);
 #endif

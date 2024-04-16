@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 20:39:26 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/16 12:10:06 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/04/16 14:59:51 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ static void	ft_child_job(t_env **env, char	**cmd_2d)
 	exit(127);
 }
 
-int	update_status(int status)
+int	ft_update_status(int status)
 {
-	if (WIFSIGNALED(status))   // check if process recived a signal
+	if (WIFSIGNALED(status))
 	{
 		if (WTERMSIG(status) == SIGINT)
 		{
@@ -70,7 +70,7 @@ int	update_status(int status)
 			return (131);
 		}
 	}
-	if (WIFEXITED(status)) // to check if the process terminted with exit 
+	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	return (1);
 }
@@ -96,6 +96,6 @@ void	ft_execute_cmd(char *cmd, t_env **env, int *exit_status)
 		ft_child_job(env, cmd_2d);
 	else
 		waitpid(pid, exit_status, 0);
-	*exit_status = update_status(*exit_status);
+	*exit_status = ft_update_status(*exit_status);
 	ft_free_2d_char(cmd_2d);
 }
