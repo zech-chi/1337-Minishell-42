@@ -37,7 +37,7 @@ static int	get_size(char const *s1, char const *set, size_t *l, size_t *r)
 		*l += 1;
 	if (*l == s1_len)
 		return (0);
-	while (*r >= 0 && is_exist(set, s1[*r]))
+	while (*r > 0 && is_exist(set, s1[*r]))
 		*r -= 1;
 	return (*r - *l + 1);
 }

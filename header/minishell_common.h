@@ -14,6 +14,7 @@
 # define MINISHELL_COMMON_H
 
 # include <sys/param.h>
+# include <sys/wait.h>
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
