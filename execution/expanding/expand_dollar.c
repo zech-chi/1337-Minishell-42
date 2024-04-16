@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 22:04:46 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/03 00:23:11 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/04/16 10:41:26 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,9 @@ void	ft_expand_dollar(t_expand *exp, t_env *env, char *cmd, int exit_status)
 	env_var = ft_env_search(env, exp->buff_env + 1);
 	if (!env_var && exp->quote)
 		exp->buff_exp = ft_strjoin2(exp->buff_exp, ft_strdup2(""));
-	else if (env_var)
+	else if (env_var && exp->quote == 0)
 		ft_add_to_expand_buffer(exp, env_var);
+	else if (env_var && exp->quote != 0)
+		exp->buff_exp = ft_strjoin2(exp->buff_exp, ft_strdup2(env_var));
 	ft_help(exp, cmd, exit_status, env_var);
 }
