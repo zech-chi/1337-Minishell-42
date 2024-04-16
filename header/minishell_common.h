@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:27:47 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/07 18:24:18 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/16 16:56:08 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,4 +93,6 @@ typedef struct s_expand_herdoc
 
 char	*ft_herdoc_expand(char *str, t_env *env, int exit_status);
 char	**ft_split2(char const *s, char c);
+char	*ft_strjoin2(char *s1, char *s2);
+char	*ft_char_to_str(char c);
 #endif

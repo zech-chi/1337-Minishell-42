@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 06:15:50 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/05 06:21:18 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/16 16:42:59 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,35 +98,3 @@ char	*ft_herdoc_expand(char *str, t_env *env, int exit_status)
 	}
 	return (exp_h.buff_exp);
 }
-
-//void	ft_open_herdoc(char *eof, t_env *env, int exit_status)
-//{
-//	char	*line;
-
-//	while (1)
-//	{
-//		line = readline("> ");
-//		if (!line)
-//			printf("%s\n", line);
-//		else if (!ft_strcmp2(line, eof))
-//		{
-//			printf("done\n");
-//			break ;
-//		}
-//		else
-//			printf("%s\n", ft_herdoc_expand(line, env, exit_status));
-//		free(line);
-//	}
-//}
-//int	main(int ac, char **av, char **ev)
-//{
-//	t_env	*env;
-//	int		exit_status;
-
-//	(void)(ac);
-//	(void)(av);
-//	env = ft_env_create(ev);
-//	exit_status = 0;
-//	ft_open_herdoc("stop", env, exit_status);
-//	ft_env_clear(&env);
-//}

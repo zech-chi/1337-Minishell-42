@@ -3,43 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:16:00 by ymomen            #+#    #+#             */
-/*   Updated: 2024/04/15 15:32:10 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/16 17:05:17 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell_parsing.h"
 
-static	int	check_line(char **limiter, t_tool *tool)
+static char	*ft_update_delimiter(char *delimiter, int *to_expand)
 {
-	char	*lim;
+	char	*new_delimiter;
+	char	quote;
+	int		i;
 
-	if (!limiter || !*limiter)
-		return (0);
-	lim = *limiter;
-	if (lim && (lim[0] != '"' && lim[0] != '\'')
-		&& (lim[ft_strlen(lim) - 1] != '"'
-			&& lim[ft_strlen(lim) - 1] != '\''))
-		return (0);
-	if (*limiter && (*limiter[0] == '\''
-			&& *limiter[ft_strlen(*limiter) - 1] == '\''))
-		*limiter = ft_strtrim(*limiter, "'", tool);
-	else
-		*limiter = ft_strtrim(*limiter, "\"", tool);
-	return (1);
+	new_delimiter = NULL;
+	quote = 0;
+	i = -1;
+	while (delimiter && delimiter[++i])
+	{
+		if (delimiter[i] == '\'' || delimiter[i] == '"')
+		{
+			to_expand = 0;
+			if (quote == 0)
+				quote = delimiter[i];
+			else if (quote == delimiter[i])
+				quote = 0;
+			else
+				new_delimiter = ft_strjoin2(new_delimiter, \
+				ft_char_to_str(delimiter[i]));
+		}
+		else
+			new_delimiter = ft_strjoin2(new_delimiter, \
+			ft_char_to_str(delimiter[i]));
+	}
+	return (new_delimiter);
 }
-
-//int check_line(char *limiter)
-//{
-//    //int i;
-
-//    //i = 0;
-//    if(limiter && (limiter[0]!= '"'|| limiter[0] != '\'')&& (limiter[ft_strlen(limiter) - 1] != '"' || limiter[ft_strlen(limiter) - 1] != '\''))
-//        return (1);
-//    return (0);
-//}
 
 static void	wrt_on_file(int *fd, char *limiter, t_tool *tool)
 {
@@ -47,21 +47,23 @@ static void	wrt_on_file(int *fd, char *limiter, t_tool *tool)
 	int		i;
 
 	line = " ";
-	i = 0;
-	if (!check_line(&limiter, tool))
-		i = 1;
+	i = 1;
+	limiter = ft_update_delimiter(limiter, &i);
+	add_to_grbg(&(tool->grbg), limiter);
 	while (line)
 	{
 		line = readline("here_doc> ");
 		if (!line)
 			return ;
 		add_to_grbg(&(tool->grbg), line);
-		if (i && limiter && limiter[0] != '$')
+		if (line && ft_strcmp(line, limiter) == 0)
+			return ;
+		if (i && limiter)
 		{
 			line = ft_herdoc_expand(line, tool->env, tool->err);
 			add_to_grbg(&(tool->grbg), line);
 		}
-		if (check_here_doc(line, fd, limiter, tool) == 0)
+		if (check_here_doc(line, fd, tool) == 0)
 			return ;
 		line = " ";
 	}

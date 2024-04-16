@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:25:53 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/15 15:24:52 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/16 16:27:34 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef struct s_tool
 }	t_tool;
 
 /* FUNCTIONS */
-int		check_here_doc(char *line, int *fd, char *limiter, t_tool *tool);
+int		check_here_doc(char *line, int *fd, t_tool *tool);
 t_tree	*parsing_phase(char *line, t_tool *tool);
 int		parssing_error(t_lst **node, t_tool *tool);
 void	unlink_heredoc(t_tree **root);

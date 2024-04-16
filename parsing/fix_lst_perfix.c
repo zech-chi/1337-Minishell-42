@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 00:42:19 by ymomen            #+#    #+#             */
-/*   Updated: 2024/04/08 00:52:44 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/16 16:27:05 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,8 @@ void	redarection_join_arg(t_lst **node, t_tool *tool)
 	}
 }
 
-int	check_here_doc(char *line, int *fd, char *limiter, t_tool *tool)
+int	check_here_doc(char *line, int *fd, t_tool *tool)
 {
-	if (line && ft_strcmp(line, limiter) == 0)
-		return (0);
 	if (write(*fd, line, ft_strlen(line)) == -1
 		|| write(*fd, "\n", 1) == -1)
 	{
