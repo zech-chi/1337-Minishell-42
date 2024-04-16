@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:55:59 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/03 04:10:15 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/04/16 12:10:40 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static void	ft_r_child(t_tree *root, t_env **env, int *exit_status, int fd[2])
 	exit(*exit_status);
 }
 
+//*exit_status = WEXITSTATUS(*exit_status);
 void	ft_execute_pipe(t_tree *root, t_env **env, int *exit_status)
 {
 	int	pid1;
@@ -62,6 +63,5 @@ void	ft_execute_pipe(t_tree *root, t_env **env, int *exit_status)
 	close(fd[1]);
 	waitpid(pid1, exit_status, 0);
 	waitpid(pid2, exit_status, 0);
-	//*exit_status = WEXITSTATUS(*exit_status);
 	*exit_status = update_status(*exit_status);
 }

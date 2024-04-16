@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:29:33 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/03 00:07:08 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/04/16 13:30:12 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@ static void	ft_update_pwd_and_oldpwd(t_env **env)
 {
 	char	cur_wd[MAXPATHLEN];
 	char	*prev_wd;
+	char	*cwd_key;
+	char	*cwd_value;
 
-	prev_wd = ft_env_search(*env, "PWD");
+	//prev_wd = ft_env_search(*env, "PWD");
 	if (getcwd(cur_wd, MAXPATHLEN) == NULL)
 	{
 		perror("cd: error retrieving current directory: \
@@ -26,12 +28,19 @@ static void	ft_update_pwd_and_oldpwd(t_env **env)
 	}
 	ft_env_delete(env, "OLDPWD");
 	ft_env_add(env, ft_strdup2("OLDPWD"), prev_wd, 1);
-	ft_env_update(env, ft_strdup2("PWD"), ft_strdup2(cur_wd), 0);
+	cwd_key = ft_strdup2("PWD");
+	cwd_value = ft_strdup2(cur_wd);
+	if (ft_env_update(env, cwd_key, cwd_value, 0))
+	{
+		free(cwd_key);
+		free(cwd_value);
+	}
 }
 
 static	void	ft_go_to_old_path(t_env **env, int *exit_status)
 {
 	char	*old_pwd;
+	char	*prev_wd;
 
 	old_pwd = ft_env_search(*env, "OLDPWD");
 	if (chdir(old_pwd) == SUCCESS)
@@ -52,11 +61,9 @@ static	void	ft_go_to_home(t_env **env, int *exit_status)
 	char	*home;
 
 	home = ft_env_search(*env, "HOME");
+	*exit_status = 1;
 	if (!home)
-	{
 		ft_put_error("🍪: cd: HOME not set\n");
-		*exit_status = 1;
-	}
 	if (chdir(home) == SUCCESS)
 	{
 		ft_update_pwd_and_oldpwd(env);
