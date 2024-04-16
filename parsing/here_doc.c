@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../header/minishell_parsing.h"
+<<<<<<< HEAD
 
 static	int	check_line(char **limiter, t_tool *tool)
 {
@@ -24,6 +25,16 @@ static	int	check_line(char **limiter, t_tool *tool)
 	else
 		*limiter = ft_strtrim(*limiter, "\"", tool);
 	return (1);
+=======
+int check_line(char *limiter)
+{
+    //int i;
+
+    //i = 0;
+    if(limiter && (limiter[0]!= '"'|| limiter[0] != '\'')&& (limiter[ft_strlen(limiter) - 1] != '"' || limiter[ft_strlen(limiter) - 1] != '\''))
+        return (1);
+    return (0);
+>>>>>>> 513ff7c06c70ecac7aa1370e591191ff47a5d8fa
 }
 
 static void	wrt_on_file(int *fd, char *limiter, t_tool *tool)
