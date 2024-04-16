@@ -6,13 +6,13 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 14:16:49 by ymomen            #+#    #+#             */
-/*   Updated: 2024/04/04 23:44:25 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/11 15:25:49 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell_parsing.h"
 
-static int	intcondtion(t_lst *n)
+static int	condtion(t_lst *n)
 {
 	if (n->prio > 0 && !n->next && n->type != CLOSE_PARENTH)
 		return (1);
@@ -33,9 +33,14 @@ static int	intcondtion(t_lst *n)
 
 static int	parssing_error_2(t_lst *node, t_tool *tool)
 {
+	int	lst;
+
+	lst = 0;
 	while (node)
 	{
-		if (intcondtion(node))
+		if (node->type > 0 && !is_redarection(node->type))
+			lst = node->type;
+		if (condtion(node) || (lst && lst == CLOSE_PARENTH && node->type == 0))
 		{
 			tool->err = 258;
 			write(2, "🍪: syntax error near unexpected token `", 43);

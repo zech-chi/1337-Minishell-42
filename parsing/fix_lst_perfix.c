@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 00:42:19 by ymomen            #+#    #+#             */
-/*   Updated: 2024/04/05 08:47:10 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/08 00:52:44 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,15 @@ void	redarection_join_arg(t_lst **node, t_tool *tool)
 	{
 		if (cur->type == 0 && cur->next && is_redarection(cur->next->type))
 			cmd = cur;
+		else if (cur->type != 0 && !is_redarection(cur->type))
+			cmd = NULL;
 		if (is_redarection(cur->type) && cmd && cmd->next && cur->next
 			&& cur->next->type == 0)
 		{
-			printf("here\n");
 			hlf = cur->next;
 			cmd ->value = ft_strjoin(cmd->value, ft_strdup(" ", tool), tool);
 			cmd->value = ft_strjoin(cmd->value, hlf->value, tool);
 			cur->next = hlf->next;
-			cmd = NULL;
 		}
 		cur = cur->next;
 	}
