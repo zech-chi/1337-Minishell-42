@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
+/*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:16:00 by ymomen            #+#    #+#             */
-/*   Updated: 2024/04/04 11:18:49 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/16 10:58:58 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell_parsing.h"
-<<<<<<< HEAD
 
 static	int	check_line(char **limiter, t_tool *tool)
 {
@@ -25,17 +24,17 @@ static	int	check_line(char **limiter, t_tool *tool)
 	else
 		*limiter = ft_strtrim(*limiter, "\"", tool);
 	return (1);
-=======
-int check_line(char *limiter)
-{
-    //int i;
-
-    //i = 0;
-    if(limiter && (limiter[0]!= '"'|| limiter[0] != '\'')&& (limiter[ft_strlen(limiter) - 1] != '"' || limiter[ft_strlen(limiter) - 1] != '\''))
-        return (1);
-    return (0);
->>>>>>> 513ff7c06c70ecac7aa1370e591191ff47a5d8fa
 }
+
+//int check_line(char *limiter)
+//{
+//    //int i;
+
+//    //i = 0;
+//    if(limiter && (limiter[0]!= '"'|| limiter[0] != '\'')&& (limiter[ft_strlen(limiter) - 1] != '"' || limiter[ft_strlen(limiter) - 1] != '\''))
+//        return (1);
+//    return (0);
+//}
 
 static void	wrt_on_file(int *fd, char *limiter, t_tool *tool)
 {
