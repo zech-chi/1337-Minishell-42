@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:25:53 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/05 08:42:39 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/15 15:24:52 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # define FILENAME "ABCDEFGHIJKLMNOPQRSTVWXYZabcdefghijklmnopqrstuvwxyz_\
 0123456789"
 
+extern int	g_test;
 typedef struct s_lst
 {
 	char			*value;

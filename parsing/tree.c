@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:57:50 by ymomen            #+#    #+#             */
-/*   Updated: 2024/04/03 15:21:47 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/15 14:55:18 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,22 +45,36 @@ void	unlink_heredoc(t_tree **root)
 	return ;
 }
 
+char	*ft_split_first(char *str, char delimiter, t_tool *tool)
+{
+	int		i;
+	char	*ptr;
+
+	i = 0;
+	while (str[i] && str[i] != delimiter)
+		i++;
+	ptr = ft_monstrdup(str, i, tool);
+	return (ptr);
+}
+
 void	update_tree(t_tree **root, t_tool *tool)
 {
-	char	**sp;
+	char	*sp;
 
 	if (!*root)
 		return ;
 	if (is_redarection((*root)->type) && !(*root)->left)
 	{
-		sp = ft_split((*root)->value, ' ', tool);
+		sp = ft_split_first((*root)->value, ' ', tool);
 		if (!sp)
 		{
 			root = NULL;
 			return ;
 		}
-		(*root)->value = sp[0];
-		(*root)->left = new_node(sp[1], -1, -2, tool);
+		(*root)->left = new_node(ft_monstrdup(&(*root)->value[ft_strlen(sp)],
+					ft_strlen((*root)->value) - ft_strlen(sp), tool),
+				-1, -2, tool);
+		(*root)->value = sp;
 		update_tree(&(*root)->right, tool);
 	}
 	else
