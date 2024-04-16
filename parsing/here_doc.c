@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
+/*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:16:00 by ymomen            #+#    #+#             */
 /*   Updated: 2024/04/15 15:32:10 by ymomen           ###   ########.fr       */
@@ -30,6 +30,16 @@ static	int	check_line(char **limiter, t_tool *tool)
 		*limiter = ft_strtrim(*limiter, "\"", tool);
 	return (1);
 }
+
+//int check_line(char *limiter)
+//{
+//    //int i;
+
+//    //i = 0;
+//    if(limiter && (limiter[0]!= '"'|| limiter[0] != '\'')&& (limiter[ft_strlen(limiter) - 1] != '"' || limiter[ft_strlen(limiter) - 1] != '\''))
+//        return (1);
+//    return (0);
+//}
 
 static void	wrt_on_file(int *fd, char *limiter, t_tool *tool)
 {
