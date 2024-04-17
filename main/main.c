@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
+/*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:23:31 by zech-chi          #+#    #+#             */
 /*   Updated: 2024/04/17 18:58:20 by ymomen           ###   ########.fr       */
@@ -43,10 +43,17 @@ void	ft_handle_signals(int sig)
 	}
 }
 
-// original main
-void dd()
+static void	ft_init(t_tool *tool, int ac, char **av, char **ev)
 {
-	system("leaks minishell");
+	tool->grbg = NULL;
+	tool->env = ft_env_create(ev);
+	tool->err = 0;
+	g_signal = 0;
+	rl_catch_signals = 0;
+	signal(SIGINT, ft_handle_signals);
+	signal(SIGQUIT, ft_handle_signals);
+	(void)(ac);
+	(void)(av);
 }
 
 int	main(int ac, char **av, char **ev)
@@ -54,18 +61,9 @@ int	main(int ac, char **av, char **ev)
 	char	*line;
 	t_tree	*tree;
 	t_tool	tool;
-
+	ft_init(&tool, ac, av, ev);
 	if (!isatty(0))
 		return (printf("tty required!\n"), 1);
-	(void)(ac);
-	(void)(av);
-	tool.grbg = NULL;
-	tool.env = ft_env_create(ev);
-	tool.err = 0;
-	rl_catch_signals = 0;
-	signal(SIGINT, ft_handle_signals);
-	signal(SIGQUIT, ft_handle_signals);
-	g_signal = 0;
 	while (1)
 	{
 		line = ft_get_prompt(tool.err);
