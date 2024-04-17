@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:25:53 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/17 16:25:35 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/04/17 16:53:51 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_tool
 }	t_tool;
 
 /* FUNCTIONS */
+int		wrt_on_file(int *fd, char *limiter, t_tool *tool);
 int		check_here_doc(char *line, int *fd, t_tool *tool);
 t_tree	*parsing_phase(char *line, t_tool *tool);
 int		parssing_error(t_lst **node, t_tool *tool);

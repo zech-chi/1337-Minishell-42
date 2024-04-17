@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:23:31 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/17 16:21:14 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/04/17 16:14:06 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,11 @@ char	*ft_get_prompt(int exit_status)
 	return (prompt);
 }
 
-void ft_handle_signals(int sig)
+void	ft_handle_signals(int sig)
 {
 	if (sig == SIGINT)
 	{
+		g_signal = 1;
 		printf("\n");
 		rl_replace_line("", 0);
 		rl_on_new_line();
@@ -63,6 +64,7 @@ int	main(int ac, char **av, char **ev)
 	rl_catch_signals = 0;
 	signal(SIGINT, ft_handle_signals);
 	signal(SIGQUIT, ft_handle_signals);
+		g_signal = 0;
 	while (1)
 	{
 		line = ft_get_prompt(tool.err);
