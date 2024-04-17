@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
+/*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:23:31 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/17 17:05:55 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/17 17:54:30 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,13 @@ void	ft_handle_signals(int sig)
 	}
 }
 
-// original main
-void dd()
+void	ft_tool_init(t_tool *tool, int ac, char **av, char **ev)
 {
-	system("leaks minishell");
+	tool->grbg = NULL;
+	tool->env = ft_env_create(ev);
+	tool->err = 0;
+	(void)(ac);
+	(void)(av);
 }
 
 int	main(int ac, char **av, char **ev)
@@ -55,11 +58,7 @@ int	main(int ac, char **av, char **ev)
 	t_tree	*tree;
 	t_tool	tool;
 
-	(void)(ac);
-	(void)(av);
-	tool.grbg = NULL;
-	tool.env = ft_env_create(ev);
-	tool.err = 0;
+	ft_tool_init(&tool, ac, av, ev);
 	rl_catch_signals = 0;
 	signal(SIGINT, ft_handle_signals);
 	signal(SIGQUIT, ft_handle_signals);
