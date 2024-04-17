@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
+/*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:16:00 by ymomen            #+#    #+#             */
-/*   Updated: 2024/04/16 17:05:17 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/17 15:33:26 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell_parsing.h"
+
+
+void ft_handler(int sig)
+{
+	if (sig == SIGINT)
+		close(0);
+}
 
 static char	*ft_update_delimiter(char *delimiter, int *to_expand)
 {
@@ -41,7 +48,7 @@ static char	*ft_update_delimiter(char *delimiter, int *to_expand)
 	return (new_delimiter);
 }
 
-static void	wrt_on_file(int *fd, char *limiter, t_tool *tool)
+static int	wrt_on_file(int *fd, char *limiter, t_tool *tool)
 {
 	char	*line;
 	int		i;
@@ -50,23 +57,30 @@ static void	wrt_on_file(int *fd, char *limiter, t_tool *tool)
 	i = 1;
 	limiter = ft_update_delimiter(limiter, &i);
 	add_to_grbg(&(tool->grbg), limiter);
+	signal(SIGINT, ft_handler);
 	while (line)
 	{
 		line = readline("here_doc> ");
+		if (!ttyname(0))
+		{
+			open(ttyname(2), O_RDWR);
+			return (1);
+		}
 		if (!line)
-			return ;
+			return (0);
 		add_to_grbg(&(tool->grbg), line);
 		if (line && ft_strcmp(line, limiter) == 0)
-			return ;
+			return (0);
 		if (i && limiter)
 		{
 			line = ft_herdoc_expand(line, tool->env, tool->err);
 			add_to_grbg(&(tool->grbg), line);
 		}
 		if (check_here_doc(line, fd, tool) == 0)
-			return ;
+			return (1);
 		line = " ";
 	}
+	return (1);
 }
 
 static int	genratnum(void)
@@ -116,9 +130,12 @@ int	heredoc(t_tool *tool, char **limiter)
 	fd2 = open(name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd2 == -1)
 		return (perror("open"), tool->err = 1, 1);
-	wrt_on_file(&fd2, *limiter, tool);
+	if (wrt_on_file(&fd2, *limiter, tool))
+		fd2 = open(name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (close(fd2) == -1)
 		return (perror("open"), tool->err = 1, 1);
 	*limiter = ft_strdup(name, tool);
+	signal(SIGINT, ft_handle_signals);
+	signal(SIGQUIT, ft_handle_signals);
 	return (0);
 }
