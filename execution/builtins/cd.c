@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:29:33 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/17 09:51:52 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/04/17 10:08:54 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ static	void	ft_go_to_home(t_env **env, char *path, int *exit_status)
 	home = ft_env_search(*env, "HOME");
 	if (chdir(home) == SUCCESS)
 	{
-		printf("here\n");
 		ft_update_pwd_and_oldpwd(env, prev_wd, path);
 		*exit_status = 0;
 	}

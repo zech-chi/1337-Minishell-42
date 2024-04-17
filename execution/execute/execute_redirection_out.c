@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:43:45 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/03 00:04:20 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/04/17 11:13:22 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	ft_execute_redirection_out(t_tree *root, t_env **env, int *exit_status)
 	if (fd == -1)
 	{
 		close(out);
+		ft_free_2d_char(file_path);
 		return (ft_redicetion_out_error("🍪: open error", exit_status));
 	}
 	dup2(fd, 1);
