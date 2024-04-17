@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:23:31 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/17 17:54:30 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/04/17 18:13:12 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,15 @@ void	ft_handle_signals(int sig)
 	}
 }
 
-void	ft_tool_init(t_tool *tool, int ac, char **av, char **ev)
+static void	ft_init(t_tool *tool, int ac, char **av, char **ev)
 {
 	tool->grbg = NULL;
 	tool->env = ft_env_create(ev);
 	tool->err = 0;
+	g_signal = 0;
+	rl_catch_signals = 0;
+	signal(SIGINT, ft_handle_signals);
+	signal(SIGQUIT, ft_handle_signals);
 	(void)(ac);
 	(void)(av);
 }
@@ -58,11 +62,9 @@ int	main(int ac, char **av, char **ev)
 	t_tree	*tree;
 	t_tool	tool;
 
-	ft_tool_init(&tool, ac, av, ev);
-	rl_catch_signals = 0;
-	signal(SIGINT, ft_handle_signals);
-	signal(SIGQUIT, ft_handle_signals);
-	g_signal = 0;
+	ft_init(&tool, ac, av, ev);
+	if (!isatty(0))
+		return (printf("tty required!\n"), 1);
 	while (1)
 	{
 		line = ft_get_prompt(tool.err);
