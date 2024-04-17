@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:23:31 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/17 16:14:06 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/17 17:05:55 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,11 @@ int	main(int ac, char **av, char **ev)
 	(void)(av);
 	tool.grbg = NULL;
 	tool.env = ft_env_create(ev);
-	g_signal = 0;
 	tool.err = 0;
 	rl_catch_signals = 0;
 	signal(SIGINT, ft_handle_signals);
 	signal(SIGQUIT, ft_handle_signals);
-		g_signal = 0;
+	g_signal = 0;
 	while (1)
 	{
 		line = ft_get_prompt(tool.err);
