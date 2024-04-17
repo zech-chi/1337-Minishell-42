@@ -6,14 +6,14 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:23:31 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/17 10:57:02 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/04/17 15:36:54 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell_execution.h"
 #include "../header/minishell_parsing.h"
 
-int	g_sig;
+int	g_exit_status;
 
 char	*ft_get_prompt(int exit_status)
 {
@@ -37,14 +37,11 @@ void ft_handle_signals(int sig)
 {
 	if (sig == SIGINT)
 	{
-		g_sig = 2;
 		printf("\n");
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
 	}
-	else
-		g_sig = 1;
 }
 
 // original main
@@ -63,7 +60,7 @@ int	main(int ac, char **av, char **ev)
 	(void)(av);
 	tool.grbg = NULL;
 	tool.env = ft_env_create(ev);
-	g_sig = 0;
+	g_exit_status = 0;
 	tool.err = 0;
 	rl_catch_signals = 0;
 	signal(SIGINT, ft_handle_signals);

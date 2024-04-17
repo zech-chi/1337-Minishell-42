@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:27:47 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/17 15:27:43 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/04/17 15:37:09 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@
 
 # define L_TO_R 3
 # define R_TO_L 2
+
+extern int g_exit_status;
 
 enum e_peroirty
 {
