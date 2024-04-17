@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 01:48:23 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/04 00:56:59 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/04/17 20:31:59 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	ft_exp_init(t_expand *exp)
 	exp->found_another_char = 0;
 }
 
-static int	ft_only_star(char *cmd)
+int	ft_only_star(char *cmd)
 {
 	if (!cmd)
 		return (0);

@@ -4,11 +4,9 @@ RM = rm -f
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror # -g -fsanitize=address
-
+CFLAGS = -Wall -Wextra -Werror
 
 READLINEFLAG = -lreadline
-
 
 READLINE_L = $(shell brew --prefix readline)/lib
 READLINE_I = $(shell brew --prefix readline)/include

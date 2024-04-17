@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 22:04:46 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/17 20:08:01 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/04/17 20:29:59 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,10 @@ static void	ft_add_to_expand_buffer(t_expand *exp, char *env_var)
 					ft_char_to_str(env_var[i]));
 		i++;
 	}
-	exp->found_another_char = 1;
+	if (ft_only_star(env_var))
+		exp->found_star = 1;
+	else
+		exp->found_another_char = 1;
 }
 
 void	ft_expand_dollar(t_expand *exp, t_env *env, char *cmd, int exit_status)
