@@ -39,6 +39,7 @@ void	ft_handle_signals(int sig)
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
+		g_signal = 1;
 	}
 }
 
@@ -58,6 +59,7 @@ int	main(int ac, char **av, char **ev)
 	(void)(av);
 	tool.grbg = NULL;
 	tool.env = ft_env_create(ev);
+	g_signal = 0;
 	tool.err = 0;
 	rl_catch_signals = 0;
 	signal(SIGINT, ft_handle_signals);
@@ -66,12 +68,9 @@ int	main(int ac, char **av, char **ev)
 	while (1)
 	{
 		line = ft_get_prompt(tool.err);
-		if(g_signal == 1)
+		if (g_signal)
 			tool.err = 1;
 		tree = parsing_phase(line, &tool);
-		//printf("--------------- tree --------------------\n");
-		//print_tree_2d(tree);
-		//printf("-----------------------------------------\n");
 		ft_execute(tree, &tool.env, &tool.err);
 		unlink_heredoc(&tree);
 		clear_garbage(tool.grbg);

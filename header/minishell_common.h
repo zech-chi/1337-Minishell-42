@@ -49,8 +49,6 @@
 # define L_TO_R 3
 # define R_TO_L 2
 
-extern int	g_signal ;
-
 enum e_peroirty
 {
 	open_par = 6 ,
