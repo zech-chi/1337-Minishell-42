@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 20:39:26 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/17 12:55:40 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/04/17 16:24:51 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ static void	ft_child_job(t_env **env, char	**cmd_2d)
 {
 	char	**env_2d;
 
-	signal(SIGINT, SIG_DFL); //
-	signal(SIGQUIT, SIG_DFL); //
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	env_2d = ft_env_create_2d(*env);
 	if (!env_2d)
 		return (ft_put_error("🍪: malloc failed\n"), exit(1));
@@ -89,6 +89,7 @@ void	ft_execute_cmd(char *cmd, t_env **env, int *exit_status)
 {
 	char	**cmd_2d;
 	pid_t	pid;
+
 	cmd_2d = ft_expand(cmd, *env, *exit_status);
 	if (!cmd_2d)
 		return (ft_put_error("🍪: malloc failed\n"));
