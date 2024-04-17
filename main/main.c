@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
+/*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:23:31 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/15 15:31:13 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/17 09:57:06 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,21 +37,22 @@ void ft_handle_signals(int sig)
 {
 	if (sig == SIGINT)
 	{
+		g_sig = 2;
 		printf("\n");
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
 	}
-	g_sig = 1;
+	else
+		g_sig = 1;
 }
-/*
-	ft_env_clear(&env);
-	ft_free_2d_char(cmd_2d);
-	free(line);
-*/
+
 // original main
 void dd()
-{system("leaks minishell");}
+{
+	system("leaks minishell");
+}
+
 int	main(int ac, char **av, char **ev)
 {
 	char	*line;
@@ -63,8 +64,8 @@ int	main(int ac, char **av, char **ev)
 	tool.grbg = NULL;
 	tool.env = ft_env_create(ev);
 	g_sig = 0;
-	rl_catch_signals = 0;
 	tool.err = 0;
+	rl_catch_signals = 0;
 	signal(SIGINT, ft_handle_signals);
 	signal(SIGQUIT, ft_handle_signals);
 	while (1)
@@ -85,12 +86,3 @@ int	main(int ac, char **av, char **ev)
 	rl_clear_history();
 	return (SUCCESS);
 }
-
-//int main()
-//{
-//	char **s;
-
-//	s = ft_expand("ls", NULL, 0);
-//	ft_free_2d_char(s);
-//	return (0);
-//}

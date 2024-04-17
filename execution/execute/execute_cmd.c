@@ -6,11 +6,18 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 20:39:26 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/04 00:43:54 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/04/16 20:19:53 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell_execution.h"
+
+static	int	ft_cmd_in_cwd(char *cmd)
+{
+	if (cmd && cmd[0] && cmd[0] == '.' && cmd[1] == '/')
+		return (1);
+	return (0);
+}
 
 static void	ft_execute_search_in_path(char **cmd_2d, t_env *env, char **env_2d)
 {
@@ -46,7 +53,8 @@ static void	ft_child_job(t_env **env, char	**cmd_2d)
 	if (!env_2d)
 		return (ft_put_error("🍪: malloc failed\n"), exit(1));
 	execve(cmd_2d[0], cmd_2d, env_2d);
-	ft_execute_search_in_path(cmd_2d, *env, env_2d);
+	if (!ft_cmd_in_cwd(cmd_2d[0]))
+		ft_execute_search_in_path(cmd_2d, *env, env_2d);
 	ft_put_error("🍪: Execution Error: ");
 	ft_put_error(cmd_2d[0]);
 	ft_put_error(" command not found\n");
@@ -55,12 +63,9 @@ static void	ft_child_job(t_env **env, char	**cmd_2d)
 	exit(127);
 }
 
-
-/////
-
-int	update_status(int status)
+int	ft_update_status(int status)
 {
-	if (WIFSIGNALED(status))   // check if process recived a signal
+	if (WIFSIGNALED(status))
 	{
 		if (WTERMSIG(status) == SIGINT)
 		{
@@ -73,12 +78,10 @@ int	update_status(int status)
 			return (131);
 		}
 	}
-	if (WIFEXITED(status)) // to check if the process terminted with exit 
+	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	return (1);
 }
-
-///
 
 void	ft_execute_cmd(char *cmd, t_env **env, int *exit_status)
 {
@@ -101,6 +104,6 @@ void	ft_execute_cmd(char *cmd, t_env **env, int *exit_status)
 		ft_child_job(env, cmd_2d);
 	else
 		waitpid(pid, exit_status, 0);
-	*exit_status = update_status(*exit_status);
+	*exit_status = ft_update_status(*exit_status);
 	ft_free_2d_char(cmd_2d);
 }
