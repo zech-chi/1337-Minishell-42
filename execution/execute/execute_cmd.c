@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 20:39:26 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/17 16:24:51 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/04/17 18:56:04 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,9 @@ int	ft_update_status(int status)
 
 void	ft_execute_cmd(char *cmd, t_env **env, int *exit_status)
 {
-	char	**cmd_2d;
-	pid_t	pid;
+	char			**cmd_2d;
+	pid_t			pid;
+	struct termios	state;
 
 	cmd_2d = ft_expand(cmd, *env, *exit_status);
 	if (!cmd_2d)
@@ -97,6 +98,7 @@ void	ft_execute_cmd(char *cmd, t_env **env, int *exit_status)
 		return (ft_free_2d_char(cmd_2d));
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
+	tcgetattr(STDOUT_FILENO, &state);
 	pid = fork();
 	if (pid < 0)
 	{
@@ -108,6 +110,8 @@ void	ft_execute_cmd(char *cmd, t_env **env, int *exit_status)
 		ft_child_job(env, cmd_2d);
 	else
 		waitpid(pid, exit_status, 0);
+	if (WIFSIGNALED(*exit_status) && WTERMSIG(*exit_status) == SIGQUIT)
+		tcsetattr(STDOUT_FILENO, TCSANOW, &state);
 	*exit_status = ft_update_status(*exit_status);
 	ft_free_2d_char(cmd_2d);
 	signal(SIGINT, ft_handle_signals);

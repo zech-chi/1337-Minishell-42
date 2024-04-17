@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 16:16:46 by ymomen            #+#    #+#             */
-/*   Updated: 2024/04/17 16:59:22 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/17 18:23:17 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ int	wrt_on_file(int *fd, char *limiter, t_tool *tool)
 		if (!ttyname(0))
 		{
 			open(ttyname(2), O_RDWR);
+			close(*fd);
 			return (1);
 		}
 		if (!line_check(&line, tool, i, limiter))

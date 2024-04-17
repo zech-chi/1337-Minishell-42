@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:27:47 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/17 16:08:22 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/17 18:48:44 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <string.h>
 # include <limits.h>
 # include <sys/wait.h>
+# include <termios.h>
 
 # define REDIRECTION 1
 # define INPUT 2

@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:23:31 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/17 17:05:55 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/17 18:58:20 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ int	main(int ac, char **av, char **ev)
 	t_tree	*tree;
 	t_tool	tool;
 
+	if (!isatty(0))
+		return (printf("tty required!\n"), 1);
 	(void)(ac);
 	(void)(av);
 	tool.grbg = NULL;

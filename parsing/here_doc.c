@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:16:00 by ymomen            #+#    #+#             */
-/*   Updated: 2024/04/17 16:53:07 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/17 18:21:36 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,9 @@ int	heredoc(t_tool *tool, char **limiter)
 		name = genratname(tool);
 	fd2 = open_file(name, tool);
 	if (wrt_on_file(&fd2, *limiter, tool) == 1)
+	{
 		fd2 = open_file(name, tool);
+	}
 	if (close(fd2) == -1)
 		return (perror("open"), tool->err = 1, 1);
 	*limiter = ft_strdup(name, tool);
