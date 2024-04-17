@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_common.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
+/*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:27:47 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/16 16:56:08 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/17 15:27:43 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,5 @@ char	*ft_herdoc_expand(char *str, t_env *env, int exit_status);
 char	**ft_split2(char const *s, char c);
 char	*ft_strjoin2(char *s1, char *s2);
 char	*ft_char_to_str(char c);
+void	ft_handle_signals(int sig);
 #endif
