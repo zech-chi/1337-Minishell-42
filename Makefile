@@ -30,6 +30,7 @@ SRCS =	parsing/ft_stdup.c \
 		parsing/tree.c \
 		parsing/fix_lst_perfix.c\
 		parsing/here_doc.c\
+		parsing/here_doc_2.c\
 		parsing/grpg.c\
 		parsing/ft_split.c\
 		main/main.c \

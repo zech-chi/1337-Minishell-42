@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_common.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:27:47 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/17 15:37:09 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/04/17 16:08:22 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@
 # define L_TO_R 3
 # define R_TO_L 2
 
-extern int g_exit_status;
+extern int	g_signal ;
 
 enum e_peroirty
 {
