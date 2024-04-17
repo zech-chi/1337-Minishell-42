@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
+/*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 20:39:26 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/17 18:56:04 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/17 20:05:58 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,11 +101,7 @@ void	ft_execute_cmd(char *cmd, t_env **env, int *exit_status)
 	tcgetattr(STDOUT_FILENO, &state);
 	pid = fork();
 	if (pid < 0)
-	{
-		ft_put_error("🍪: Fork Error\n");
-		ft_free_2d_char(cmd_2d);
-		return ;
-	}
+		return (ft_put_error("🍪: Fork Error\n"), ft_free_2d_char(cmd_2d));
 	else if (pid == 0)
 		ft_child_job(env, cmd_2d);
 	else
