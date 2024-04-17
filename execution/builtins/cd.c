@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:29:33 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/16 17:48:55 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/04/17 09:51:52 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,22 +55,22 @@ static	void	ft_go_to_old_path(t_env **env, char *path, int *exit_status)
 	free(old_pwd);
 }
 
-static	void	ft_go_to_home(t_env **env, char *path,int *exit_status)
+static	void	ft_go_to_home(t_env **env, char *path, int *exit_status)
 {
 	char	*home;
 	char	*prev_wd;
 
 	prev_wd = ft_get_cwd(NULL, 0);
 	home = ft_env_search(*env, "HOME");
-	if (!home)
-		ft_put_error("🍪: cd: HOME not set\n");
 	if (chdir(home) == SUCCESS)
 	{
+		printf("here\n");
 		ft_update_pwd_and_oldpwd(env, prev_wd, path);
 		*exit_status = 0;
 	}
 	else
 	{
+		ft_put_error("🍪: cd: HOME not set\n");
 		*exit_status = 1;
 		free(prev_wd);
 	}
@@ -94,7 +94,8 @@ static	void	ft_go_to_new_path(t_env **env, char *path, int *exit_status)
 		perror(msg);
 		free(msg);
 		free(prev_wd);
-		*exit_status = 1;	}
+		*exit_status = 1;
+	}
 }
 
 int	ft_cd(char **cmd_2d, t_env **env, int *exit_status)
