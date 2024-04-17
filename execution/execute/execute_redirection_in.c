@@ -6,11 +6,22 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 03:35:59 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/17 11:13:35 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/04/17 11:48:36 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell_execution.h"
+
+static int	ft_open_file(char *file_path, int *exit_status)
+{
+	int	fd;
+
+	fd = -1;
+	fd = open(file_path, O_RDONLY);
+	if (fd != -1)
+		*exit_status = 0;
+	return (fd);
+}
 
 static void	ft_error1(char *msg, int *exit_status)
 {
@@ -41,7 +52,7 @@ void	ft_execute_redirection_in(t_tree *root, t_env **env, int *exit_status)
 	file_path = ft_expand(root->left->value, *env, *exit_status);
 	if (!file_path || !(*file_path))
 		return (ft_error2(exit_status, file_path, root->left->value));
-	fd = open(*file_path, O_RDONLY);
+	fd = ft_open_file(*file_path, exit_status);
 	if (fd == -1)
 	{
 		close(in);

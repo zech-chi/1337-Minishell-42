@@ -6,24 +6,27 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:29:33 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/17 10:08:54 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/04/17 13:56:11 by zech-chi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell_execution.h"
 
-static void	ft_update_pwd_and_oldpwd(t_env **env, char *prev_wd, char *path)
+static int	ft_update_pwd_and_oldpwd(t_env **env, char *prev_wd, char *path)
 {
 	char	cwd[MAXPATHLEN];
 	char	*cwd_key;
 	char	*cwd_value;
+	int		ex;
 
+	ex = 0;
 	ft_env_delete(env, "OLDPWD");
 	ft_env_add(env, ft_strdup2("OLDPWD"), prev_wd, 1);
 	if (getcwd(cwd, MAXPATHLEN) == NULL)
 	{
 		perror("cd: error retrieving current directory: \
 		getcwd: cannot access parent directories");
+		ex = 1;
 	}
 	cwd_value = ft_get_cwd(path, 1);
 	cwd_key = ft_strdup2("PWD");
@@ -32,6 +35,7 @@ static void	ft_update_pwd_and_oldpwd(t_env **env, char *prev_wd, char *path)
 		free(cwd_key);
 		free(cwd_value);
 	}
+	return (ex);
 }
 
 static	void	ft_go_to_old_path(t_env **env, char *path, int *exit_status)
@@ -42,10 +46,7 @@ static	void	ft_go_to_old_path(t_env **env, char *path, int *exit_status)
 	prev_wd = ft_get_cwd(NULL, 0);
 	old_pwd = ft_env_search(*env, "OLDPWD");
 	if (chdir(old_pwd) == SUCCESS)
-	{
-		ft_update_pwd_and_oldpwd(env, prev_wd, path);
-		*exit_status = 0;
-	}
+		*exit_status = ft_update_pwd_and_oldpwd(env, prev_wd, path);
 	else
 	{
 		ft_put_error("🍪: cd: OLDPWD not set\n");
@@ -63,10 +64,7 @@ static	void	ft_go_to_home(t_env **env, char *path, int *exit_status)
 	prev_wd = ft_get_cwd(NULL, 0);
 	home = ft_env_search(*env, "HOME");
 	if (chdir(home) == SUCCESS)
-	{
-		ft_update_pwd_and_oldpwd(env, prev_wd, path);
-		*exit_status = 0;
-	}
+		*exit_status = ft_update_pwd_and_oldpwd(env, prev_wd, path);
 	else
 	{
 		ft_put_error("🍪: cd: HOME not set\n");
@@ -83,10 +81,7 @@ static	void	ft_go_to_new_path(t_env **env, char *path, int *exit_status)
 
 	prev_wd = ft_get_cwd(NULL, 0);
 	if (chdir(path) == SUCCESS)
-	{
-		ft_update_pwd_and_oldpwd(env, prev_wd, path);
-		*exit_status = 0;
-	}
+		*exit_status = ft_update_pwd_and_oldpwd(env, prev_wd, path);
 	else
 	{
 		msg = ft_strjoin2(ft_strdup2("🍪: cd: "), ft_strdup2(path));
