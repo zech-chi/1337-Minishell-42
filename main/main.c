@@ -6,7 +6,7 @@
 /*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:23:31 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/17 18:13:12 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/04/17 18:58:20 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ int	main(int ac, char **av, char **ev)
 	char	*line;
 	t_tree	*tree;
 	t_tool	tool;
-
 	ft_init(&tool, ac, av, ev);
 	if (!isatty(0))
 		return (printf("tty required!\n"), 1);
