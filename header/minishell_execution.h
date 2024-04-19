@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_execution.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:07:18 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/17 20:28:58 by zech-chi         ###   ########.fr       */
+/*   Updated: 2024/04/18 15:22:52 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,6 @@
 
 # define SUCCESS 0
 # define FAILED 1
-
-//colors
-# define RED_COLOR   "\x1b[31m"
-# define GREEN_COLOR "\x1b[32m"
-# define RESET_COLOR "\x1b[0m"
 
 // split with
 # define SPACE ' '

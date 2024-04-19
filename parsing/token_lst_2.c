@@ -6,11 +6,20 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 14:16:49 by ymomen            #+#    #+#             */
-/*   Updated: 2024/04/11 15:25:49 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/18 16:36:34 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell_parsing.h"
+
+void	ft_clearhd(t_lst *here_doc)
+{
+	while (here_doc)
+	{
+		unlink(here_doc->value);
+		here_doc = here_doc->next;
+	}
+}
 
 static int	condtion(t_lst *n)
 {
@@ -33,9 +42,11 @@ static int	condtion(t_lst *n)
 
 static int	parssing_error_2(t_lst *node, t_tool *tool)
 {
-	int	lst;
+	int		lst;
+	t_lst	*here_doc;
 
 	lst = 0;
+	here_doc = NULL;
 	while (node)
 	{
 		if (node->type > 0 && !is_redarection(node->type))
@@ -46,11 +57,12 @@ static int	parssing_error_2(t_lst *node, t_tool *tool)
 			write(2, "🍪: syntax error near unexpected token `", 43);
 			ft_putstr_fd(node->value, 2);
 			write(2, "'\n", 2);
-			return (1);
+			return (ft_clearhd(here_doc), 1);
 		}
 		if (node->type == 10 && node->next
-			&& heredoc(tool, &(node->next->value)))
-			return (write(2, "error in here_doc \n", 20), 1);
+			&& heredoc(tool, &(node->next->value), &here_doc))
+			return (ft_clearhd(here_doc), \
+			write(2, "error in here_doc \n", 20), 1);
 		node = node->next;
 	}
 	return (0);

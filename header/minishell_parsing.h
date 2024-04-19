@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zech-chi <zech-chi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 21:25:53 by zech-chi          #+#    #+#             */
-/*   Updated: 2024/04/17 16:53:51 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/18 16:31:32 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	unlink_heredoc(t_tree **root);
 void	clear_garbage(t_garbage *head);
 char	**ft_split(char const *s, char c, t_tool *tool);
 void	add_to_grbg(t_garbage **head, void *node);
-int		heredoc(t_tool *tool, char **limiter);
+int		heredoc(t_tool *tool, char **limite, t_lst **her_doc);
 void	update_tree(t_tree **root, t_tool *tool);
 t_lst	*pop_last_1(t_lst **stack);
 t_lst	*post_new(t_lst *head, t_tool *tool);

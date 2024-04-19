@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:16:00 by ymomen            #+#    #+#             */
-/*   Updated: 2024/04/17 18:21:36 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/18 16:30:39 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static char	*genratname(t_tool *tool)
 	return (name);
 }
 
-int	heredoc(t_tool *tool, char **limiter)
+int	heredoc(t_tool *tool, char **limiter, t_lst **her_doc)
 {
 	int		fd2;
 	char	*name;
@@ -67,6 +67,7 @@ int	heredoc(t_tool *tool, char **limiter)
 	while (!name || !access(name, F_OK))
 		name = genratname(tool);
 	fd2 = open_file(name, tool);
+	lst_add_back(her_doc, lst_new(name, tool));
 	if (wrt_on_file(&fd2, *limiter, tool) == 1)
 	{
 		fd2 = open_file(name, tool);

@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:57:50 by ymomen            #+#    #+#             */
-/*   Updated: 2024/04/15 14:55:18 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/04/18 16:12:28 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void	update_tree(t_tree **root, t_tool *tool)
 		(*root)->left = new_node(ft_monstrdup(&(*root)->value[ft_strlen(sp)],
 					ft_strlen((*root)->value) - ft_strlen(sp), tool),
 				-1, -2, tool);
+		(*root)->left->value = ft_strtrim((*root)->left->value, " ", tool);
 		(*root)->value = sp;
 		update_tree(&(*root)->right, tool);
 	}
